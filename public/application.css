@@ -8,6 +8,12 @@ p {
   justify-content: space-evenly;
 }
 
+.square {
+  display: block;
+  height: 20px;
+  width: 20px;
+}
+
 .col {
   width: 500px;
   background: lightgray;

@@ -2,6 +2,7 @@
 *.zip
 *.css
 *.css.map
+*.map
 
 /extras
 /.sass-cache
