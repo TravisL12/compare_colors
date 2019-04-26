@@ -13,21 +13,24 @@
  */
 
 function Color(color, id) {
+  this.color = this.cleanColor(color);
   this.el = document.createElement("div");
   this.el.classList = `square square-${id}`;
-  this.el.style.cssText = `background-color: ${color}; border: 1px solid`;
+  this.el.style.cssText = `background-color: ${this.color}`;
 }
 
-const parseColors = event => {
-  const text = results.querySelector(".all") || document.createElement("p");
-  text.classList.add("all");
+Color.prototype.cleanColor = color => {
+  return color.replace(/\'/gi, "");
+};
 
+const parseColors = event => {
+  const all = results.querySelector(".all");
   const colors = event.target.value.split("\n");
 
-  for (let i = 0; i < colors; i++) {
+  for (let i = 0; i < colors.length; i++) {
     console.log(i, "count");
     const color = new Color(colors[i], i);
-    results.appendChild(color.el);
+    all.appendChild(color.el);
   }
 };
 

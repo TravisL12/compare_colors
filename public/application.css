@@ -8,6 +8,11 @@ p {
   justify-content: space-evenly;
 }
 
+.all {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .square {
   display: block;
   height: 20px;
