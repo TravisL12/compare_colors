@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="/public/application.css" />
+
+    <title>Compare Colors and Win!</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="color-entry col">
+        <div class="title">
+          <p>Enter/Paste colors</p>
+          <button id="reset">Reset</button>
+        </div>
+        <div class="display text-area">
+          <textarea id="colors" class="color-textarea" rows="20"></textarea>
+        </div>
+      </div>
+      <div id="results" class="display color-types col">
+        <div class="title">
+          <p>Results</p>
+        </div>
+        <div class="results-display"></div>
+      </div>
+    </div>
+  </body>
+  <script src="/public/application.js"></script>
+</html>
