@@ -12,16 +12,18 @@
 #454E5F
  */
 
-function Color(color, id) {
-  this.color = this.cleanColor(color);
-  this.el = document.createElement("div");
-  this.el.classList = `square square-${id}`;
-  this.el.style.cssText = `background-color: ${this.color}`;
-}
+class Color {
+  constructor(color, id) {
+    this.color = this.cleanColor(color);
+    this.el = document.createElement("div");
+    this.el.classList = `square square-${id}`;
+    this.el.style.cssText = `background-color: ${this.color}`;
+  }
 
-Color.prototype.cleanColor = color => {
-  return color.replace(/\'/gi, "");
-};
+  cleanColor(color) {
+    return color.replace(/\'/gi, "");
+  }
+}
 
 const parseColors = event => {
   const all = results.querySelector(".all");
