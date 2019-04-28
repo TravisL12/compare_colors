@@ -16,22 +16,22 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      textEnter: "",
+      colorInput: "",
       colors: []
     };
   }
 
   updateTextArea = event => {
-    this.setState({ textEnter: event.target.value });
+    this.setState({ colorInput: event.target.value });
   };
 
   parseColors = () => {
-    this.setState({ colors: this.state.textEnter.split("\n") });
+    this.setState({ colors: this.state.colorInput.split("\n") });
   };
 
   resetDisplay = () => {
     this.setState = {
-      textEnter: "",
+      colorInput: "",
       colors: []
     };
   };
