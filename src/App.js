@@ -19,25 +19,22 @@ class App extends Component {
       textEnter: "",
       colors: []
     };
-    this.updateTextArea = this.updateTextArea.bind(this);
-    this.parseColors = this.parseColors.bind(this);
-    this.resetDisplay = this.resetDisplay.bind(this);
   }
 
-  updateTextArea(event) {
+  updateTextArea = event => {
     this.setState({ textEnter: event.target.value });
-  }
+  };
 
-  parseColors() {
+  parseColors = () => {
     this.setState({ colors: this.state.textEnter.split("\n") });
-  }
+  };
 
-  resetDisplay() {
+  resetDisplay = () => {
     this.setState = {
       textEnter: "",
       colors: []
     };
-  }
+  };
 
   render() {
     return (
