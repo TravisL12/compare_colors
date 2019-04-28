@@ -1,0 +1,76 @@
+import React, { Component } from "react";
+import Color from "./Color";
+import "./application.scss";
+
+/** TEST COLORS
+#353B4B
+#ff001E
+#1C202A
+#3A3A48
+#0fa912
+#232836
+#454E5F
+ */
+
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      textEnter: "",
+      colors: []
+    };
+    this.updateTextArea = this.updateTextArea.bind(this);
+    this.parseColors = this.parseColors.bind(this);
+    this.resetDisplay = this.resetDisplay.bind(this);
+  }
+
+  updateTextArea(event) {
+    this.setState({ textEnter: event.target.value });
+  }
+
+  parseColors() {
+    this.setState({ colors: this.state.textEnter.split("\n") });
+  }
+
+  resetDisplay() {
+    this.setState = {
+      textEnter: "",
+      colors: []
+    };
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <div className="col color-entry">
+          <div className="title">
+            <p>Enter/Paste colors</p>
+            <button onClick={this.resetDisplay}>Reset</button>
+          </div>
+          <div className="display text-area">
+            <textarea
+              className="color-textarea"
+              rows="20"
+              onChange={this.updateTextArea}
+            />
+            <button onClick={this.parseColors}>Convert</button>
+          </div>
+        </div>
+        <div className="col color-types">
+          <div className="title">
+            <p>Results</p>
+          </div>
+          <div className="display results-display">
+            <div className="all">
+              {this.state.colors.map((color, idx) => {
+                return <Color color={color} id={idx} key={idx} />;
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default App;
