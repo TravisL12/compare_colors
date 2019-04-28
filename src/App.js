@@ -60,7 +60,7 @@ class App extends Component {
           <div className="display results-display">
             <div className="all">
               {this.state.colors.map((color, idx) => {
-                return <Color color={color} id={idx} key={idx} />;
+                return <Color color={color} key={idx} />;
               })}
             </div>
           </div>

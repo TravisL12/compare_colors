@@ -4,7 +4,6 @@ function Color(props) {
   const color = cleanColor();
   const style = { backgroundColor: `#${color}` };
 
-  //   console.log(hex2dec(color), color);
   console.log(distance("000000"), "Distance from Black", color);
 
   function cleanColor() {
@@ -34,8 +33,8 @@ function Color(props) {
 
   return (
     <div className="color-container">
-      <div className={`square square-${props.id}`} style={style} />
-      <p>#{color}</p>
+      <div className={`square`} style={style} />
+      <p className="name">#{color}</p>
     </div>
   );
 }

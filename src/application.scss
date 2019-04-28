@@ -14,14 +14,19 @@ p {
   flex-wrap: wrap;
 }
 
-.square {
-  display: block;
-  font-family: "Courier New", Courier, monospace;
-  text-transform: uppercase;
-  color: white;
-  margin: 5px 10px;
-  height: 50px;
-  width: 50px;
+.color-container {
+  .square {
+    display: block;
+    font-family: "Courier New", Courier, monospace;
+    color: white;
+    margin: 5px 10px;
+    height: 50px;
+    width: 50px;
+  }
+
+  .name {
+    text-transform: uppercase;
+  }
 }
 
 .col {
