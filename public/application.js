@@ -17,36 +17,59 @@ class Color {
     this.color = this.cleanColor(color);
     this.el = document.createElement("div");
     this.el.classList = `square square-${id}`;
-    this.el.style.cssText = `background-color: ${this.color}`;
+    this.el.style.cssText = `background-color: #${this.color}`;
+
+    console.log(this.hex2dec(), color);
   }
 
   cleanColor(color) {
-    return color.replace(/\'/gi, "");
+    return color.replace(/[\'#]/gi, "");
+  }
+
+  hex2dec() {
+    const split = [
+      this.color.slice(0, 2),
+      this.color.slice(2, 4),
+      this.color.slice(4, 6)
+    ];
+    return split.map(c => {
+      return parseInt(c, 16);
+    });
+  }
+
+  distance(target) {
+    const tDec = this.hex2dec(target);
+    const cDec = this.hex2dec(this.color);
+    const red = Math.pow(tDec[0] - cDec[0], 2);
+    const green = Math.pow(tDec[1] - cDec[1], 2);
+    const blue = Math.pow(tDec[2] - cDec[2], 2);
+
+    return Math.sqrt(red + green + blue);
   }
 }
 
-const parseColors = event => {
+const parseColors = () => {
   const all = results.querySelector(".all");
-  const colors = event.target.value.split("\n");
+  const colors = colorTextarea.value.split("\n");
 
   for (let i = 0; i < colors.length; i++) {
-    console.log(i, "count");
     const color = new Color(colors[i], i);
     all.appendChild(color.el);
+  }
+};
+
+const resetDisplay = () => {
+  colorTextarea.value = "";
+  const text = results.querySelector(".all");
+  if (text) {
+    results.removeChild(text);
   }
 };
 
 const colorTextarea = document.getElementById("colors");
 const results = document.getElementById("results");
 const resetBtn = document.getElementById("reset");
+const convertBtn = document.getElementById("convert");
 
-colorTextarea.addEventListener("change", parseColors);
-colorTextarea.addEventListener("input", parseColors);
-
-resetBtn.addEventListener("click", event => {
-  colorTextarea.value = "";
-  const text = results.querySelector(".all");
-  if (text) {
-    results.removeChild(text);
-  }
-});
+convertBtn.addEventListener("click", parseColors);
+resetBtn.addEventListener("click", resetDisplay);
