@@ -4,11 +4,12 @@
 // also make something where you can compare a single color against a library of colors to determine which is the closest match (if not exact match)
 
 /** TEST COLORS
-#00001E
-#1C202A
-#232836
 #353B4B
+#ff001E
+#1C202A
 #3A3A48
+#0fa912
+#232836
 #454E5F
  */
 
@@ -18,7 +19,7 @@ class Color {
     this.el = document.createElement("div");
     this.el.classList = `square square-${id}`;
     this.el.style.cssText = `background-color: #${this.color}`;
-
+    this.el.textContent = `#${this.color}`;
     console.log(this.hex2dec(), color);
   }
 
@@ -50,6 +51,7 @@ class Color {
 
 const parseColors = () => {
   const all = results.querySelector(".all");
+  all.innerHTML = "";
   const colors = colorTextarea.value.split("\n");
 
   for (let i = 0; i < colors.length; i++) {
@@ -60,9 +62,9 @@ const parseColors = () => {
 
 const resetDisplay = () => {
   colorTextarea.value = "";
-  const text = results.querySelector(".all");
-  if (text) {
-    results.removeChild(text);
+  const all = results.querySelector(".all");
+  if (all) {
+    all.innerHTML = "";
   }
 };
 
