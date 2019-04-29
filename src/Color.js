@@ -3,7 +3,9 @@ import React from "react";
 function Color(props) {
   const isRgb = /^rgb/.test(props.color);
   const { hexColor, rgbColor } = createColor();
-  const style = { backgroundColor: `#${hexColor}` };
+  const style = {
+    backgroundColor: `#${hexColor}`
+  };
 
   console.log(distance("000000"), "Distance from Black", hexColor);
 
@@ -37,6 +39,10 @@ function Color(props) {
       .join("");
   }
 
+  /**
+   *
+   * @param {string} hex 6 character hex string w/o # ex: 'FF09A4'
+   */
   function hex2dec(hex) {
     const split = [hex.slice(0, 2), hex.slice(2, 4), hex.slice(4, 6)];
 
@@ -45,6 +51,10 @@ function Color(props) {
     });
   }
 
+  /**
+   *
+   * @param {string} target 6 character hex string w/o # ex: 'FF09A4'
+   */
   function distance(target) {
     const tDec = hex2dec(target);
     const cDec = hex2dec(hexColor);
