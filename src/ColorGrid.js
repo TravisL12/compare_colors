@@ -49,19 +49,29 @@ function ColorGrid(props) {
    *
    * @param {string} target 6 character hex string w/o # ex: 'FF09A4'
    */
-  function distance(target, compare) {
+  function distance(compare, target = "000000") {
     const tDec = hex2dec(target);
-    const red = Math.pow(tDec[0] - compare[0], 2);
-    const green = Math.pow(tDec[1] - compare[1], 2);
-    const blue = Math.pow(tDec[2] - compare[2], 2);
+    const cDec = hex2dec(compare);
+
+    const red = Math.pow(tDec[0] - cDec[0], 2);
+    const green = Math.pow(tDec[1] - cDec[1], 2);
+    const blue = Math.pow(tDec[2] - cDec[2], 2);
 
     return Math.sqrt(red + green + blue);
   }
 
+  const sortedColors = props.colors
+    .map(color => {
+      return createColor(color);
+    })
+    .sort((a, b) => {
+      return distance(a.hexColor) - distance(b.hexColor);
+    });
+
   return (
     <div className="all">
-      {props.colors.map((color, idx) => {
-        return <Color color={createColor(color)} key={idx} />;
+      {sortedColors.map((color, idx) => {
+        return <Color color={color} key={idx} />;
       })}
     </div>
   );

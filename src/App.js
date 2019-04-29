@@ -11,6 +11,12 @@ rgb(0,0,200)
 rgb(200,150,2)
 #232836
 #454E5F
+
+#ffffff
+#050505
+#e1e1e1
+#444444
+#999999
  */
 
 class App extends Component {
