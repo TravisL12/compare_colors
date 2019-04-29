@@ -5,9 +5,10 @@ import "./application.scss";
 /** TEST COLORS
 #353B4B
 #ff001E
-#1C202A
+rgb(0,0,200);
 #3A3A48
 #0fa912
+rgb(200,150,2);
 #232836
 #454E5F
  */
