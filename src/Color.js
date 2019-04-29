@@ -16,6 +16,7 @@ function Color(props) {
       hexColor.slice(2, 4),
       hexColor.slice(4, 6)
     ];
+
     return split.map(c => {
       return parseInt(c, 16);
     });
@@ -35,6 +36,7 @@ function Color(props) {
     <div className="color-container">
       <div className={`square`} style={style} />
       <p className="name">#{color}</p>
+      <p className="name">rgb({hex2dec(color).join(",")})</p>
     </div>
   );
 }

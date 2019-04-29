@@ -29,6 +29,14 @@ p {
   }
 }
 
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  font-size: 24px;
+}
+
 .col {
   width: 500px;
   background: lightgray;
