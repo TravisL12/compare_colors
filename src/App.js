@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Color from "./Color";
+import ColorGrid from "./ColorGrid";
 import "./application.scss";
 
 /** TEST COLORS
@@ -27,22 +27,24 @@ class App extends Component {
   };
 
   parseColors = () => {
-    this.setState({ colors: this.state.colorInput.split("\n") });
+    if (this.state.colorInput) {
+      this.setState({ colors: this.state.colorInput.split("\n") });
+    }
   };
 
   resetDisplay = () => {
-    this.setState = {
+    this.setState({
       colorInput: "",
       colors: []
-    };
+    });
   };
 
   render() {
     return (
-      <div className="container">
+      <div className="app-container">
         <div className="col color-entry">
           <div className="title">
-            <p>Enter/Paste colors</p>
+            <p>Enter/Paste colors (hex or rgb)</p>
             <button onClick={this.resetDisplay}>Reset</button>
           </div>
           <div className="display text-area">
@@ -50,6 +52,7 @@ class App extends Component {
               className="color-textarea"
               rows="20"
               onChange={this.updateTextArea}
+              value={this.state.colorInput}
             />
             <button onClick={this.parseColors}>Convert</button>
           </div>
@@ -59,11 +62,7 @@ class App extends Component {
             <p>Results</p>
           </div>
           <div className="display results-display">
-            <div className="all">
-              {this.state.colors.map((color, idx) => {
-                return <Color color={color} key={idx} />;
-              })}
-            </div>
+            <ColorGrid colors={this.state.colors} />
           </div>
         </div>
       </div>

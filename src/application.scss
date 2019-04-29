@@ -1,9 +1,14 @@
-body,
+body {
+  margin: 0;
+  background: #e6e6e6;
+}
+
 p {
   margin: 0;
 }
 
-.container {
+.app-container {
+  padding: 20px;
   display: flex;
   justify-content: space-evenly;
 }
@@ -47,7 +52,7 @@ button {
 
 .col {
   width: 500px;
-  background: lightgray;
+  background: whitesmoke;
   padding: 10px;
 
   .title {
