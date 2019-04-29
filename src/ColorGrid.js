@@ -85,16 +85,23 @@ class ColorGrid extends Component {
     return (
       <div className="all">
         <div className="compare-input">
-          <input
-            type="text"
-            onChange={this.updateCompareColor}
-            value={this.state.compareColor}
+          <div>
+            <input
+              type="text"
+              onChange={this.updateCompareColor}
+              value={this.state.compareColor}
+            />
+          </div>
+          <Color
+            showTitle={false}
+            color={this.createColor(this.state.compareColor)}
           />
-          <Color color={this.createColor(this.state.compareColor)} />
         </div>
-        {sortedColors.map((color, idx) => {
-          return <Color color={color} key={idx} />;
-        })}
+        <div className="color-grid">
+          {sortedColors.map((color, idx) => {
+            return <Color color={color} key={idx} />;
+          })}
+        </div>
       </div>
     );
   }

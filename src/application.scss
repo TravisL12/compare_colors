@@ -14,9 +14,23 @@ p {
 }
 
 .all {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  .compare-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .square {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  .color-grid {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
 }
 
 .color-container {
@@ -31,8 +45,8 @@ p {
     display: block;
     font-family: "Courier New", Courier, monospace;
     color: white;
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
   }
 
   .names {
