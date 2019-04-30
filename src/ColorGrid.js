@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Color from "./Color";
+import { rgb2lab, deltaE } from "./deltaDistance";
 
 class ColorGrid extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       compareColor: "000000"
@@ -53,24 +54,31 @@ class ColorGrid extends Component {
   };
 
   /**
-   *
+   * Based on calculation from:
+   * https://en.wikipedia.org/wiki/Color_difference
    * @param {string} compare 6 character hex string w/o # ex: 'FF09A4'
    * @param {string} target 6 character hex string w/o # ex: 'FF09A4'
    * @return {float} returns distance between compare and target hex values
    */
   distance = (compare, target = this.state.compareColor) => {
-    const tDec = this.hex2dec(target);
-    const cDec = this.hex2dec(compare);
+    const labA = rgb2lab(this.hex2dec(target));
+    const labB = rgb2lab(compare);
+    return deltaE(labA, labB);
 
-    const red = Math.pow(tDec[0] - cDec[0], 2);
-    const green = Math.pow(tDec[1] - cDec[1], 2);
-    const blue = Math.pow(tDec[2] - cDec[2], 2);
+    // const tDec = this.hex2dec(target);
+    // const cDec = this.hex2dec(compare);
 
-    return Math.sqrt(red + green + blue);
+    // const red = 2 * Math.pow(tDec[0] - cDec[0], 2);
+    // const green = 4 * Math.pow(tDec[1] - cDec[1], 2);
+    // const blue = 3 * Math.pow(tDec[2] - cDec[2], 2);
+
+    // return Math.sqrt(red + green + blue);
   };
 
   updateCompareColor = event => {
-    this.setState({ compareColor: event.target.value });
+    if (event.target.value.length === 6) {
+      this.setState({ compareColor: event.target.value });
+    }
   };
 
   render() {
@@ -79,17 +87,18 @@ class ColorGrid extends Component {
         return this.createColor(color);
       })
       .sort((a, b) => {
-        return this.distance(a.hexColor) - this.distance(b.hexColor);
+        return this.distance(a.rgbColor) - this.distance(b.rgbColor);
       });
 
     return (
       <div className="all">
-        <div className="compare-input">
-          <div>
+        <div className="compare-container">
+          <div className="compare-input">
             <input
               type="text"
+              id="compare-color"
               onChange={this.updateCompareColor}
-              value={this.state.compareColor}
+              placeholder="Comparison Color"
             />
           </div>
           <Color
