@@ -66,7 +66,7 @@ class ColorGrid extends Component {
     return deltaE(labA, labB);
 
     // const tDec = this.hex2dec(target);
-    // const cDec = this.hex2dec(compare);
+    // const cDec = compare;
 
     // const red = 2 * Math.pow(tDec[0] - cDec[0], 2);
     // const green = 4 * Math.pow(tDec[1] - cDec[1], 2);
@@ -78,6 +78,8 @@ class ColorGrid extends Component {
   updateCompareColor = event => {
     if (event.target.value.length === 6) {
       this.setState({ compareColor: event.target.value });
+    } else if (event.target.value.length === 0) {
+      this.setState({ compareColor: "000000" });
     }
   };
 
