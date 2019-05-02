@@ -5,10 +5,9 @@ import "./application.scss";
 /** TEST COLORS
 #353B4B
 ff001E
-rgb(0,0,200)
-#3A3A48
-0fa912
-rgb(200,150,2)
+rgb(0, 0, 200)
+#3A3A48 0fa912
+rgb( 200 , 150 , 2 ) rgb(1,2,3)
 #232836
 #454E5F
 #ffffff
@@ -33,7 +32,14 @@ class App extends Component {
 
   parseColors = () => {
     if (this.state.colorInput) {
-      this.setState({ colors: this.state.colorInput.split("\n") });
+      const re = new RegExp(
+        /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#?([0-9]|[a-f]){6})/,
+        "gi"
+      );
+      const colors = this.state.colorInput.match(re);
+      if (colors) {
+        this.setState({ colors });
+      }
     }
   };
 
