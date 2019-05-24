@@ -3,12 +3,9 @@ import Color from "./Color";
 import { rgb2lab, deltaE } from "./deltaDistance";
 
 class ColorGrid extends Component {
-  constructor() {
-    super();
-    this.state = {
-      compareColor: "000000"
-    };
-  }
+  state = {
+    compareColor: "000000"
+  };
 
   createColor = color => {
     const isRgb = /^rgb/.test(color);
@@ -64,20 +61,12 @@ class ColorGrid extends Component {
     const labA = rgb2lab(this.hex2dec(target));
     const labB = rgb2lab(compare);
     return deltaE(labA, labB);
-
-    // const tDec = this.hex2dec(target);
-    // const cDec = compare;
-
-    // const red = 2 * Math.pow(tDec[0] - cDec[0], 2);
-    // const green = 4 * Math.pow(tDec[1] - cDec[1], 2);
-    // const blue = 3 * Math.pow(tDec[2] - cDec[2], 2);
-
-    // return Math.sqrt(red + green + blue);
   };
 
   updateCompareColor = event => {
-    if (event.target.value.length === 6) {
-      this.setState({ compareColor: event.target.value });
+    const { hexColor } = this.createColor(event.target.value);
+    if (hexColor.length === 6) {
+      this.setState({ compareColor: hexColor });
     } else if (event.target.value.length === 0) {
       this.setState({ compareColor: "000000" });
     }
