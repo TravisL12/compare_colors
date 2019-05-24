@@ -7,15 +7,22 @@ class ColorGrid extends Component {
     compareColor: "000000"
   };
 
+  /**
+   * createColor - produce object that has RGB and hexadecimal
+   * @param {string} color - rgba(200,150,0) or #ff00f0 value
+   * @return {object} colorObj:
+   * example:
+   * {
+   *    rgbColor: [200, 150, 0],
+   *    hexColor: #C89600
+   * }
+   */
   createColor = color => {
     const isRgb = /^rgb/.test(color);
     const colorObj = {};
 
     if (isRgb) {
-      colorObj.rgbColor = color
-        .replace(/[rgb()\s]/gi, "")
-        .split(",")
-        .map(num => parseInt(num, 10));
+      colorObj.rgbColor = this.dec2arrayValue(color);
       colorObj.hexColor = this.dec2hex(colorObj.rgbColor);
     } else {
       colorObj.hexColor = color.replace(/['#]/gi, "");
@@ -23,6 +30,17 @@ class ColorGrid extends Component {
     }
 
     return colorObj;
+  };
+
+  /**
+   * @param {string} rgb color string => rgb(200, 150, 0)
+   * @return {array} [200, 150, 0]
+   */
+  dec2arrayValue = rgbColorStr => {
+    return rgbColorStr
+      .replace(/[rgb()\s]/gi, "")
+      .split(",")
+      .map(num => parseInt(num, 10));
   };
 
   /**
