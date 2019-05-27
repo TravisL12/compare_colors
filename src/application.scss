@@ -8,16 +8,18 @@ p {
 }
 
 .app-container {
-  padding: 20px;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
 
-.all {
+.compare-grid-container {
+  display: flex;
+
   .compare-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     margin-bottom: 20px;
 
     .square {
@@ -63,8 +65,13 @@ button {
   font-size: 24px;
 }
 
+.col + .col {
+  margin-top: 20px;
+}
+
 .col {
-  width: 500px;
+  max-width: 1400px;
+  width: 100%;
   background: whitesmoke;
   padding: 10px;
 
@@ -84,6 +91,7 @@ button {
 .color-textarea {
   width: 100%;
   height: auto;
+  max-height: 200px;
   box-sizing: border-box;
   padding: 4px 6px;
   border: none;
@@ -92,4 +100,25 @@ button {
 
 .color-results {
   white-space: wrap;
+}
+
+.compare-controls {
+  input[type="radio"] {
+    display: none;
+  }
+
+  input[type="radio"] + label {
+    padding: 6px 10px;
+    background: lightgray;
+    color: whitesmoke;
+  }
+
+  input[type="radio"]:checked + label {
+    background: limegreen;
+    color: green;
+  }
+
+  .controls {
+    display: flex;
+  }
 }

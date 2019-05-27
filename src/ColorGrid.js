@@ -109,9 +109,10 @@ class ColorGrid extends Component {
       : colorObjects;
 
     return (
-      <div className="all">
+      <div className="compare-grid-container">
         <div className="compare-container">
           <div className="compare-input">
+            <Color showTitle={false} color={this.createColor(compareColor)} />
             <input
               type="text"
               id="compare-color"
@@ -119,28 +120,29 @@ class ColorGrid extends Component {
               placeholder="Comparison Color"
             />
           </div>
-          <Color showTitle={false} color={this.createColor(compareColor)} />
           <div className="compare-controls">
             <p>Sort by closest match?</p>
-            <input
-              type="radio"
-              id="compare-on"
-              name="sortOption"
-              checked={areColorsSorted}
-              onChange={this.toggleSorting}
-              value={true}
-            />
-            <label htmlFor="compare-on">On</label>
+            <div className="controls">
+              <input
+                type="radio"
+                id="compare-on"
+                name="sortOption"
+                checked={areColorsSorted}
+                onChange={this.toggleSorting}
+                value={true}
+              />
+              <label htmlFor="compare-on">On</label>
 
-            <input
-              type="radio"
-              id="compare-off"
-              name="sortOption"
-              checked={!areColorsSorted}
-              onChange={this.toggleSorting}
-              value={false}
-            />
-            <label htmlFor="compare-off">Off</label>
+              <input
+                type="radio"
+                id="compare-off"
+                name="sortOption"
+                checked={!areColorsSorted}
+                onChange={this.toggleSorting}
+                value={false}
+              />
+              <label htmlFor="compare-off">Off</label>
+            </div>
           </div>
         </div>
         <div className="color-grid">
