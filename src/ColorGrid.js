@@ -117,7 +117,7 @@ class ColorGrid extends Component {
               type="text"
               id="compare-color"
               onChange={this.updateCompareColor}
-              placeholder="Comparison Color"
+              placeholder="#000000 (Default)"
             />
           </div>
           <div className="compare-controls">
