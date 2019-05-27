@@ -4,7 +4,8 @@ import { rgb2lab, deltaE } from "./deltaDistance";
 
 class ColorGrid extends Component {
   state = {
-    compareColor: "000000"
+    compareColor: "000000",
+    areColorsSorted: false
   };
 
   /**
@@ -90,14 +91,22 @@ class ColorGrid extends Component {
     }
   };
 
+  toggleSorting = event => {
+    // target value is passed as a string
+    this.setState({ areColorsSorted: event.currentTarget.value === "true" });
+  };
+
   render() {
-    const sortedColors = this.props.colors
-      .map(color => {
-        return this.createColor(color);
-      })
-      .sort((a, b) => {
-        return this.distance(a.rgbColor) - this.distance(b.rgbColor);
-      });
+    const { areColorsSorted, compareColor } = this.state;
+    const colorObjects = this.props.colors.map(color => {
+      return this.createColor(color);
+    });
+
+    const sortedColors = areColorsSorted
+      ? colorObjects.sort((a, b) => {
+          return this.distance(a.rgbColor) - this.distance(b.rgbColor);
+        })
+      : colorObjects;
 
     return (
       <div className="all">
@@ -110,10 +119,29 @@ class ColorGrid extends Component {
               placeholder="Comparison Color"
             />
           </div>
-          <Color
-            showTitle={false}
-            color={this.createColor(this.state.compareColor)}
-          />
+          <Color showTitle={false} color={this.createColor(compareColor)} />
+          <div className="compare-controls">
+            <p>Sort by closest match?</p>
+            <input
+              type="radio"
+              id="compare-on"
+              name="sortOption"
+              checked={areColorsSorted}
+              onChange={this.toggleSorting}
+              value={true}
+            />
+            <label htmlFor="compare-on">On</label>
+
+            <input
+              type="radio"
+              id="compare-off"
+              name="sortOption"
+              checked={!areColorsSorted}
+              onChange={this.toggleSorting}
+              value={false}
+            />
+            <label htmlFor="compare-off">Off</label>
+          </div>
         </div>
         <div className="color-grid">
           {sortedColors.map((color, idx) => {
