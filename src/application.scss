@@ -21,10 +21,6 @@ p {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
-
-    .square {
-      box-shadow: 0 0 0 0.5px black;
-    }
   }
 
   .color-grid {
@@ -48,6 +44,8 @@ p {
     color: white;
     height: 40px;
     width: 40px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 0.5px black;
   }
 
   .names {
@@ -63,6 +61,10 @@ button {
   border-radius: 0;
   margin: 0;
   font-size: 24px;
+}
+
+button + button {
+  margin-left: 10px;
 }
 
 .col + .col {

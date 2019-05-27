@@ -2,7 +2,8 @@ import React from "react";
 
 function Color(props) {
   const style = {
-    backgroundColor: `#${props.color.hexColor}`
+    backgroundColor: `#${props.color.hexColor}`,
+    color: `#${props.color.hexColor}`
   };
 
   const showTitle = props.showTitle && (
