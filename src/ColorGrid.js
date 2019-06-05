@@ -25,10 +25,12 @@ class ColorGrid extends Component {
   render() {
     const { areColorsSorted, compareColor } = this.state;
     const { colors, removeColor } = this.props;
-
     const sortedColors = areColorsSorted
-      ? colors.sort((a, b) => {
-          return distance(a.rgbColor) - distance(b.rgbColor);
+      ? colors.slice().sort((a, b) => {
+          return (
+            distance(a.rgbColor, compareColor) -
+            distance(b.rgbColor, compareColor)
+          );
         })
       : colors;
 
