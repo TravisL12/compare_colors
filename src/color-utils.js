@@ -46,9 +46,9 @@ export function hex2dec(hex) {
  *    hexColor: #C89600
  * }
  */
-export function createColor(color) {
+export function createColor(color, id = null) {
   const isRgb = /^rgb/.test(color);
-  const colorObj = {};
+  const colorObj = { id };
 
   if (isRgb) {
     colorObj.rgbColor = dec2arrayValue(color);

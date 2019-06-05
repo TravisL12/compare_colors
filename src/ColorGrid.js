@@ -24,15 +24,13 @@ class ColorGrid extends Component {
 
   render() {
     const { areColorsSorted, compareColor } = this.state;
-    const colorObjects = this.props.colors.map(color => {
-      return createColor(color);
-    });
+    const { colors, removeColor } = this.props;
 
     const sortedColors = areColorsSorted
-      ? colorObjects.sort((a, b) => {
+      ? colors.sort((a, b) => {
           return distance(a.rgbColor) - distance(b.rgbColor);
         })
-      : colorObjects;
+      : colors;
 
     return (
       <div className="compare-grid-container">
@@ -73,7 +71,7 @@ class ColorGrid extends Component {
         </div>
         <div className="color-grid">
           {sortedColors.map((color, idx) => {
-            return <Color color={color} key={idx} />;
+            return <Color color={color} remove={removeColor} key={idx} />;
           })}
         </div>
       </div>

@@ -15,7 +15,12 @@ function Color(props) {
 
   return (
     <div className="color-container">
-      <div className={`square`} style={style} />
+      <div
+        className={`square`}
+        style={style}
+        data-color-idx={props.color.id || undefined}
+        onClick={props.remove}
+      />
       {showTitle}
     </div>
   );

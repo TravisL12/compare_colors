@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ColorGrid from "./ColorGrid";
 import "./application.scss";
+import { createColor } from "./color-utils";
 
 const test = `#353B4B
 ff001E
@@ -14,6 +15,7 @@ rgb( 200 , 150 , 2 ) rgb(1,2,3)
 #e1e1e1
 #444444
 #999999
+hey I have a color #d928ae inside this sentence
  `;
 
 class App extends Component {
@@ -31,13 +33,24 @@ class App extends Component {
 
   parseColors = () => {
     if (this.state.colorInput) {
+      // Parse rgb(X, X, X) or #123456 (hex) patterns
       const re = new RegExp(
         /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#?([0-9]|[a-f]){6})/,
         "gi"
       );
       const colors = this.state.colorInput.match(re);
+
       if (colors) {
-        this.setState({ colors });
+        this.setState(({ colors: currentColors }) => {
+          const colorObjects = colors.map((color, idx) => {
+            const id = currentColors.length + idx + 1;
+            return createColor(color, id);
+          });
+
+          // TODO REMOVE DUPLICATES
+
+          return { colorInput: "", colors: currentColors.concat(colorObjects) };
+        });
       }
     }
   };
@@ -58,7 +71,23 @@ class App extends Component {
     );
   };
 
+  removeColor = event => {
+    const id = event.target.dataset.colorIdx - 1; // ID is 1 indexed
+    const colors = this.state.colors;
+    colors.splice(id, 1);
+
+    // Remap ID's on remaining colors
+    const newColors = colors.map((color, idx) => {
+      color.id = idx + 1;
+      return color;
+    });
+
+    this.setState({ colors: newColors });
+  };
+
   render() {
+    const { colors, colorInput } = this.state;
+
     return (
       <div className="app-container">
         <div className="col color-entry">
@@ -70,7 +99,7 @@ class App extends Component {
               className="color-textarea"
               rows="20"
               onChange={this.updateTextArea}
-              value={this.state.colorInput}
+              value={colorInput}
             />
             <button onClick={this.parseColors}>Convert</button>
             <button onClick={this.resetDisplay}>Reset</button>
@@ -79,10 +108,10 @@ class App extends Component {
         </div>
         <div className="col color-types">
           <div className="title">
-            <p>Results</p>
+            <p>Results ({colors.length})</p>
           </div>
           <div className="display results-display">
-            <ColorGrid colors={this.state.colors} />
+            <ColorGrid removeColor={this.removeColor} colors={colors} />
           </div>
         </div>
       </div>
