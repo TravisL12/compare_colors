@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import ColorGrid from "./ColorGrid";
 import "./application.scss";
 
-/** TEST COLORS
-#353B4B
+const test = `#353B4B
 ff001E
 rgb(0, 0, 200)
 #3A3A48 0fa912
@@ -15,7 +14,7 @@ rgb( 200 , 150 , 2 ) rgb(1,2,3)
 #e1e1e1
 #444444
 #999999
- */
+ `;
 
 class App extends Component {
   constructor() {
@@ -50,6 +49,15 @@ class App extends Component {
     });
   };
 
+  testColors = () => {
+    this.setState(
+      {
+        colorInput: test
+      },
+      this.parseColors
+    );
+  };
+
   render() {
     return (
       <div className="app-container">
@@ -66,6 +74,7 @@ class App extends Component {
             />
             <button onClick={this.parseColors}>Convert</button>
             <button onClick={this.resetDisplay}>Reset</button>
+            <button onClick={this.testColors}>Test</button>
           </div>
         </div>
         <div className="col color-types">
