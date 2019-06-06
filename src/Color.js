@@ -1,15 +1,20 @@
 import React from "react";
 
 function Color(props) {
+  const {
+    color: { hexColor, rgbColor },
+    id
+  } = props;
+
   const style = {
-    backgroundColor: `#${props.color.hexColor}`,
-    color: `#${props.color.hexColor}`
+    backgroundColor: `#${hexColor}`,
+    color: `#${hexColor}`
   };
 
   const showTitle = props.showTitle && (
     <div className="names">
-      <p>#{props.color.hexColor}</p>
-      <p>rgb({props.color.rgbColor.join(",")})</p>
+      <p>#{hexColor}</p>
+      <p>rgb({rgbColor.join(",")})</p>
     </div>
   );
 
@@ -18,7 +23,7 @@ function Color(props) {
       <div
         className={`square`}
         style={style}
-        data-color-idx={props.color.id || undefined}
+        data-color-idx={id || undefined}
         onClick={props.remove}
       />
       {showTitle}

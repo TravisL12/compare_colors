@@ -13,10 +13,15 @@ function dec2arrayValue(rgbColorStr) {
 
 /**
  *
- * @param {array} array of ints ex: [210, 190, 5];
+ * @param {array | string} array of ints ex: [210, 190, 5];
  */
-function dec2hex(rgbColor) {
-  return rgbColor
+export function dec2hex(rgbColor) {
+  let color = rgbColor;
+  if (typeof rgbColor === "string") {
+    color = dec2arrayValue(color);
+  }
+
+  return color
     .map(c => {
       const num = Number(c);
       return `0${num.toString(16)}`.slice(-2);
@@ -36,6 +41,10 @@ export function hex2dec(hex) {
   });
 }
 
+export function isColorRgb(color) {
+  return /^rgb/.test(color);
+}
+
 /**
  * createColor - produce object that has RGB and hexadecimal
  * @param {string} color - rgba(200,150,0) or #ff00f0 value
@@ -47,18 +56,22 @@ export function hex2dec(hex) {
  * }
  */
 export function createColor(color, id = null) {
-  const isRgb = /^rgb/.test(color);
-  const colorObj = { id };
+  let rgbColor;
+  let hexColor;
 
-  if (isRgb) {
-    colorObj.rgbColor = dec2arrayValue(color);
-    colorObj.hexColor = dec2hex(colorObj.rgbColor);
+  if (isColorRgb(color)) {
+    rgbColor = dec2arrayValue(color);
+    hexColor = dec2hex(rgbColor);
   } else {
-    colorObj.hexColor = color.replace(/['#]/gi, "");
-    colorObj.rgbColor = hex2dec(colorObj.hexColor);
+    hexColor = formatHexadecimal(color);
+    rgbColor = hex2dec(hexColor);
   }
 
-  return colorObj;
+  return { id, rgbColor, hexColor: hexColor.toLowerCase() };
+}
+
+export function formatHexadecimal(color) {
+  return color.replace(/['#]/gi, "");
 }
 
 /**

@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import ColorGrid from "./ColorGrid";
 import "./application.scss";
-import { createColor } from "./color-utils";
+import {
+  dec2hex,
+  createColor,
+  formatHexadecimal,
+  isColorRgb
+} from "./color-utils";
 
 const test = `#353B4B
 ff001E
@@ -42,14 +47,23 @@ class App extends Component {
 
       if (colors) {
         this.setState(({ colors: currentColors }) => {
-          const colorObjects = colors.map((color, idx) => {
+          const existingHex = currentColors.map(({ hexColor }) => hexColor);
+
+          // No duplicates!
+          const filteredColors = colors.filter(color => {
+            const hexColor = isColorRgb(color)
+              ? dec2hex(color)
+              : formatHexadecimal(color);
+
+            return !existingHex.includes(hexColor.toLowerCase());
+          });
+
+          const newColors = filteredColors.map((color, idx) => {
             const id = currentColors.length + idx + 1;
             return createColor(color, id);
           });
 
-          // TODO REMOVE DUPLICATES
-
-          return { colorInput: "", colors: currentColors.concat(colorObjects) };
+          return { colorInput: "", colors: currentColors.concat(newColors) };
         });
       }
     }
