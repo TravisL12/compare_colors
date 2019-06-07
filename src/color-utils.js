@@ -1,10 +1,14 @@
 import { rgb2lab, deltaE } from "./deltaDistance";
 
+export function isColorRgb(color) {
+  return /^rgb/i.test(color);
+}
+
 /**
  * @param {string} rgb color string => rgb(200, 150, 0)
  * @return {array} [200, 150, 0]
  */
-function dec2arrayValue(rgbColorStr) {
+function dec2array(rgbColorStr) {
   return rgbColorStr
     .replace(/[rgb()\s]/gi, "")
     .split(",")
@@ -18,7 +22,7 @@ function dec2arrayValue(rgbColorStr) {
 export function dec2hex(rgbColor) {
   let color = rgbColor;
   if (typeof rgbColor === "string") {
-    color = dec2arrayValue(color);
+    color = dec2array(color);
   }
 
   return color
@@ -27,6 +31,11 @@ export function dec2hex(rgbColor) {
       return `0${num.toString(16)}`.slice(-2);
     })
     .join("");
+}
+
+export function format2hex(color) {
+  const hex = isColorRgb(color) ? dec2hex(color) : color;
+  return hex.replace(/['#]/gi, "").toLowerCase();
 }
 
 /**
@@ -39,10 +48,6 @@ export function hex2dec(hex) {
   return split.map(c => {
     return parseInt(c, 16);
   });
-}
-
-export function isColorRgb(color) {
-  return /^rgb/.test(color);
 }
 
 /**
@@ -60,18 +65,14 @@ export function createColor(color, id = null) {
   let hexColor;
 
   if (isColorRgb(color)) {
-    rgbColor = dec2arrayValue(color);
+    rgbColor = dec2array(color);
     hexColor = dec2hex(rgbColor);
   } else {
-    hexColor = formatHexadecimal(color);
+    hexColor = format2hex(color);
     rgbColor = hex2dec(hexColor);
   }
 
   return { id, rgbColor, hexColor: hexColor.toLowerCase() };
-}
-
-export function formatHexadecimal(color) {
-  return color.replace(/['#]/gi, "");
 }
 
 /**

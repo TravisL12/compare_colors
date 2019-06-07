@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import ColorGrid from "./ColorGrid";
 import "./application.scss";
-import {
-  dec2hex,
-  createColor,
-  formatHexadecimal,
-  isColorRgb
-} from "./color-utils";
+import { createColor, format2hex } from "./color-utils";
 
 const test = `#353B4B
 ff001E
@@ -50,13 +45,18 @@ class App extends Component {
           const existingHex = currentColors.map(({ hexColor }) => hexColor);
 
           // No duplicates!
-          const filteredColors = colors.filter(color => {
-            const hexColor = isColorRgb(color)
-              ? dec2hex(color)
-              : formatHexadecimal(color);
+          const filteredColors = colors.reduce((results, color) => {
+            const hexColor = format2hex(color);
 
-            return !existingHex.includes(hexColor.toLowerCase());
-          });
+            if (
+              !existingHex.includes(hexColor) &&
+              !results.includes(hexColor)
+            ) {
+              results.push(color);
+            }
+
+            return results;
+          }, []);
 
           const newColors = filteredColors.map((color, idx) => {
             const id = currentColors.length + idx + 1;
@@ -87,6 +87,7 @@ class App extends Component {
 
   removeColor = event => {
     const id = event.target.dataset.colorIdx - 1; // ID is 1 indexed
+    console.log(id);
     const colors = this.state.colors;
     colors.splice(id, 1);
 

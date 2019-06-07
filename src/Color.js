@@ -2,8 +2,7 @@ import React from "react";
 
 function Color(props) {
   const {
-    color: { hexColor, rgbColor },
-    id
+    color: { hexColor, rgbColor, id }
   } = props;
 
   const style = {
