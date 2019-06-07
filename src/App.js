@@ -52,7 +52,7 @@ class App extends Component {
               !existingHex.includes(hexColor) &&
               !results.includes(hexColor)
             ) {
-              results.push(color);
+              results.push(hexColor);
             }
 
             return results;

@@ -52,6 +52,14 @@ p {
     font-size: 12px;
     text-transform: uppercase;
     text-align: center;
+
+    p {
+      cursor: pointer;
+      border-radius: 2px;
+      padding: 1px 2px;
+      // Transition delay is also affected by Color::CopyText setTimeout fn
+      transition: 0.5s linear background-color;
+    }
   }
 }
 

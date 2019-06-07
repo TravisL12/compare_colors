@@ -4,6 +4,11 @@ export function isColorRgb(color) {
   return /^rgb/i.test(color);
 }
 
+export function hexAlpha(color, percent = 0.5) {
+  const percentHex = parseInt(percent * 100, 16);
+  return `${format2hex(color)}${percentHex}`;
+}
+
 /**
  * @param {string} rgb color string => rgb(200, 150, 0)
  * @return {array} [200, 150, 0]
@@ -17,7 +22,9 @@ function dec2array(rgbColorStr) {
 
 /**
  *
- * @param {array | string} array of ints ex: [210, 190, 5];
+ * @param {array | string}
+ * array of ints ex: [210, 190, 5];
+ * string ex: 'rgb(210, 190, 5)'
  */
 export function dec2hex(rgbColor) {
   let color = rgbColor;
@@ -25,17 +32,19 @@ export function dec2hex(rgbColor) {
     color = dec2array(color);
   }
 
-  return color
+  const hex = color
     .map(c => {
       const num = Number(c);
       return `0${num.toString(16)}`.slice(-2);
     })
     .join("");
+
+  return format2hex(hex);
 }
 
 export function format2hex(color) {
   const hex = isColorRgb(color) ? dec2hex(color) : color;
-  return hex.replace(/['#]/gi, "").toLowerCase();
+  return hex.replace(/['#]/gi, "").toUpperCase();
 }
 
 /**
@@ -72,7 +81,7 @@ export function createColor(color, id = null) {
     rgbColor = hex2dec(hexColor);
   }
 
-  return { id, rgbColor, hexColor: hexColor.toLowerCase() };
+  return { id, rgbColor, hexColor };
 }
 
 /**
