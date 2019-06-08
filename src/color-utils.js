@@ -1,12 +1,36 @@
 import { rgb2lab, deltaE } from "./deltaDistance";
 
+/**
+ *
+ * @param {string} color
+ * @returns {boolean}
+ */
 export function isColorRgb(color) {
   return /^rgb/i.test(color);
 }
 
+/**
+ * Convert hex or decimal string to a hexadecimal alpha
+ * @param {string} color
+ * @param {float} percent opacity percentage
+ */
 export function hexAlpha(color, percent = 0.5) {
   const percentHex = parseInt(percent * 100, 16);
   return `${format2hex(color)}${percentHex}`;
+}
+
+/**
+ * matchColors - Parse rgb(X, X, X) or #123456 (hex) patterns
+ * @param {string} colorInput
+ * @return {array} array of matched values
+ */
+export function matchColors(colorInput) {
+  const re = new RegExp(
+    /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#?([0-9]|[a-f]){6})/,
+    "gi"
+  );
+
+  return colorInput.match(re);
 }
 
 /**

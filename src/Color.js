@@ -1,9 +1,13 @@
 import React from "react";
+import { shape, array, string, number, bool, func } from "prop-types";
 import { hexAlpha } from "./color-utils";
 
 function copyText(event) {
   const { target } = event;
   const { textContent } = target;
+
+  // Briefly have the element that was clicked glow with its color
+  // to confirm the string has been copied
   target.style.backgroundColor = `#${hexAlpha(textContent)}`;
   setTimeout(() => {
     target.style.backgroundColor = null;
@@ -19,38 +23,46 @@ function copyText(event) {
   document.body.removeChild(inputEl);
 }
 
-function Color(props) {
-  const {
-    color: { hexColor, rgbColor, id }
-  } = props;
+function Color({ color, showTitle, remove }) {
+  const { hexColor, rgbColor, id } = color;
 
   const squareStyle = {
     backgroundColor: `#${hexColor}`,
     color: `#${hexColor}`
   };
 
-  const showTitle = props.showTitle && (
-    <div className="names">
-      <p onClick={copyText}>#{hexColor}</p>
-      <p onClick={copyText}>rgb({rgbColor.join(",")})</p>
-    </div>
-  );
-
   return (
     <div className="color-container">
       <div
         className={`square`}
         style={squareStyle}
-        data-color-idx={id || undefined}
-        onClick={props.remove}
+        data-color-idx={id}
+        onClick={remove}
       />
-      {showTitle}
+      {showTitle && (
+        <div className="names">
+          <p onClick={copyText}>#{hexColor}</p>
+          <p onClick={copyText}>rgb({rgbColor.join(",")})</p>
+        </div>
+      )}
     </div>
   );
 }
 
+Color.propTypes = {
+  color: shape({
+    hexColor: string.isRequired,
+    rgbColor: array.isRequired,
+    id: number
+  }).isRequired,
+  showTitle: bool,
+  remove: func
+};
+
 Color.defaultProps = {
-  showTitle: true
+  color: { id: undefined },
+  showTitle: true,
+  remove: undefined
 };
 
 export default Color;

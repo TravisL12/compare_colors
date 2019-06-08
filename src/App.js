@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ColorGrid from "./ColorGrid";
 import "./application.scss";
-import { createColor, format2hex } from "./color-utils";
+import { matchColors, createColor, format2hex } from "./color-utils";
 
 const test = `#353B4B
 ff001E
@@ -32,41 +32,37 @@ class App extends Component {
   };
 
   parseColors = () => {
-    if (this.state.colorInput) {
-      // Parse rgb(X, X, X) or #123456 (hex) patterns
-      const re = new RegExp(
-        /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#?([0-9]|[a-f]){6})/,
-        "gi"
-      );
-      const colors = this.state.colorInput.match(re);
-
-      if (colors) {
-        this.setState(({ colors: currentColors }) => {
-          const existingHex = currentColors.map(({ hexColor }) => hexColor);
-
-          // No duplicates!
-          const filteredColors = colors.reduce((results, color) => {
-            const hexColor = format2hex(color);
-
-            if (
-              !existingHex.includes(hexColor) &&
-              !results.includes(hexColor)
-            ) {
-              results.push(hexColor);
-            }
-
-            return results;
-          }, []);
-
-          const newColors = filteredColors.map((color, idx) => {
-            const id = currentColors.length + idx + 1;
-            return createColor(color, id);
-          });
-
-          return { colorInput: "", colors: currentColors.concat(newColors) };
-        });
-      }
+    if (!this.state.colorInput) {
+      return;
     }
+
+    const matchedColors = matchColors(this.state.colorInput);
+
+    if (!matchedColors) {
+      return;
+    }
+
+    const existingHex = this.state.colors.map(({ hexColor }) => hexColor);
+    const filteredColors = matchedColors.reduce((results, color) => {
+      const hexColor = format2hex(color);
+
+      // No duplicates!
+      if (!existingHex.includes(hexColor) && !results.includes(hexColor)) {
+        results.push(hexColor);
+      }
+
+      return results;
+    }, []);
+
+    const newColors = filteredColors.map((color, idx) => {
+      const id = this.state.colors.length + idx + 1;
+      return createColor(color, id);
+    });
+
+    this.setState({
+      colorInput: "",
+      colors: [...this.state.colors, ...newColors]
+    });
   };
 
   resetDisplay = () => {
@@ -86,8 +82,7 @@ class App extends Component {
   };
 
   removeColor = event => {
-    const id = event.target.dataset.colorIdx - 1; // ID is 1 indexed
-    console.log(id);
+    const id = event.target.dataset.colorIdx - 1; // Change ID from 1-idx -> 0-idx
     const colors = this.state.colors;
     colors.splice(id, 1);
 
