@@ -19,13 +19,10 @@ hey I have a color #d928ae inside this sentence
  `;
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      colorInput: "",
-      colors: []
-    };
-  }
+  state = {
+    colorInput: "",
+    colors: []
+  };
 
   updateTextArea = event => {
     this.setState({ colorInput: event.target.value });
