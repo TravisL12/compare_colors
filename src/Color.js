@@ -24,7 +24,7 @@ function copyText(event) {
 }
 
 function Color({ color, showTitle, remove }) {
-  const { hexColor, rgbColor, id } = color;
+  const { hexColor, rgbColor, hslColor, id } = color;
 
   const squareStyle = {
     backgroundColor: `#${hexColor}`,
@@ -43,6 +43,7 @@ function Color({ color, showTitle, remove }) {
         <div className="names">
           <p onClick={copyText}>#{hexColor}</p>
           <p onClick={copyText}>rgb({rgbColor.join(",")})</p>
+          <p onClick={copyText}>hsl({hslColor.join(",")})</p>
         </div>
       )}
     </div>
