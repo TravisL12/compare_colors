@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Color from "./Color";
-import { createColor, distance } from "./color-utils";
+import { createColor, distanceDelta, distanceChromatic } from "./color-utils";
 
 function ColorGrid({ colors, removeColor }) {
   const [compareColor, setCompareColor] = useState("000000");
   const [areColorsSorted, setAreColorsSorted] = useState(false);
+  const [sortMethod, setSortMethod] = useState("distanceChromatic");
 
   const updateCompareColor = ({ target: { value } }) => {
     const { hexColor } = createColor(value);
@@ -15,18 +16,29 @@ function ColorGrid({ colors, removeColor }) {
     }
   };
 
+  const sortTypes = {
+    distanceDelta,
+    distanceChromatic
+  };
+
   // target value is passed as a string
-  const toggleSorting = ({ currentTarget: { value } }) => {
-    setAreColorsSorted(value === "true");
+  const toggleSorting = () => {
+    setAreColorsSorted(!areColorsSorted);
+  };
+
+  // target value is passed as a string
+  const toggleSortMethod = ({ currentTarget: { value } }) => {
+    setSortMethod(value);
   };
 
   const sortedColors = areColorsSorted
-    ? colors.slice().sort((a, b) => {
-        return (
-          distance(a.rgbColor, compareColor) -
-          distance(b.rgbColor, compareColor)
-        );
-      })
+    ? colors
+        .slice()
+        .sort(
+          (a, b) =>
+            sortTypes[sortMethod](a.rgbColor, compareColor) -
+            sortTypes[sortMethod](b.rgbColor, compareColor)
+        )
     : colors;
 
   return (
@@ -42,27 +54,31 @@ function ColorGrid({ colors, removeColor }) {
           />
         </div>
         <div className="compare-controls">
-          <p>Sort by closest match?</p>
+          <p>Sort?</p>
+          <button onClick={toggleSorting}>
+            {areColorsSorted ? "On" : "Off"}
+          </button>
+          <p>Sorting Method?</p>
           <div className="controls">
             <input
               type="radio"
               id="compare-on"
               name="sortOption"
-              checked={areColorsSorted}
-              onChange={toggleSorting}
-              value={true}
+              checked={sortMethod === "distanceChromatic"}
+              onChange={toggleSortMethod}
+              value={"distanceChromatic"}
             />
-            <label htmlFor="compare-on">On</label>
+            <label htmlFor="compare-on">Chromatic</label>
 
             <input
               type="radio"
               id="compare-off"
               name="sortOption"
-              checked={!areColorsSorted}
-              onChange={toggleSorting}
-              value={false}
+              checked={sortMethod === "distanceDelta"}
+              onChange={toggleSortMethod}
+              value={"distanceDelta"}
             />
-            <label htmlFor="compare-off">Off</label>
+            <label htmlFor="compare-off">DeltaE</label>
           </div>
         </div>
       </div>

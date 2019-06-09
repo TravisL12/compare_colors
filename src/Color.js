@@ -9,8 +9,10 @@ function copyText(event) {
   // Briefly have the element that was clicked glow with its color
   // to confirm the string has been copied
   target.style.backgroundColor = `#${hexAlpha(textContent)}`;
+  target.textContent = "Copied!";
   setTimeout(() => {
     target.style.backgroundColor = null;
+    target.textContent = textContent;
   }, 250);
 
   // Can only copy text from an HTMLInputElement

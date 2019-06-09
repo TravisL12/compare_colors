@@ -89,10 +89,27 @@ export function createColor(color, id = null) {
  * @param {string} target 6 character hex string w/o # ex: 'FF09A4'
  * @return {float} returns distance between compare and target hex values
  */
-export function distance(compare, target = "000000") {
+export function distanceDelta(compare, target = "000000") {
   const labA = rgb2lab(hex2dec(target));
   const labB = rgb2lab(compare);
   return deltaE(labA, labB);
+}
+
+/**
+ *
+ * @param {string} compare 6 character hex string w/o # ex: 'FF09A4'
+ * @param {string} target 6 character hex string w/o # ex: 'FF09A4'
+ * @return {float} returns distance between compare and target hex values
+ */
+export function distanceChromatic(compare = [0, 0, 0], target = "000000") {
+  const cDec = compare;
+  const tDec = hex2dec(target);
+
+  const red = Math.pow(tDec[0] - cDec[0], 2);
+  const green = Math.pow(tDec[1] - cDec[1], 2);
+  const blue = Math.pow(tDec[2] - cDec[2], 2);
+
+  return Math.sqrt(red + green + blue);
 }
 
 /**
@@ -112,7 +129,7 @@ export function hexAlpha(color, percent = 0.5) {
  */
 export function matchColors(colorInput) {
   const re = new RegExp(
-    /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#?([0-9]|[a-f]){6})/,
+    /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){6})/,
     "gi"
   );
 

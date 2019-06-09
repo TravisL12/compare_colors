@@ -3,11 +3,13 @@ import ColorGrid from "./ColorGrid";
 import "./application.scss";
 import { matchColors, createColor, format2hex } from "./color-utils";
 
-const test = `#353B4B
-ff001E
+const test = `
+#353B4B
+#ff001E
 rgb(0, 0, 200)
-#3A3A48 0fa912
-rgb( 200 , 150 , 2 ) rgb(1,2,3)
+#3A3A48 #0fa912
+rgb( 200 , 150 , 2 )
+rgb(1,2,3)
 #232836
 #454E5F
 #ffffff
