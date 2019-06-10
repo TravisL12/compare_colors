@@ -54,9 +54,8 @@ function ColorGrid({ colors, removeColor }) {
           />
         </div>
         <div className="compare-controls">
-          <p>Sort?</p>
           <button onClick={toggleSorting}>
-            {areColorsSorted ? "On" : "Off"}
+            Sorting {areColorsSorted ? "On" : "Off"}
           </button>
           <p>Sorting Method?</p>
           <div className="controls">

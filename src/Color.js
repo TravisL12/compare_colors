@@ -37,11 +37,11 @@ function Color({ color, showTitle, remove }) {
     <div className="color-container">
       {remove && (
         <div onClick={remove} data-color-idx={id} className="delete-btn">
-          x
+          <span>x</span>
         </div>
       )}
       <div className={`square`} style={squareStyle} />
-      {false && showTitle && (
+      {showTitle && (
         <div className="names">
           <p onClick={copyText}>#{hexColor}</p>
           <p onClick={copyText}>rgb({rgbColor.join(",")})</p>
