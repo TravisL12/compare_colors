@@ -31,13 +31,32 @@ p {
 }
 
 .color-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100px;
-  min-width: 100px;
-  margin: 5px 10px;
+  margin: 0.5px;
   box-sizing: border-box;
+
+  &:hover {
+    .delete-btn {
+      opacity: 1;
+    }
+  }
+
+  .delete-btn {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    opacity: 0;
+    background-color: rgba(200, 100, 100, 0.2);
+  }
 
   .square {
     display: block;
@@ -45,8 +64,6 @@ p {
     color: white;
     height: 40px;
     width: 40px;
-    border-radius: 3px;
-    box-shadow: 0 0 0 0.5px black;
   }
 
   .names {

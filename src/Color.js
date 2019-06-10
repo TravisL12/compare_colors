@@ -35,13 +35,13 @@ function Color({ color, showTitle, remove }) {
 
   return (
     <div className="color-container">
-      <div
-        className={`square`}
-        style={squareStyle}
-        data-color-idx={id}
-        onClick={remove}
-      />
-      {showTitle && (
+      {remove && (
+        <div onClick={remove} data-color-idx={id} className="delete-btn">
+          x
+        </div>
+      )}
+      <div className={`square`} style={squareStyle} />
+      {false && showTitle && (
         <div className="names">
           <p onClick={copyText}>#{hexColor}</p>
           <p onClick={copyText}>rgb({rgbColor.join(",")})</p>
