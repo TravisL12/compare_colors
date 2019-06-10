@@ -2,23 +2,7 @@ import React, { Component } from "react";
 import ColorGrid from "./ColorGrid";
 import "./application.scss";
 import { matchColors, createColor, format2hex } from "./color-utils";
-
-const test = `
-#353B4B
-#ff001E
-rgb(0, 0, 200)
-#3A3A48 #0fa912
-rgb( 200 , 150 , 2 )
-rgb(1,2,3)
-#232836
-#454E5F
-#ffffff
-#050505
-#e1e1e1
-#444444
-#999999
-hey I have a color #d928ae inside this sentence
- `;
+import { test } from "./testData";
 
 class App extends Component {
   state = {
