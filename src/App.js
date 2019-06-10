@@ -86,6 +86,7 @@ class App extends Component {
         <div className="col color-entry">
           <div className="title">
             <p>Enter/Paste colors (hex or rgb)</p>
+            <button onClick={this.testColors}>Test Data</button>
           </div>
           <div className="display text-area">
             <textarea
@@ -94,9 +95,12 @@ class App extends Component {
               onChange={this.updateTextArea}
               value={colorInput}
             />
-            <button onClick={this.parseColors}>Convert</button>
-            <button onClick={this.resetDisplay}>Reset</button>
-            <button onClick={this.testColors}>Test</button>
+            <button className="action-btn" onClick={this.parseColors}>
+              Parse Colors
+            </button>
+            <button className="action-btn" onClick={this.resetDisplay}>
+              Reset
+            </button>
           </div>
         </div>
         <div className="col color-types">
