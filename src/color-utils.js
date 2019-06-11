@@ -118,7 +118,7 @@ export function distanceChromatic(compare = [0, 0, 0], target = "000000") {
  * @param {float} percent opacity percentage
  */
 export function hexAlpha(color, percent = 0.5) {
-  const percentHex = parseInt(percent * 100, 16);
+  const percentHex = `0${Number(100 * percent).toString(16)}`.slice(-2);
   return `${format2hex(color)}${percentHex}`;
 }
 

@@ -8,7 +8,7 @@ function copyText(event) {
 
   // Briefly have the element that was clicked glow with its color
   // to confirm the string has been copied
-  target.style.backgroundColor = `#${hexAlpha(textContent)}`;
+  target.style.backgroundColor = `#${hexAlpha(textContent, 0.75)}`;
   target.textContent = "Copied!";
   setTimeout(() => {
     target.style.backgroundColor = null;
@@ -37,7 +37,7 @@ function Color({ color, showTitle, remove }) {
     <div className="color-container">
       {remove && (
         <div onClick={remove} data-color-idx={id} className="delete-btn">
-          <span>x</span>
+          x
         </div>
       )}
       <div className={`square`} style={squareStyle} />

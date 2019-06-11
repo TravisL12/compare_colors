@@ -43,7 +43,7 @@ p {
       opacity: 1;
     }
     .names {
-      opacity: 1;
+      display: block;
     }
   }
 
@@ -71,21 +71,21 @@ p {
 
   .names {
     position: absolute;
-    opacity: 0;
-    left: 100%;
+    display: none;
+    top: 98%;
     font-size: 12px;
     text-transform: uppercase;
     text-align: center;
     border-radius: 2px;
     z-index: 1;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 1);
 
     p {
       cursor: pointer;
       border-radius: 2px;
       padding: 1px 2px;
       // Transition delay is also affected by Color::CopyText setTimeout fn
-      transition: 0.5s linear background-color;
+      transition: 0.1s linear background-color;
     }
   }
 }
@@ -152,6 +152,7 @@ button + button {
     padding: 6px 10px;
     background: lightgray;
     color: whitesmoke;
+    width: 120px;
   }
 
   input[type="radio"]:checked + label {

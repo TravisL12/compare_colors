@@ -43,14 +43,19 @@ class App extends Component {
     });
 
     this.setState({
-      colorInput: "",
       colors: [...this.state.colors, ...newColors]
     });
   };
 
-  resetDisplay = () => {
+  resetInputDisplay = () => {
     this.setState({
-      colorInput: "",
+      colorInput: ""
+    });
+  };
+
+
+  resetColorDisplay = () => {
+    this.setState({
       colors: []
     });
   };
@@ -65,7 +70,7 @@ class App extends Component {
   };
 
   removeColor = event => {
-    const id = event.target.dataset.colorIdx - 1; // Change ID from 1-idx -> 0-idx
+    const id = event.currentTarget.dataset.colorIdx - 1; // Change ID from 1-idx -> 0-idx
     const colors = this.state.colors;
     colors.splice(id, 1);
 
@@ -98,8 +103,11 @@ class App extends Component {
             <button className="action-btn" onClick={this.parseColors}>
               Parse Colors
             </button>
-            <button className="action-btn" onClick={this.resetDisplay}>
-              Reset
+            <button className="action-btn" onClick={this.resetInputDisplay}>
+              Reset Text
+            </button>
+            <button className="action-btn" onClick={this.resetColorDisplay}>
+              Reset Colors
             </button>
           </div>
         </div>
