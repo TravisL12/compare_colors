@@ -20,7 +20,7 @@ p {
   .compare-container {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-right: 5px;
   }
 
   .color-grid {
@@ -31,13 +31,28 @@ p {
 }
 
 .color-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100px;
-  min-width: 100px;
-  margin: 5px 10px;
+  overflow: hidden;
+  margin: 2px;
   box-sizing: border-box;
+
+  .delete-btn {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 
   .square {
     display: block;
@@ -45,21 +60,45 @@ p {
     color: white;
     height: 40px;
     width: 40px;
-    border-radius: 3px;
-    box-shadow: 0 0 0 0.5px black;
   }
 
   .names {
     font-size: 12px;
     text-transform: uppercase;
     text-align: center;
+    border-radius: 2px;
+    z-index: 1;
 
     p {
       cursor: pointer;
       border-radius: 2px;
       padding: 1px 2px;
       // Transition delay is also affected by Color::CopyText setTimeout fn
-      transition: 0.5s linear background-color;
+      transition: 0.1s linear background-color;
+    }
+  }
+
+  &.hideInfo {
+    width: auto;
+    overflow: unset;
+
+    .names {
+      position: absolute;
+      display: none;
+      top: 98%;
+      background-color: rgba(255, 255, 255, 1);
+    }
+  }
+
+  &:hover {
+    .delete-btn {
+      opacity: 1;
+    }
+
+    &.hideInfo {
+      .names {
+        display: block;
+      }
     }
   }
 }
@@ -69,11 +108,14 @@ button {
   border: none;
   border-radius: 0;
   margin: 0;
-  font-size: 24px;
 }
 
 button + button {
   margin-left: 10px;
+}
+
+.action-btn {
+  font-size: 24px;
 }
 
 .col + .col {
@@ -119,9 +161,11 @@ button + button {
   }
 
   input[type="radio"] + label {
+    margin-top: 2px;
     padding: 6px 10px;
     background: lightgray;
     color: whitesmoke;
+    width: 120px;
   }
 
   input[type="radio"]:checked + label {
@@ -131,5 +175,6 @@ button + button {
 
   .controls {
     display: flex;
+    flex-direction: column;
   }
 }

@@ -5,6 +5,7 @@ import { createColor, distanceDelta, distanceChromatic } from "./color-utils";
 function ColorGrid({ colors, removeColor }) {
   const [compareColor, setCompareColor] = useState("000000");
   const [areColorsSorted, setAreColorsSorted] = useState(false);
+  const [showInfo, setShowInfo] = useState(true);
   const [sortMethod, setSortMethod] = useState("distanceChromatic");
 
   const updateCompareColor = ({ target: { value } }) => {
@@ -24,6 +25,10 @@ function ColorGrid({ colors, removeColor }) {
   // target value is passed as a string
   const toggleSorting = () => {
     setAreColorsSorted(!areColorsSorted);
+  };
+
+  const toggleInfo = () => {
+    setShowInfo(!showInfo);
   };
 
   // target value is passed as a string
@@ -54,9 +59,11 @@ function ColorGrid({ colors, removeColor }) {
           />
         </div>
         <div className="compare-controls">
-          <p>Sort?</p>
           <button onClick={toggleSorting}>
-            {areColorsSorted ? "On" : "Off"}
+            Sorting {areColorsSorted ? "On" : "Off"}
+          </button>
+          <button onClick={toggleInfo}>
+            {showInfo ? "Hide" : "Show"} info
           </button>
           <p>Sorting Method?</p>
           <div className="controls">
@@ -84,7 +91,14 @@ function ColorGrid({ colors, removeColor }) {
       </div>
       <div className="color-grid">
         {sortedColors.map((color, idx) => {
-          return <Color color={color} remove={removeColor} key={idx} />;
+          return (
+            <Color
+              color={color}
+              showInfo={showInfo}
+              remove={removeColor}
+              key={idx}
+            />
+          );
         })}
       </div>
     </div>

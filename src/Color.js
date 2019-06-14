@@ -8,7 +8,7 @@ function copyText(event) {
 
   // Briefly have the element that was clicked glow with its color
   // to confirm the string has been copied
-  target.style.backgroundColor = `#${hexAlpha(textContent)}`;
+  target.style.backgroundColor = `#${hexAlpha(textContent, 0.75)}`;
   target.textContent = "Copied!";
   setTimeout(() => {
     target.style.backgroundColor = null;
@@ -25,8 +25,8 @@ function copyText(event) {
   document.body.removeChild(inputEl);
 }
 
-function Color({ color, showTitle, remove }) {
-  const { hexColor, rgbColor, hslColor, id } = color;
+function Color({ color, showTitle, remove, showInfo }) {
+  const { hexColor, rgbColor, id } = color;
 
   const squareStyle = {
     backgroundColor: `#${hexColor}`,
@@ -34,18 +34,17 @@ function Color({ color, showTitle, remove }) {
   };
 
   return (
-    <div className="color-container">
-      <div
-        className={`square`}
-        style={squareStyle}
-        data-color-idx={id}
-        onClick={remove}
-      />
+    <div className={`color-container ${!showInfo && "hideInfo"}`}>
+      {remove && (
+        <div onClick={remove} data-color-idx={id} className="delete-btn">
+          x
+        </div>
+      )}
+      <div className={`square`} style={squareStyle} />
       {showTitle && (
         <div className="names">
           <p onClick={copyText}>#{hexColor}</p>
           <p onClick={copyText}>rgb({rgbColor.join(",")})</p>
-          <p onClick={copyText}>hsl({hslColor.join(",")})</p>
         </div>
       )}
     </div>

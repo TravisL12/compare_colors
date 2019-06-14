@@ -2,23 +2,7 @@ import React, { Component } from "react";
 import ColorGrid from "./ColorGrid";
 import "./application.scss";
 import { matchColors, createColor, format2hex } from "./color-utils";
-
-const test = `
-#353B4B
-#ff001E
-rgb(0, 0, 200)
-#3A3A48 #0fa912
-rgb( 200 , 150 , 2 )
-rgb(1,2,3)
-#232836
-#454E5F
-#ffffff
-#050505
-#e1e1e1
-#444444
-#999999
-hey I have a color #d928ae inside this sentence
- `;
+import { test } from "./testData";
 
 class App extends Component {
   state = {
@@ -59,14 +43,19 @@ class App extends Component {
     });
 
     this.setState({
-      colorInput: "",
       colors: [...this.state.colors, ...newColors]
     });
   };
 
-  resetDisplay = () => {
+  resetInputDisplay = () => {
     this.setState({
-      colorInput: "",
+      colorInput: ""
+    });
+  };
+
+
+  resetColorDisplay = () => {
+    this.setState({
       colors: []
     });
   };
@@ -81,7 +70,7 @@ class App extends Component {
   };
 
   removeColor = event => {
-    const id = event.target.dataset.colorIdx - 1; // Change ID from 1-idx -> 0-idx
+    const id = event.currentTarget.dataset.colorIdx - 1; // Change ID from 1-idx -> 0-idx
     const colors = this.state.colors;
     colors.splice(id, 1);
 
@@ -102,6 +91,7 @@ class App extends Component {
         <div className="col color-entry">
           <div className="title">
             <p>Enter/Paste colors (hex or rgb)</p>
+            <button onClick={this.testColors}>Test Data</button>
           </div>
           <div className="display text-area">
             <textarea
@@ -110,9 +100,15 @@ class App extends Component {
               onChange={this.updateTextArea}
               value={colorInput}
             />
-            <button onClick={this.parseColors}>Convert</button>
-            <button onClick={this.resetDisplay}>Reset</button>
-            <button onClick={this.testColors}>Test</button>
+            <button className="action-btn" onClick={this.parseColors}>
+              Parse Colors
+            </button>
+            <button className="action-btn" onClick={this.resetInputDisplay}>
+              Reset Text
+            </button>
+            <button className="action-btn" onClick={this.resetColorDisplay}>
+              Reset Colors
+            </button>
           </div>
         </div>
         <div className="col color-types">
