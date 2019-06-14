@@ -25,8 +25,8 @@ function copyText(event) {
   document.body.removeChild(inputEl);
 }
 
-function Color({ color, showTitle, remove }) {
-  const { hexColor, rgbColor, hslColor, id } = color;
+function Color({ color, showTitle, remove, showInfo }) {
+  const { hexColor, rgbColor, id } = color;
 
   const squareStyle = {
     backgroundColor: `#${hexColor}`,
@@ -34,7 +34,7 @@ function Color({ color, showTitle, remove }) {
   };
 
   return (
-    <div className="color-container">
+    <div className={`color-container ${!showInfo && "hideInfo"}`}>
       {remove && (
         <div onClick={remove} data-color-idx={id} className="delete-btn">
           x
@@ -45,7 +45,6 @@ function Color({ color, showTitle, remove }) {
         <div className="names">
           <p onClick={copyText}>#{hexColor}</p>
           <p onClick={copyText}>rgb({rgbColor.join(",")})</p>
-          <p onClick={copyText}>hsl({hslColor.join(",")})</p>
         </div>
       )}
     </div>
