@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ContentEditable from "react-contenteditable";
 import ColorGrid from "./ColorGrid";
 import "./application.scss";
 import { matchColors, createColor, format2hex } from "./color-utils";
@@ -53,7 +54,6 @@ class App extends Component {
     });
   };
 
-
   resetColorDisplay = () => {
     this.setState({
       colors: []
@@ -94,11 +94,10 @@ class App extends Component {
             <button onClick={this.testColors}>Test Data</button>
           </div>
           <div className="display text-area">
-            <textarea
+            <ContentEditable
               className="color-textarea"
-              rows="20"
               onChange={this.updateTextArea}
-              value={colorInput}
+              html={colorInput}
             />
             <button className="action-btn" onClick={this.parseColors}>
               Parse Colors

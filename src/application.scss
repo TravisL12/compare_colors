@@ -143,12 +143,15 @@ button + button {
 
 .color-textarea {
   width: 100%;
-  height: auto;
+  height: 200px;
+  font-size: 11px;
   max-height: 200px;
   box-sizing: border-box;
   padding: 4px 6px;
-  border: none;
-  resize: none;
+  background-color: white;
+  margin: 5px 0;
+  overflow-y: scroll;
+  white-space: pre-wrap;
 }
 
 .color-results {
