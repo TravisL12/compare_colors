@@ -1,3 +1,13 @@
+%label {
+  background: lightgray;
+  color: whitesmoke;
+}
+
+%checked {
+  background: limegreen;
+  color: green;
+}
+
 .compare-grid-container {
   display: flex;
 
@@ -19,17 +29,20 @@
     display: none;
   }
 
-  input[type="radio"] + label {
-    margin-top: 2px;
-    padding: 6px 10px;
-    background: lightgray;
-    color: whitesmoke;
-    width: 120px;
+  .off {
+    @extend %label;
   }
 
+  input[type="radio"] + label {
+    @extend %label;
+    margin-top: 2px;
+    padding: 6px 10px;
+    width: 100px;
+  }
+
+  .on,
   input[type="radio"]:checked + label {
-    background: limegreen;
-    color: green;
+    @extend %checked;
   }
 
   .controls {

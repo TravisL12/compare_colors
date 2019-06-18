@@ -25,10 +25,15 @@ function GridControls({
       </div>
 
       <div className="compare-controls">
-        <button onClick={toggleSorting}>
-          Sorting {areColorsSorted ? "On" : "Off"}
+        <button
+          className={areColorsSorted ? "on" : "off"}
+          onClick={toggleSorting}
+        >
+          Sort {areColorsSorted ? "on" : "off"}
         </button>
-        <button onClick={toggleInfo}>{showInfo ? "Hide" : "Show"} info</button>
+        <button className={showInfo ? "on" : "off"} onClick={toggleInfo}>
+          Info {showInfo ? "on" : "off"}
+        </button>
 
         <p>Sorting Method?</p>
 
@@ -40,6 +45,7 @@ function GridControls({
             checked={sortMethod === "distanceChromatic"}
             onChange={toggleSortMethod}
             value={"distanceChromatic"}
+            disabled={!areColorsSorted}
           />
           <label htmlFor="compare-on">Chromatic</label>
 
@@ -50,6 +56,7 @@ function GridControls({
             checked={sortMethod === "distanceDelta"}
             onChange={toggleSortMethod}
             value={"distanceDelta"}
+            disabled={!areColorsSorted}
           />
           <label htmlFor="compare-off">DeltaE</label>
         </div>
