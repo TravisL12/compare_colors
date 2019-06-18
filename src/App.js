@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ContentEditable from "react-contenteditable";
 import ColorGrid from "./ColorGrid";
 import "./application.scss";
-import { matchColors, createColor, format2hex } from "./color-utils";
+import { matchColors, tagColors, createColor, format2hex } from "./color-utils";
 import { test } from "./testData";
 
 class App extends Component {
@@ -21,6 +21,7 @@ class App extends Component {
     }
 
     const matchedColors = matchColors(this.state.colorInput);
+    const colorInput = tagColors(this.state.colorInput);
 
     if (!matchedColors) {
       return;
@@ -44,7 +45,8 @@ class App extends Component {
     });
 
     this.setState({
-      colors: [...this.state.colors, ...newColors]
+      colors: [...this.state.colors, ...newColors],
+      colorInput
     });
   };
 

@@ -1,5 +1,10 @@
 import { rgb2lab, deltaE } from "./deltaDistance";
 
+const matchRegex = new RegExp(
+  /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){6})/,
+  "gi"
+);
+
 /**
  *
  * @param {string} color
@@ -128,12 +133,14 @@ export function hexAlpha(color, percent = 0.5) {
  * @return {array} array of matched values
  */
 export function matchColors(colorInput) {
-  const re = new RegExp(
-    /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){6})/,
-    "gi"
-  );
+  return colorInput.match(matchRegex);
+}
 
-  return colorInput.match(re);
+export function tagColors(colorInput) {
+  return colorInput.replace(
+    matchRegex,
+    '<span class="tagged-color" style="background-color: $1;">$1</span>'
+  );
 }
 
 export function format2hex(color) {
