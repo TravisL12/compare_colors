@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Color from "./Color";
+import GridControls from "./GridControls";
 import { createColor, distanceDelta, distanceChromatic } from "./color-utils";
 
 function ColorGrid({ colors, removeColor }) {
@@ -7,6 +8,11 @@ function ColorGrid({ colors, removeColor }) {
   const [areColorsSorted, setAreColorsSorted] = useState(false);
   const [showInfo, setShowInfo] = useState(true);
   const [sortMethod, setSortMethod] = useState("distanceChromatic");
+
+  const sortTypes = {
+    distanceDelta,
+    distanceChromatic
+  };
 
   const updateCompareColor = ({ target: { value } }) => {
     const { hexColor } = createColor(value);
@@ -17,12 +23,6 @@ function ColorGrid({ colors, removeColor }) {
     }
   };
 
-  const sortTypes = {
-    distanceDelta,
-    distanceChromatic
-  };
-
-  // target value is passed as a string
   const toggleSorting = () => {
     setAreColorsSorted(!areColorsSorted);
   };
@@ -31,7 +31,6 @@ function ColorGrid({ colors, removeColor }) {
     setShowInfo(!showInfo);
   };
 
-  // target value is passed as a string
   const toggleSortMethod = ({ currentTarget: { value } }) => {
     setSortMethod(value);
   };
@@ -53,47 +52,16 @@ function ColorGrid({ colors, removeColor }) {
       </div>
       <div className="display results-display">
         <div className="compare-grid-container">
-          <div className="compare-container">
-            <div className="compare-input">
-              <Color showTitle={false} color={createColor(compareColor)} />
-              <input
-                type="text"
-                id="compare-color"
-                onChange={updateCompareColor}
-                placeholder="#000000 (Default)"
-              />
-            </div>
-            <div className="compare-controls">
-              <button onClick={toggleSorting}>
-                Sorting {areColorsSorted ? "On" : "Off"}
-              </button>
-              <button onClick={toggleInfo}>
-                {showInfo ? "Hide" : "Show"} info
-              </button>
-              <p>Sorting Method?</p>
-              <div className="controls">
-                <input
-                  type="radio"
-                  id="compare-on"
-                  name="sortOption"
-                  checked={sortMethod === "distanceChromatic"}
-                  onChange={toggleSortMethod}
-                  value={"distanceChromatic"}
-                />
-                <label htmlFor="compare-on">Chromatic</label>
-
-                <input
-                  type="radio"
-                  id="compare-off"
-                  name="sortOption"
-                  checked={sortMethod === "distanceDelta"}
-                  onChange={toggleSortMethod}
-                  value={"distanceDelta"}
-                />
-                <label htmlFor="compare-off">DeltaE</label>
-              </div>
-            </div>
-          </div>
+          <GridControls
+            toggleSorting={toggleSorting}
+            toggleInfo={toggleInfo}
+            toggleSortMethod={toggleSortMethod}
+            updateCompareColor={updateCompareColor}
+            compareColor={compareColor}
+            areColorsSorted={areColorsSorted}
+            showInfo={showInfo}
+            sortMethod={sortMethod}
+          />
           <div className="color-grid">
             {sortedColors.map((color, idx) => {
               return (
