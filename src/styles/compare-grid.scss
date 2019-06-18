@@ -1,0 +1,39 @@
+.compare-grid-container {
+  display: flex;
+
+  .compare-container {
+    display: flex;
+    flex-direction: column;
+    margin-right: 5px;
+  }
+
+  .color-grid {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+.compare-controls {
+  input[type="radio"] {
+    display: none;
+  }
+
+  input[type="radio"] + label {
+    margin-top: 2px;
+    padding: 6px 10px;
+    background: lightgray;
+    color: whitesmoke;
+    width: 120px;
+  }
+
+  input[type="radio"]:checked + label {
+    background: limegreen;
+    color: green;
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+  }
+}

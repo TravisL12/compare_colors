@@ -47,59 +47,66 @@ function ColorGrid({ colors, removeColor }) {
     : colors;
 
   return (
-    <div className="compare-grid-container">
-      <div className="compare-container">
-        <div className="compare-input">
-          <Color showTitle={false} color={createColor(compareColor)} />
-          <input
-            type="text"
-            id="compare-color"
-            onChange={updateCompareColor}
-            placeholder="#000000 (Default)"
-          />
-        </div>
-        <div className="compare-controls">
-          <button onClick={toggleSorting}>
-            Sorting {areColorsSorted ? "On" : "Off"}
-          </button>
-          <button onClick={toggleInfo}>
-            {showInfo ? "Hide" : "Show"} info
-          </button>
-          <p>Sorting Method?</p>
-          <div className="controls">
-            <input
-              type="radio"
-              id="compare-on"
-              name="sortOption"
-              checked={sortMethod === "distanceChromatic"}
-              onChange={toggleSortMethod}
-              value={"distanceChromatic"}
-            />
-            <label htmlFor="compare-on">Chromatic</label>
+    <div className="col color-types">
+      <div className="title">
+        <p>Results ({colors.length})</p>
+      </div>
+      <div className="display results-display">
+        <div className="compare-grid-container">
+          <div className="compare-container">
+            <div className="compare-input">
+              <Color showTitle={false} color={createColor(compareColor)} />
+              <input
+                type="text"
+                id="compare-color"
+                onChange={updateCompareColor}
+                placeholder="#000000 (Default)"
+              />
+            </div>
+            <div className="compare-controls">
+              <button onClick={toggleSorting}>
+                Sorting {areColorsSorted ? "On" : "Off"}
+              </button>
+              <button onClick={toggleInfo}>
+                {showInfo ? "Hide" : "Show"} info
+              </button>
+              <p>Sorting Method?</p>
+              <div className="controls">
+                <input
+                  type="radio"
+                  id="compare-on"
+                  name="sortOption"
+                  checked={sortMethod === "distanceChromatic"}
+                  onChange={toggleSortMethod}
+                  value={"distanceChromatic"}
+                />
+                <label htmlFor="compare-on">Chromatic</label>
 
-            <input
-              type="radio"
-              id="compare-off"
-              name="sortOption"
-              checked={sortMethod === "distanceDelta"}
-              onChange={toggleSortMethod}
-              value={"distanceDelta"}
-            />
-            <label htmlFor="compare-off">DeltaE</label>
+                <input
+                  type="radio"
+                  id="compare-off"
+                  name="sortOption"
+                  checked={sortMethod === "distanceDelta"}
+                  onChange={toggleSortMethod}
+                  value={"distanceDelta"}
+                />
+                <label htmlFor="compare-off">DeltaE</label>
+              </div>
+            </div>
+          </div>
+          <div className="color-grid">
+            {sortedColors.map((color, idx) => {
+              return (
+                <Color
+                  color={color}
+                  showInfo={showInfo}
+                  remove={removeColor}
+                  key={idx}
+                />
+              );
+            })}
           </div>
         </div>
-      </div>
-      <div className="color-grid">
-        {sortedColors.map((color, idx) => {
-          return (
-            <Color
-              color={color}
-              showInfo={showInfo}
-              remove={removeColor}
-              key={idx}
-            />
-          );
-        })}
       </div>
     </div>
   );

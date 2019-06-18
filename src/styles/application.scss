@@ -1,0 +1,73 @@
+@import 'compare-grid';
+@import 'color';
+
+body {
+  margin: 0;
+  background: #e6e6e6;
+}
+
+p {
+  margin: 0;
+}
+
+.tagged-color {
+  color: white;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+}
+
+button + button {
+  margin-left: 10px;
+}
+
+.action-btn {
+  font-size: 24px;
+}
+
+.col + .col {
+  margin-top: 20px;
+}
+
+.col {
+  max-width: 1400px;
+  width: 100%;
+  background: whitesmoke;
+  padding: 10px;
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+  }
+
+  .display {
+    padding: 5px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.color-textarea {
+  width: 100%;
+  height: 200px;
+  font-size: 11px;
+  max-height: 200px;
+  box-sizing: border-box;
+  padding: 4px 6px;
+  background-color: white;
+  margin: 5px 0;
+  overflow-y: scroll;
+  white-space: pre-wrap;
+}

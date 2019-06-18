@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ContentEditable from "react-contenteditable";
 import ColorGrid from "./ColorGrid";
-import "./application.scss";
+import "./styles/application.scss";
 import { matchColors, tagColors, createColor, format2hex } from "./color-utils";
 import { test } from "./testData";
 
@@ -112,14 +112,7 @@ class App extends Component {
             </button>
           </div>
         </div>
-        <div className="col color-types">
-          <div className="title">
-            <p>Results ({colors.length})</p>
-          </div>
-          <div className="display results-display">
-            <ColorGrid removeColor={this.removeColor} colors={colors} />
-          </div>
-        </div>
+        <ColorGrid removeColor={this.removeColor} colors={colors} />
       </div>
     );
   }
