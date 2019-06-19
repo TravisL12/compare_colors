@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ContentEditable from "react-contenteditable";
 import ColorGrid from "./ColorGrid";
 import "./styles/application.scss";
-import { matchColors, tagColors, createColor, format2hex } from "./color-utils";
+import { matchColors, createColor, format2hex } from "./color-utils";
 import { test } from "./testData";
 
 class App extends Component {
@@ -21,7 +21,6 @@ class App extends Component {
     }
 
     const matchedColors = matchColors(this.state.colorInput);
-    const colorInput = tagColors(this.state.colorInput);
 
     if (!matchedColors) {
       return;
@@ -38,6 +37,14 @@ class App extends Component {
 
       return results;
     }, []);
+
+    const colorInput = matchedColors.reduce((str, color, idx) => {
+      return str.replace(
+        color,
+        `<span class="tagged-color" id=${idx +
+          1} style="background-color: $&">$&</span>`
+      );
+    }, this.state.colorInput);
 
     const newColors = filteredColors.map((color, idx) => {
       const id = this.state.colors.length + idx + 1;

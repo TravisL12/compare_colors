@@ -136,18 +136,6 @@ export function matchColors(colorInput) {
   return colorInput.match(matchRegex);
 }
 
-/**
- * tagColors - Wrap rgb(X, X, X) or #123456 (hex) values in <span> tag
- * @param {string} colorInput
- * @return {string} HTML string with colors wrapped in <span> tag
- */
-export function tagColors(colorInput) {
-  return colorInput.replace(
-    matchRegex,
-    '<span class="tagged-color" style="background-color: $1;">$1</span>'
-  );
-}
-
 export function format2hex(color) {
   const hex = isColorRgb(color) ? dec2hex(color) : color;
   return hex.replace(/['#]/gi, "").toUpperCase();
