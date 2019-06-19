@@ -26,6 +26,14 @@ class App extends Component {
       return;
     }
 
+    const colorInput = matchedColors.reduce((str, color, idx) => {
+      return str.replace(
+        color,
+        `<span class="tagged-color" id=${idx +
+          1} style="background-color: $&">$&</span>`
+      );
+    }, this.state.colorInput);
+
     const existingHex = this.state.colors.map(({ hexColor }) => hexColor);
     const filteredColors = matchedColors.reduce((results, color) => {
       const hexColor = format2hex(color);
@@ -37,14 +45,6 @@ class App extends Component {
 
       return results;
     }, []);
-
-    const colorInput = matchedColors.reduce((str, color, idx) => {
-      return str.replace(
-        color,
-        `<span class="tagged-color" id=${idx +
-          1} style="background-color: $&">$&</span>`
-      );
-    }, this.state.colorInput);
 
     const newColors = filteredColors.map((color, idx) => {
       const id = this.state.colors.length + idx + 1;
