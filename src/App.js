@@ -2,7 +2,13 @@ import React, { Component } from "react";
 import ContentEditable from "react-contenteditable";
 import ColorGrid from "./ColorGrid";
 import "./styles/application.scss";
-import { matchColors, createColor, format2hex } from "./color-utils";
+import {
+  distanceDelta,
+  matchColors,
+  createColor,
+  hex2dec,
+  format2hex
+} from "./color-utils";
 import { test } from "./testData";
 
 class App extends Component {
@@ -27,10 +33,14 @@ class App extends Component {
     }
 
     const colorInput = matchedColors.reduce((str, color, idx) => {
+      const hexColor = hex2dec(format2hex(color));
+      const dist = distanceDelta(hexColor);
+      const textColor = dist > 70 ? "black" : "white";
+
       return str.replace(
         color,
         `<span class="tagged-color" id=${idx +
-          1} style="background-color: $&">$&</span>`
+          1} style="color: ${textColor}; background-color: $&">$&</span>`
       );
     }, this.state.colorInput);
 
@@ -102,21 +112,21 @@ class App extends Component {
             <p>Enter/Paste colors (hex or rgb)</p>
             <button onClick={this.testColors}>Test Data</button>
           </div>
+          <button className="action-btn" onClick={this.parseColors}>
+            Parse Colors
+          </button>
+          <button className="action-btn" onClick={this.resetInputDisplay}>
+            Reset Text
+          </button>
+          <button className="action-btn" onClick={this.resetColorDisplay}>
+            Reset Colors
+          </button>
           <div className="display text-area">
             <ContentEditable
               className="color-textarea"
               onChange={this.updateTextArea}
               html={colorInput}
             />
-            <button className="action-btn" onClick={this.parseColors}>
-              Parse Colors
-            </button>
-            <button className="action-btn" onClick={this.resetInputDisplay}>
-              Reset Text
-            </button>
-            <button className="action-btn" onClick={this.resetColorDisplay}>
-              Reset Colors
-            </button>
           </div>
         </div>
         <ColorGrid removeColor={this.removeColor} colors={colors} />

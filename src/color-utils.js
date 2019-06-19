@@ -51,7 +51,7 @@ function dec2hex(rgbColor) {
  *
  * @param {string} hex 6 character hex string w/o # ex: 'FF09A4'
  */
-function hex2dec(hex) {
+export function hex2dec(hex) {
   const split = [hex.slice(0, 2), hex.slice(2, 4), hex.slice(4, 6)];
 
   return split.map(c => {

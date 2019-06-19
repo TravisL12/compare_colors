@@ -1,5 +1,5 @@
-@import 'compare-grid';
-@import 'color';
+@import "compare-grid";
+@import "color";
 
 body {
   margin: 0;
@@ -10,14 +10,8 @@ p {
   margin: 0;
 }
 
-.tagged-color {
-  color: white;
-}
-
 .app-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 20px;
 }
 
@@ -37,10 +31,12 @@ button + button {
 }
 
 .col + .col {
-  margin-top: 20px;
+  margin-left: 5px;
+  margin-right: 0;
 }
 
 .col {
+  margin-right: 5px;
   max-width: 1400px;
   width: 100%;
   background: whitesmoke;
@@ -59,11 +55,13 @@ button + button {
   }
 }
 
+.color-entry {
+  max-width: 700px;
+}
+
 .color-textarea {
-  width: 100%;
-  height: 200px;
+  min-height: 200px;
   font-size: 11px;
-  max-height: 200px;
   box-sizing: border-box;
   padding: 4px 6px;
   background-color: white;
