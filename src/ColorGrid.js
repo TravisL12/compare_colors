@@ -16,11 +16,7 @@ function ColorGrid({ colors, removeColor }) {
 
   const updateCompareColor = ({ target: { value } }) => {
     const { hexColor } = createColor(value);
-    if (hexColor.length === 6) {
-      setCompareColor(hexColor);
-    } else if (value.length === 0) {
-      setCompareColor("000000");
-    }
+    setCompareColor(hexColor);
   };
 
   const toggleSorting = () => {

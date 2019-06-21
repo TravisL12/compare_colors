@@ -19,9 +19,16 @@ function GridControls({
 
         <Color showTitle={false} color={createColor(compareColor)} />
         <input
-          type="text"
-          id="compare-color"
+          type="color"
+          id="compare-color-type"
           onChange={updateCompareColor}
+          value={`#${compareColor}`}
+        />
+        <input
+          type="text"
+          id="compare-color-text"
+          onChange={updateCompareColor}
+          value={compareColor}
           placeholder="#000000 (Default)"
         />
       </div>

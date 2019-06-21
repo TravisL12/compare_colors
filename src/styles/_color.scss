@@ -19,7 +19,7 @@
     width: 15px;
     height: 15px;
     opacity: 0;
-    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
   }
 
   .square {
@@ -30,7 +30,7 @@
     width: 40px;
     border-radius: 2px;
     box-shadow: 0 0px 1px 0.5px white;
-    margin-top: 5px;
+    margin: 1px;
 
     &:hover {
       &:after {
