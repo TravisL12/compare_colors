@@ -1,6 +1,7 @@
 $black: #444444;
 $gray: darkgray;
 $white: #ffffff;
+$app-padding: 20px;
 
 @mixin flex($major: center, $minor: center) {
   display: flex;

@@ -13,7 +13,7 @@ p {
 
 .app-container {
   @include flexTop;
-  padding: 20px;
+  padding: $app-padding;
 }
 
 .action-btn + .action-btn {
@@ -34,9 +34,12 @@ p {
 }
 
 .col {
+  display: flex;
+  flex-direction: column;
   margin-right: 5px;
   max-width: 1400px;
   width: 100%;
+  height: calc(100vh - 60px);
   background: $gray;
   padding: 10px;
 
@@ -48,6 +51,8 @@ p {
   .display {
     width: 100%;
     box-sizing: border-box;
+    flex: 1;
+    overflow: scroll;
   }
 }
 
@@ -60,7 +65,7 @@ p {
 }
 
 .color-textarea {
-  min-height: 200px;
+  height: 100%;
   font-size: 11px;
   box-sizing: border-box;
   padding: 4px 6px;

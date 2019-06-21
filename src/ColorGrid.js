@@ -42,32 +42,28 @@ function ColorGrid({ colors, removeColor }) {
     : colors;
 
   return (
-    <div className="col color-types">
-      <div className="display results-display">
-        <div className="compare-grid-container">
-          <GridControls
-            toggleSorting={toggleSorting}
-            toggleInfo={toggleInfo}
-            toggleSortMethod={toggleSortMethod}
-            updateCompareColor={updateCompareColor}
-            compareColor={compareColor}
-            areColorsSorted={areColorsSorted}
-            showInfo={showInfo}
-            sortMethod={sortMethod}
-          />
-          <div className="color-grid">
-            {sortedColors.map((color, idx) => {
-              return (
-                <Color
-                  color={color}
-                  showInfo={showInfo}
-                  remove={removeColor}
-                  key={idx}
-                />
-              );
-            })}
-          </div>
-        </div>
+    <div className="col color-grid-container">
+      <GridControls
+        toggleSorting={toggleSorting}
+        toggleInfo={toggleInfo}
+        toggleSortMethod={toggleSortMethod}
+        updateCompareColor={updateCompareColor}
+        compareColor={compareColor}
+        areColorsSorted={areColorsSorted}
+        showInfo={showInfo}
+        sortMethod={sortMethod}
+      />
+      <div className="display color-grid">
+        {sortedColors.map((color, idx) => {
+          return (
+            <Color
+              color={color}
+              showInfo={showInfo}
+              remove={removeColor}
+              key={idx}
+            />
+          );
+        })}
       </div>
     </div>
   );

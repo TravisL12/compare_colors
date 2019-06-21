@@ -26,13 +26,11 @@ function ColorInput({
           Reset Colors
         </button>
       </div>
-      <div className="display text-area">
-        <ContentEditable
-          className="color-textarea"
-          onChange={updateTextArea}
-          html={colorInput}
-        />
-      </div>
+      <ContentEditable
+        className="display color-textarea"
+        onChange={updateTextArea}
+        html={colorInput}
+      />
     </div>
   );
 }
