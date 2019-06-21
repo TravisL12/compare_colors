@@ -1,14 +1,16 @@
 import React from "react";
 import { shape, array, string, number, bool, func } from "prop-types";
+import ColorModel from "./models/color";
 import { hexAlpha } from "./color-utils";
 
 function copyText(event) {
   const { target } = event;
   const { textContent } = target;
+  const color = new ColorModel(textContent);
 
   // Briefly have the element that was clicked glow with its color
   // to confirm the string has been copied
-  target.style.backgroundColor = `#${hexAlpha(textContent, 0.75)}`;
+  target.style.backgroundColor = `#${hexAlpha(color, 0.75)}`;
   setTimeout(() => {
     target.style.backgroundColor = null;
   }, 250);

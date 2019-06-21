@@ -64,7 +64,7 @@ export function hex2dec(hex) {
  */
 export function hexAlpha(color, percent = 0.5) {
   const percentHex = `0${Number(100 * percent).toString(16)}`.slice(-2);
-  return `${format2hex(color)}${percentHex}`;
+  return `${color.hexColor}${percentHex}`;
 }
 
 /**

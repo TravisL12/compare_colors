@@ -5,7 +5,7 @@ import GridControls from "./GridControls";
 import { distanceDelta, distanceChromatic } from "./distance-utils";
 
 function ColorGrid({ colors, removeColor }) {
-  const [compareColor, setCompareColor] = useState("000000");
+  const [compareColor, setCompareColor] = useState(new ColorModel("000000"));
   const [areColorsSorted, setAreColorsSorted] = useState(false);
   const [showInfo, setShowInfo] = useState(true);
   const [sortMethod, setSortMethod] = useState("distanceChromatic");
@@ -16,8 +16,7 @@ function ColorGrid({ colors, removeColor }) {
   };
 
   const updateCompareColor = ({ target: { value } }) => {
-    const { hexColor } = new ColorModel(value);
-    setCompareColor(hexColor);
+    setCompareColor(new ColorModel(value));
   };
 
   const toggleSorting = () => {
@@ -37,8 +36,8 @@ function ColorGrid({ colors, removeColor }) {
         .slice()
         .sort(
           (a, b) =>
-            sortTypes[sortMethod](a.rgbColor, compareColor) -
-            sortTypes[sortMethod](b.rgbColor, compareColor)
+            sortTypes[sortMethod](a, compareColor) -
+            sortTypes[sortMethod](b, compareColor)
         )
     : colors;
 

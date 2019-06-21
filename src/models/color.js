@@ -1,7 +1,7 @@
 import { isColorRgb, dec2array, format2hex, hex2dec } from "../color-utils";
 
 export default class ColorModel {
-  constructor(color, id) {
+  constructor(color = "000000", id) {
     this.entry = color;
     if (id) {
       this.id = id;
@@ -9,44 +9,21 @@ export default class ColorModel {
 
     if (isColorRgb(this.entry)) {
       [this.red, this.blue, this.green] = dec2array(color);
+      this.hexColor = format2hex(this.entry);
     } else {
-      this.hex = format2hex(this.entry);
-      [this.red, this.blue, this.green] = hex2dec(this.hex);
+      this.hexColor = format2hex(this.entry);
+      [this.red, this.blue, this.green] = hex2dec(this.hexColor);
     }
 
-    this.createHsl();
-  }
-
-  get hexColor() {
-    return this.hex;
-  }
-
-  get rgbColor() {
-    return [this.red, this.blue, this.green];
-  }
-
-  get hslColor() {
-    return [this.hue, this.saturation, this.lightness];
-  }
-
-  get hexString() {
-    return `#${this.hex}`;
-  }
-
-  get rgbString() {
-    return `rgb(${[this.red, this.blue, this.green].join(",")})`;
-  }
-
-  get hslString() {
-    return `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
-  }
-
-  get toString() {
-    return {
-      hex: this.hexString,
-      rgb: this.rgbString,
-      hsl: this.hslString
+    this.toString = {
+      hex: `#${this.hexColor}`,
+      rgb: `rgb(${[this.red, this.blue, this.green].join(",")})`,
+      hsl: `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`
     };
+
+    this.rgbColor = [this.red, this.blue, this.green];
+    this.hslColor = [this.hue, this.saturation, this.lightness];
+    this.createHsl();
   }
 
   // https://codepen.io/pankajparashar/pen/oFzIg

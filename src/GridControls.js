@@ -1,6 +1,5 @@
 import React from "react";
 import Color from "./Color";
-import ColorModel from "./models/color";
 
 function GridControls({
   areColorsSorted,
@@ -17,20 +16,20 @@ function GridControls({
       <div className="options compare-color-options">
         <p>Comparison</p>
 
-        <Color showTitle={false} color={new ColorModel(compareColor)} />
+        <Color showTitle={false} color={compareColor} />
 
         <div className="color-inputs">
           <input
             type="color"
             id="compare-color-type"
             onChange={updateCompareColor}
-            value={`#${compareColor}`}
+            value={compareColor.toString.hex}
           />
           <input
             type="text"
             id="compare-color-text"
             onChange={updateCompareColor}
-            value={compareColor}
+            value={compareColor.toString.hex}
             placeholder="#000000 (Default)"
           />
         </div>

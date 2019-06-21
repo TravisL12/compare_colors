@@ -3,7 +3,7 @@ import ColorGrid from "./ColorGrid";
 import ColorInput from "./ColorInput";
 import "./styles/application.scss";
 import ColorModel from "./models/color";
-import { matchColors, hex2dec, format2hex } from "./color-utils";
+import { matchColors } from "./color-utils";
 import { distanceDelta } from "./distance-utils";
 import { test } from "./testData";
 
@@ -29,8 +29,7 @@ class App extends Component {
     }
 
     const colorInput = matchedColors.reduce((str, color, idx) => {
-      const hexColor = hex2dec(format2hex(color));
-      const dist = distanceDelta(hexColor);
+      const dist = distanceDelta(new ColorModel(color));
       const textColor = dist > 70 ? "black" : "white";
 
       return str.replace(
@@ -42,7 +41,7 @@ class App extends Component {
 
     const existingHex = this.state.colors.map(({ hexColor }) => hexColor);
     const filteredColors = matchedColors.reduce((results, color) => {
-      const hexColor = format2hex(color);
+      const { hexColor } = new ColorModel(color);
 
       // No duplicates!
       if (!existingHex.includes(hexColor) && !results.includes(hexColor)) {
