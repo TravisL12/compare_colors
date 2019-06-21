@@ -3,7 +3,7 @@
 
 body {
   margin: 0;
-  background: #e6e6e6;
+  background: black;
 }
 
 p {
@@ -36,7 +36,7 @@ p {
   margin-right: 5px;
   max-width: 1400px;
   width: 100%;
-  background: whitesmoke;
+  background: darkgray;
   padding: 10px;
 
   .title {
@@ -46,7 +46,6 @@ p {
   }
 
   .display {
-    padding: 5px;
     width: 100%;
     box-sizing: border-box;
   }
@@ -54,6 +53,10 @@ p {
 
 .color-entry {
   max-width: 700px;
+
+  .actions {
+    min-height: 90px;
+  }
 }
 
 .color-textarea {

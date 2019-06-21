@@ -25,10 +25,11 @@ function copyText(event) {
 
 function Color({ color, showTitle, remove, showInfo }) {
   const { hexColor, rgbColor, id } = color;
+  const hex = `#${hexColor}`;
 
   const squareStyle = {
-    backgroundColor: `#${hexColor}`,
-    color: `#${hexColor}`
+    color: `#${hexColor}`,
+    background: `linear-gradient(-45deg,${hex} 45%, white 50%, ${hex} 60%)`
   };
 
   return (

@@ -19,12 +19,18 @@
 
   .options-container {
     display: flex;
+    min-height: 90px;
   }
 
   .color-grid {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-top: 5px;
+    background: black;
+    min-height: 200px;
   }
 }
 
