@@ -1,9 +1,10 @@
+@import "variables";
 @import "compare-grid";
 @import "color";
 
 body {
   margin: 0;
-  background: black;
+  background: $black;
 }
 
 p {
@@ -11,7 +12,7 @@ p {
 }
 
 .app-container {
-  display: flex;
+  @include flexTop;
   padding: 20px;
 }
 
@@ -36,12 +37,11 @@ p {
   margin-right: 5px;
   max-width: 1400px;
   width: 100%;
-  background: darkgray;
+  background: $gray;
   padding: 10px;
 
   .title {
-    display: flex;
-    justify-content: space-between;
+    @include flex(space-between);
     padding-bottom: 5px;
   }
 
@@ -64,7 +64,7 @@ p {
   font-size: 11px;
   box-sizing: border-box;
   padding: 4px 6px;
-  background-color: white;
+  background-color: $white;
   margin: 5px 0;
   overflow-y: scroll;
   white-space: pre-wrap;

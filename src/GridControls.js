@@ -14,23 +14,26 @@ function GridControls({
 }) {
   return (
     <div className="options-container">
-      <div className="options compare-color-option">
+      <div className="options compare-color-options">
         <p>Comparison</p>
 
         <Color showTitle={false} color={createColor(compareColor)} />
-        <input
-          type="color"
-          id="compare-color-type"
-          onChange={updateCompareColor}
-          value={`#${compareColor}`}
-        />
-        <input
-          type="text"
-          id="compare-color-text"
-          onChange={updateCompareColor}
-          value={compareColor}
-          placeholder="#000000 (Default)"
-        />
+
+        <div className="color-inputs">
+          <input
+            type="color"
+            id="compare-color-type"
+            onChange={updateCompareColor}
+            value={`#${compareColor}`}
+          />
+          <input
+            type="text"
+            id="compare-color-text"
+            onChange={updateCompareColor}
+            value={compareColor}
+            placeholder="#000000 (Default)"
+          />
+        </div>
       </div>
 
       <div className="options sort-info-options">

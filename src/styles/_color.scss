@@ -1,35 +1,32 @@
 .color-container {
+  @include flex();
   position: relative;
-  display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100px;
   overflow: hidden;
   margin: 2px;
   box-sizing: border-box;
 
   .delete-btn {
+    @include flex();
     position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
     top: 0;
     right: 0;
     width: 15px;
     height: 15px;
     opacity: 0;
-    color: white;
+    color: $white;
   }
 
   .square {
     display: block;
     font-family: "Courier New", Courier, monospace;
-    color: white;
+    color: $white;
     height: 40px;
     width: 40px;
     border-radius: 2px;
-    box-shadow: 0 0px 1px 0.5px white;
+    box-shadow: 0 0px 1px 0.5px $white;
     margin: 1px;
 
     &:hover {
@@ -64,7 +61,7 @@
       border-radius: 2px;
       padding: 1px 2px;
       font-size: 11px;
-      color: white;
+      color: $white;
       // Transition delay is also affected by Color::CopyText setTimeout fn
       transition: 0.1s linear background-color;
     }
@@ -92,7 +89,7 @@
         display: block;
 
         p {
-          color: black;
+          color: $black;
         }
       }
     }

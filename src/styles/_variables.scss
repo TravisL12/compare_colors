@@ -1,0 +1,13 @@
+$black: #444444;
+$gray: darkgray;
+$white: #ffffff;
+
+@mixin flex($major: center, $minor: center) {
+  display: flex;
+  justify-content: $major;
+  align-items: $minor;
+}
+
+@mixin flexTop {
+  @include flex(flex-start, flex-start);
+}
