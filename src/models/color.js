@@ -1,6 +1,6 @@
 import { isColorRgb, dec2array, format2hex, hex2dec } from "../color-utils";
 
-export default class Color {
+export default class ColorModel {
   constructor(color, id) {
     this.entry = color;
     if (id) {
@@ -21,24 +21,32 @@ export default class Color {
     return this.hex;
   }
 
-  get hexString() {
-    return `#${this.hex}`;
-  }
-
   get rgbColor() {
     return [this.red, this.blue, this.green];
-  }
-
-  get rgbString() {
-    return `rgb(${[this.red, this.blue, this.green].join(",")})`;
   }
 
   get hslColor() {
     return [this.hue, this.saturation, this.lightness];
   }
 
+  get hexString() {
+    return `#${this.hex}`;
+  }
+
+  get rgbString() {
+    return `rgb(${[this.red, this.blue, this.green].join(",")})`;
+  }
+
   get hslString() {
     return `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
+  }
+
+  get toString() {
+    return {
+      hex: this.hexString,
+      rgb: this.rgbString,
+      hsl: this.hslString
+    };
   }
 
   // https://codepen.io/pankajparashar/pen/oFzIg

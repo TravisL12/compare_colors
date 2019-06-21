@@ -1,5 +1,6 @@
-// Found at: https://github.com/antimatter15/rgb-lab/blob/master/color.js
+import { hex2dec } from "./color-utils";
 
+// Found at: https://github.com/antimatter15/rgb-lab/blob/master/color.js
 export function rgb2lab(rgb) {
   let r = rgb[0] / 255;
   let g = rgb[1] / 255;
@@ -48,4 +49,34 @@ export function deltaE(labA, labB) {
     deltaLKlsl * deltaLKlsl + deltaCkcsc * deltaCkcsc + deltaHkhsh * deltaHkhsh;
 
   return i < 0 ? 0 : Math.sqrt(i);
+}
+
+/**
+ * Based on calculation from:
+ * https://en.wikipedia.org/wiki/Color_difference
+ * @param {string} compare 6 character hex string w/o # ex: 'FF09A4'
+ * @param {string} target 6 character hex string w/o # ex: 'FF09A4'
+ * @return {float} returns distance between compare and target hex values
+ */
+export function distanceDelta(compare, target = "000000") {
+  const labA = rgb2lab(hex2dec(target));
+  const labB = rgb2lab(compare);
+  return deltaE(labA, labB);
+}
+
+/**
+ *
+ * @param {string} compare 6 character hex string w/o # ex: 'FF09A4'
+ * @param {string} target 6 character hex string w/o # ex: 'FF09A4'
+ * @return {float} returns distance between compare and target hex values
+ */
+export function distanceChromatic(compare = [0, 0, 0], target = "000000") {
+  const cDec = compare;
+  const tDec = hex2dec(target);
+
+  const red = Math.pow(tDec[0] - cDec[0], 2);
+  const green = Math.pow(tDec[1] - cDec[1], 2);
+  const blue = Math.pow(tDec[2] - cDec[2], 2);
+
+  return Math.sqrt(red + green + blue);
 }

@@ -2,13 +2,9 @@ import React, { Component } from "react";
 import ColorGrid from "./ColorGrid";
 import ColorInput from "./ColorInput";
 import "./styles/application.scss";
-import {
-  distanceDelta,
-  matchColors,
-  createColor,
-  hex2dec,
-  format2hex
-} from "./color-utils";
+import ColorModel from "./models/color";
+import { matchColors, hex2dec, format2hex } from "./color-utils";
+import { distanceDelta } from "./distance-utils";
 import { test } from "./testData";
 
 class App extends Component {
@@ -58,7 +54,7 @@ class App extends Component {
 
     const newColors = filteredColors.map((color, idx) => {
       const id = this.state.colors.length + idx + 1;
-      return createColor(color, id);
+      return new ColorModel(color, id);
     });
 
     this.setState({

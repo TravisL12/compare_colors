@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import ColorModel from "./models/color";
 import Color from "./Color";
 import GridControls from "./GridControls";
-import { createColor, distanceDelta, distanceChromatic } from "./color-utils";
+import { distanceDelta, distanceChromatic } from "./distance-utils";
 
 function ColorGrid({ colors, removeColor }) {
   const [compareColor, setCompareColor] = useState("000000");
@@ -15,7 +16,7 @@ function ColorGrid({ colors, removeColor }) {
   };
 
   const updateCompareColor = ({ target: { value } }) => {
-    const { hexColor } = createColor(value);
+    const { hexColor } = new ColorModel(value);
     setCompareColor(hexColor);
   };
 

@@ -1,6 +1,3 @@
-import { rgb2lab, deltaE } from "./deltaDistance";
-import Color from "./models/color";
-
 const matchRegex = new RegExp(
   /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){6})/,
   "gi"
@@ -58,57 +55,6 @@ export function hex2dec(hex) {
   return split.map(c => {
     return parseInt(c, 16);
   });
-}
-
-/**
- * createColor - produce object that has RGB and hexadecimal
- * @param {string} color - rgba(200,150,0) or #ff00f0 value
- * @return {object} colorObj:
- * example:
- * {
- *    rgbColor: [200, 150, 0],
- *    hexColor: #C89600
- * }
- */
-export function createColor(color, id = null) {
-  const colorObj = new Color(color, id);
-
-  return {
-    id: colorObj.id,
-    rgbColor: colorObj.rgbColor,
-    hexColor: colorObj.hexColor,
-    hslColor: colorObj.hslColor
-  };
-}
-
-/**
- * Based on calculation from:
- * https://en.wikipedia.org/wiki/Color_difference
- * @param {string} compare 6 character hex string w/o # ex: 'FF09A4'
- * @param {string} target 6 character hex string w/o # ex: 'FF09A4'
- * @return {float} returns distance between compare and target hex values
- */
-export function distanceDelta(compare, target = "000000") {
-  const labA = rgb2lab(hex2dec(target));
-  const labB = rgb2lab(compare);
-  return deltaE(labA, labB);
-}
-
-/**
- *
- * @param {string} compare 6 character hex string w/o # ex: 'FF09A4'
- * @param {string} target 6 character hex string w/o # ex: 'FF09A4'
- * @return {float} returns distance between compare and target hex values
- */
-export function distanceChromatic(compare = [0, 0, 0], target = "000000") {
-  const cDec = compare;
-  const tDec = hex2dec(target);
-
-  const red = Math.pow(tDec[0] - cDec[0], 2);
-  const green = Math.pow(tDec[1] - cDec[1], 2);
-  const blue = Math.pow(tDec[2] - cDec[2], 2);
-
-  return Math.sqrt(red + green + blue);
 }
 
 /**

@@ -1,6 +1,6 @@
 import React from "react";
 import Color from "./Color";
-import { createColor } from "./color-utils";
+import ColorModel from "./models/color";
 
 function GridControls({
   areColorsSorted,
@@ -17,7 +17,7 @@ function GridControls({
       <div className="options compare-color-options">
         <p>Comparison</p>
 
-        <Color showTitle={false} color={createColor(compareColor)} />
+        <Color showTitle={false} color={new ColorModel(compareColor)} />
 
         <div className="color-inputs">
           <input
