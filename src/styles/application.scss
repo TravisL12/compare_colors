@@ -1,6 +1,4 @@
 @import "variables";
-@import "compare-grid";
-@import "color";
 
 body {
   margin: 0;
@@ -69,38 +67,6 @@ p {
   }
 }
 
-.color-input-container {
-  max-width: 700px;
-
-  .options-container {
-    flex-direction: column;
-    justify-content: unset;
-    align-items: unset;
-
-    .title {
-      @include flex(space-between);
-      padding-bottom: 5px;
-    }
-  }
-
-  .action-btn + .action-btn {
-    margin-left: 10px;
-  }
-
-  .action-btn {
-    font-size: 24px;
-    cursor: pointer;
-    border: none;
-    border-radius: 0;
-    margin: 0;
-  }
-
-  .color-textarea {
-    height: 100%;
-    font-size: 11px;
-    box-sizing: border-box;
-    background-color: $white;
-    overflow-y: scroll;
-    white-space: pre-wrap;
-  }
-}
+@import "color-grid";
+@import "color-input";
+@import "color-item";

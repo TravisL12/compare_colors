@@ -12,3 +12,18 @@ $app-padding: 20px;
 @mixin flexTop {
   @include flex(flex-start, flex-start);
 }
+
+%label {
+  background: lightgray;
+  color: whitesmoke;
+  margin-top: 2px;
+  padding: 6px 10px;
+  width: 100px;
+  text-align: left;
+}
+
+%checked {
+  @extend %label;
+  background: limegreen;
+  color: green;
+}
