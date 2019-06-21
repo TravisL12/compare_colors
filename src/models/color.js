@@ -2,47 +2,48 @@ import { isColorRgb, dec2array, format2hex, hex2dec } from "../color-utils";
 
 export default class Color {
   constructor(color, id) {
-    this.originalColorEntry = color;
+    this.entry = color;
     if (id) {
       this.id = id;
     }
 
-    if (isColorRgb(this.originalColorEntry)) {
+    if (isColorRgb(this.entry)) {
       [this.red, this.blue, this.green] = dec2array(color);
     } else {
-      this.hex = format2hex(this.originalColorEntry);
+      this.hex = format2hex(this.entry);
       [this.red, this.blue, this.green] = hex2dec(this.hex);
     }
 
     this.createHsl();
   }
 
-  hexValue() {
+  get hexColor() {
     return this.hex;
   }
 
-  hexString() {
+  get hexString() {
     return `#${this.hex}`;
   }
 
-  rgbValue() {
+  get rgbColor() {
     return [this.red, this.blue, this.green];
   }
 
-  rgbString() {
+  get rgbString() {
     return `rgb(${[this.red, this.blue, this.green].join(",")})`;
   }
 
-  hslValue() {
+  get hslColor() {
     return [this.hue, this.saturation, this.lightness];
   }
 
-  hslString() {
+  get hslString() {
     return `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
   }
 
+  // https://codepen.io/pankajparashar/pen/oFzIg
   createHsl() {
-    const rgb = this.rgbValue().map(i => i / 255);
+    const rgb = this.rgbColor.map(i => i / 255);
     const r = rgb[0];
     const g = rgb[1];
     const b = rgb[2];
