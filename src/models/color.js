@@ -1,4 +1,4 @@
-import { isColorRgb, dec2array, format2hex, hex2dec } from "../color-utils";
+import { format2hex, hex2dec } from "../color-utils";
 
 export default class ColorModel {
   constructor(color = "000000", id) {
@@ -7,23 +7,16 @@ export default class ColorModel {
       this.id = id;
     }
 
-    if (isColorRgb(this.entry)) {
-      [this.red, this.blue, this.green] = dec2array(color);
-      this.hexColor = format2hex(this.entry);
-    } else {
-      this.hexColor = format2hex(this.entry);
-      [this.red, this.blue, this.green] = hex2dec(this.hexColor);
-    }
-
-    this.toString = {
-      hex: `#${this.hexColor}`,
-      rgb: `rgb(${[this.red, this.blue, this.green].join(",")})`,
-      hsl: `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`
-    };
-
-    this.rgbColor = [this.red, this.blue, this.green];
-    this.hslColor = [this.hue, this.saturation, this.lightness];
+    this.hexColor = format2hex(this.entry);
+    this.rgbColor = hex2dec(this.hexColor);
     this.createHsl();
+
+    this.hexString = `#${this.hexColor}`;
+    this.rgbString = `rgb(${[this.red, this.blue, this.green].join(",")})`;
+    this.hslString = `hsl(${this.hue}, ${this.saturation}%, ${
+      this.lightness
+    }%)`;
+    [this.red, this.blue, this.green] = this.rgbColor;
   }
 
   // https://codepen.io/pankajparashar/pen/oFzIg

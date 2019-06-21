@@ -23,13 +23,13 @@ function GridControls({
             type="color"
             id="compare-color-type"
             onChange={updateCompareColor}
-            value={compareColor.toString.hex}
+            value={compareColor.hexString}
           />
           <input
             type="text"
             id="compare-color-text"
             onChange={updateCompareColor}
-            value={compareColor.toString.hex}
+            value={compareColor.hexString}
             placeholder="#000000 (Default)"
           />
         </div>
