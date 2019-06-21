@@ -1,4 +1,5 @@
 import { rgb2lab, deltaE } from "./deltaDistance";
+import Color from "./models/color";
 
 const matchRegex = new RegExp(
   /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){6})/,
@@ -10,7 +11,7 @@ const matchRegex = new RegExp(
  * @param {string} color
  * @returns {boolean}
  */
-function isColorRgb(color) {
+export function isColorRgb(color) {
   return /^rgb/i.test(color);
 }
 
@@ -18,7 +19,7 @@ function isColorRgb(color) {
  * @param {string} rgb color string => rgb(200, 150, 0)
  * @return {array} [200, 150, 0]
  */
-function dec2array(rgbColorStr) {
+export function dec2array(rgbColorStr) {
   return rgbColorStr
     .replace(/[rgb()\s]/gi, "")
     .split(",")
@@ -70,6 +71,8 @@ export function hex2dec(hex) {
  * }
  */
 export function createColor(color, id = null) {
+  console.log(new Color(color, id), "color object");
+
   let rgbColor;
   let hexColor;
   let hslColor;
