@@ -16,18 +16,6 @@ p {
   padding: $app-padding;
 }
 
-.action-btn + .action-btn {
-  margin-left: 10px;
-}
-
-.action-btn {
-  font-size: 24px;
-  cursor: pointer;
-  border: none;
-  border-radius: 0;
-  margin: 0;
-}
-
 .col + .col {
   margin-left: 5px;
   margin-right: 0;
@@ -53,24 +41,66 @@ p {
     box-sizing: border-box;
     flex: 1;
     overflow: scroll;
+    margin-top: 5px;
+    padding: 10px;
   }
 }
 
-.color-entry {
+.options-container {
+  @include flex;
+  min-height: 90px;
+
+  .options {
+    @include flex;
+    flex-direction: column;
+
+    p {
+      text-align: center;
+    }
+    button,
+    label {
+      font-size: 14px;
+      outline: none;
+    }
+  }
+
+  .options + .options {
+    margin-left: 10px;
+  }
+}
+
+.color-input-container {
   max-width: 700px;
 
-  .actions {
-    min-height: 90px;
-  }
-}
+  .options-container {
+    flex-direction: column;
+    justify-content: unset;
+    align-items: unset;
 
-.color-textarea {
-  height: 100%;
-  font-size: 11px;
-  box-sizing: border-box;
-  padding: 4px 6px;
-  background-color: $white;
-  margin-top: 5px;
-  overflow-y: scroll;
-  white-space: pre-wrap;
+    .title {
+      @include flex(space-between);
+      padding-bottom: 5px;
+    }
+  }
+
+  .action-btn + .action-btn {
+    margin-left: 10px;
+  }
+
+  .action-btn {
+    font-size: 24px;
+    cursor: pointer;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .color-textarea {
+    height: 100%;
+    font-size: 11px;
+    box-sizing: border-box;
+    background-color: $white;
+    overflow-y: scroll;
+    white-space: pre-wrap;
+  }
 }
