@@ -47,9 +47,6 @@ function ColorGrid({ colors, removeColor }) {
 
   return (
     <div className="col color-types">
-      <div className="title">
-        <p>Results ({colors.length})</p>
-      </div>
       <div className="display results-display">
         <div className="compare-grid-container">
           <GridControls

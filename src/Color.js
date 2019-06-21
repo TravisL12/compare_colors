@@ -9,10 +9,8 @@ function copyText(event) {
   // Briefly have the element that was clicked glow with its color
   // to confirm the string has been copied
   target.style.backgroundColor = `#${hexAlpha(textContent, 0.75)}`;
-  target.textContent = "Copied!";
   setTimeout(() => {
     target.style.backgroundColor = null;
-    target.textContent = textContent;
   }, 250);
 
   // Can only copy text from an HTMLInputElement
@@ -34,7 +32,7 @@ function Color({ color, showTitle, remove, showInfo }) {
   };
 
   return (
-    <div className={`color-container ${!showInfo && "hideInfo"}`}>
+    <div className={`color-container ${!showInfo ? "hideInfo" : ""}`}>
       {remove && (
         <div onClick={remove} data-color-idx={id} className="delete-btn">
           x

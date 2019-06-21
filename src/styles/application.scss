@@ -15,19 +15,16 @@ p {
   padding: 20px;
 }
 
-button {
-  cursor: pointer;
-  border: none;
-  border-radius: 0;
-  margin: 0;
-}
-
-button + button {
+.action-btn + .action-btn {
   margin-left: 10px;
 }
 
 .action-btn {
   font-size: 24px;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  margin: 0;
 }
 
 .col + .col {

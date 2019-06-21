@@ -1,20 +1,24 @@
 %label {
   background: lightgray;
   color: whitesmoke;
+  margin-top: 2px;
+  padding: 6px 10px;
+  width: 100px;
+  text-align: left;
 }
 
 %checked {
+  @extend %label;
   background: limegreen;
   color: green;
 }
 
 .compare-grid-container {
   display: flex;
+  flex-direction: column;
 
-  .compare-container {
+  .options-container {
     display: flex;
-    flex-direction: column;
-    margin-right: 5px;
   }
 
   .color-grid {
@@ -24,29 +28,48 @@
   }
 }
 
-.compare-controls {
-  input[type="radio"] {
-    display: none;
+.options {
+  display: flex;
+  flex-direction: column;
+
+  p {
+    text-align: center;
+  }
+  button,
+  label {
+    font-size: 14px;
+  }
+}
+
+.options + .options {
+  margin-left: 10px;
+}
+
+.sort-info-options {
+  button {
+    width: 100px;
+    margin: 0;
   }
 
   .off {
     @extend %label;
   }
 
-  input[type="radio"] + label {
-    @extend %label;
-    margin-top: 2px;
-    padding: 6px 10px;
-    width: 100px;
-  }
-
-  .on,
-  input[type="radio"]:checked + label {
+  .on {
     @extend %checked;
   }
+}
 
-  .controls {
-    display: flex;
-    flex-direction: column;
+.distance-options {
+  input[type="radio"] {
+    display: none;
+  }
+
+  input[type="radio"] + label {
+    @extend %label;
+  }
+
+  input[type="radio"]:checked + label {
+    @extend %checked;
   }
 }
