@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ContentEditable from "react-contenteditable";
 import ColorGrid from "./ColorGrid";
+import ColorInput from "./ColorInput";
 import "./styles/application.scss";
 import {
   distanceDelta,
@@ -107,28 +107,14 @@ class App extends Component {
 
     return (
       <div className="app-container">
-        <div className="col color-entry">
-          <div className="title">
-            <p>Enter/Paste colors (hex or rgb)</p>
-            <button onClick={this.testColors}>Test Data</button>
-          </div>
-          <button className="action-btn" onClick={this.parseColors}>
-            Parse Colors
-          </button>
-          <button className="action-btn" onClick={this.resetInputDisplay}>
-            Reset Text
-          </button>
-          <button className="action-btn" onClick={this.resetColorDisplay}>
-            Reset Colors
-          </button>
-          <div className="display text-area">
-            <ContentEditable
-              className="color-textarea"
-              onChange={this.updateTextArea}
-              html={colorInput}
-            />
-          </div>
-        </div>
+        <ColorInput
+          colorInput={colorInput}
+          updateTextArea={this.updateTextArea}
+          testColors={this.testColors}
+          parseColors={this.parseColors}
+          resetInputDisplay={this.resetInputDisplay}
+          resetColorDisplay={this.resetColorDisplay}
+        />
         <ColorGrid removeColor={this.removeColor} colors={colors} />
       </div>
     );
