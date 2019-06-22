@@ -1,4 +1,4 @@
-import ColorModel from "./models/color";
+import Color from "./models/color";
 
 // Found at: https://github.com/antimatter15/rgb-lab/blob/master/color.js
 export function rgb2lab(rgb) {
@@ -54,11 +54,11 @@ export function deltaE(labA, labB) {
 /**
  * Based on calculation from:
  * https://en.wikipedia.org/wiki/Color_difference
- * @param {string} compare 6 character hex string w/o # ex: 'FF09A4'
- * @param {string} target 6 character hex string w/o # ex: 'FF09A4'
+ * @param {Color} compare
+ * @param {Color} target
  * @return {float} returns distance between compare and target hex values
  */
-export function distanceDelta(compare, target = new ColorModel()) {
+export function distanceDelta(compare, target = new Color()) {
   const labA = rgb2lab(target.rgbColor);
   const labB = rgb2lab(compare.rgbColor);
   return deltaE(labA, labB);
@@ -66,11 +66,11 @@ export function distanceDelta(compare, target = new ColorModel()) {
 
 /**
  *
- * @param {string} compare 6 character hex string w/o # ex: 'FF09A4'
- * @param {string} target 6 character hex string w/o # ex: 'FF09A4'
+ * @param {Color} compare
+ * @param {Color} target
  * @return {float} returns distance between compare and target hex values
  */
-export function distanceChromatic(compare, target = new ColorModel()) {
+export function distanceChromatic(compare, target = new Color()) {
   const cDec = compare.rgbColor;
   const tDec = target.rgbColor;
 

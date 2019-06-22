@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import ColorModel from "./models/color";
-import Color from "./Color";
+import Color from "./models/color";
+import ColorItem from "./ColorItem";
 import GridControls from "./GridControls";
 import { distanceDelta, distanceChromatic } from "./distance-utils";
 
 function ColorGrid({ colors, removeColor }) {
-  const [compareColor, setCompareColor] = useState(new ColorModel("000000"));
+  const [compareColor, setCompareColor] = useState(new Color("000000"));
   const [areColorsSorted, setAreColorsSorted] = useState(false);
   const [showInfo, setShowInfo] = useState(true);
   const [sortMethod, setSortMethod] = useState("distanceChromatic");
@@ -16,7 +16,7 @@ function ColorGrid({ colors, removeColor }) {
   };
 
   const updateCompareColor = ({ target: { value } }) => {
-    setCompareColor(new ColorModel(value));
+    setCompareColor(new Color(value));
   };
 
   const toggleSorting = () => {
@@ -56,7 +56,7 @@ function ColorGrid({ colors, removeColor }) {
       <div className="display color-grid">
         {sortedColors.map((color, idx) => {
           return (
-            <Color
+            <ColorItem
               color={color}
               showInfo={showInfo}
               remove={removeColor}

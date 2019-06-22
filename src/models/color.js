@@ -1,6 +1,6 @@
 import { format2hex, hex2dec } from "../color-utils";
 
-export default class ColorModel {
+export default class Color {
   constructor(color = "000000", id) {
     this.entry = color;
     if (id) {

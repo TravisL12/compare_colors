@@ -1,12 +1,12 @@
 import React from "react";
 import { shape, array, string, number, bool, func } from "prop-types";
-import ColorModel from "./models/color";
+import Color from "./models/color";
 import { hexAlpha } from "./color-utils";
 
 function copyText(event) {
   const { target } = event;
   const { textContent } = target;
-  const color = new ColorModel(textContent);
+  const color = new Color(textContent);
 
   // Briefly have the element that was clicked glow with its color
   // to confirm the string has been copied
@@ -25,7 +25,7 @@ function copyText(event) {
   document.body.removeChild(inputEl);
 }
 
-function Color({ color, showTitle, remove, showInfo }) {
+function ColorItem({ color, showTitle, remove, showInfo }) {
   const { hexColor, rgbColor, id } = color;
 
   const squareStyle = {
@@ -51,7 +51,7 @@ function Color({ color, showTitle, remove, showInfo }) {
   );
 }
 
-Color.propTypes = {
+ColorItem.propTypes = {
   color: shape({
     hexColor: string.isRequired,
     rgbColor: array.isRequired,
@@ -61,10 +61,10 @@ Color.propTypes = {
   remove: func
 };
 
-Color.defaultProps = {
+ColorItem.defaultProps = {
   color: { id: undefined },
   showTitle: true,
   remove: undefined
 };
 
-export default Color;
+export default ColorItem;

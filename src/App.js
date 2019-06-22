@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ColorGrid from "./ColorGrid";
 import ColorInput from "./ColorInput";
 import "./styles/application.scss";
-import ColorModel from "./models/color";
+import Color from "./models/color";
 import { matchColors } from "./color-utils";
 import { distanceDelta } from "./distance-utils";
 import { test } from "./testData";
@@ -29,7 +29,7 @@ class App extends Component {
     }
 
     const colorInput = matchedColors.reduce((str, color, idx) => {
-      const dist = distanceDelta(new ColorModel(color));
+      const dist = distanceDelta(new Color(color));
       const textColor = dist > 70 ? "black" : "white";
 
       return str.replace(
@@ -41,7 +41,7 @@ class App extends Component {
 
     const existingHex = this.state.colors.map(({ hexColor }) => hexColor);
     const filteredColors = matchedColors.reduce((results, color) => {
-      const { hexColor } = new ColorModel(color);
+      const { hexColor } = new Color(color);
 
       // No duplicates!
       if (!existingHex.includes(hexColor) && !results.includes(hexColor)) {
@@ -53,7 +53,7 @@ class App extends Component {
 
     const newColors = filteredColors.map((color, idx) => {
       const id = this.state.colors.length + idx + 1;
-      return new ColorModel(color, id);
+      return new Color(color, id);
     });
 
     this.setState({
@@ -85,7 +85,7 @@ class App extends Component {
 
   removeColor = event => {
     const id = event.currentTarget.dataset.colorIdx - 1; // Change ID from 1-idx -> 0-idx
-    const colors = this.state.colors;
+    const { colors } = this.state;
     colors.splice(id, 1);
 
     // Remap ID's on remaining colors

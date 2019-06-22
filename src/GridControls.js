@@ -1,5 +1,5 @@
 import React from "react";
-import Color from "./Color";
+import ColorItem from "./ColorItem";
 
 function GridControls({
   areColorsSorted,
@@ -16,7 +16,7 @@ function GridControls({
       <div className="options compare-color-options">
         <p>Comparison</p>
 
-        <Color showTitle={false} color={compareColor} />
+        <ColorItem showTitle={false} color={compareColor} />
 
         <div className="color-inputs">
           <input
