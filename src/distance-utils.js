@@ -22,7 +22,7 @@ export function rgb2lab(rgb) {
   return [116 * y - 16, 500 * (x - y), 200 * (y - z)];
 }
 
-// calculate the perceptual distance between colors in CIELAB
+// calculate the perceptual distance between colors in CIELAB (Delta-E 94)
 // https://github.com/THEjoezack/ColorMine/blob/master/ColorMine/ColorSpaces/Comparisons/Cie94Comparison.cs
 
 export function deltaE(labA, labB) {
