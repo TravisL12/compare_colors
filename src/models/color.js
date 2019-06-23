@@ -2,12 +2,11 @@ import { format2hex, hex2dec } from "../color-utils";
 
 export default class Color {
   constructor(color = "000000", id) {
-    this.entry = color;
     if (id) {
       this.id = id;
     }
 
-    this.hexColor = format2hex(this.entry);
+    this.hexColor = format2hex(color);
     this.rgbColor = hex2dec(this.hexColor);
     this.createHsl();
 

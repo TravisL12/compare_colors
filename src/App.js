@@ -18,17 +18,19 @@ class App extends Component {
   };
 
   parseColors = () => {
-    if (!this.state.colorInput) {
+    const { colorInput, colors } = this.state;
+
+    if (!colorInput) {
       return;
     }
 
-    const matchedColors = matchColors(this.state.colorInput);
+    const matchedColors = matchColors(colorInput);
 
     if (!matchedColors) {
       return;
     }
 
-    const colorInput = matchedColors.reduce((str, color, idx) => {
+    const colorMatchedInput = matchedColors.reduce((str, color, idx) => {
       const dist = distanceDelta(new Color(color));
       const textColor = dist > 70 ? "black" : "white";
 
@@ -37,9 +39,9 @@ class App extends Component {
         `<span class="tagged-color" id=${idx +
           1} style="color: ${textColor}; background-color: $&">$&</span>`
       );
-    }, this.state.colorInput);
+    }, colorInput);
 
-    const existingHex = this.state.colors.map(({ hexColor }) => hexColor);
+    const existingHex = colors.map(({ hexColor }) => hexColor);
     const filteredColors = matchedColors.reduce((results, color) => {
       const { hexColor } = new Color(color);
 
@@ -52,13 +54,13 @@ class App extends Component {
     }, []);
 
     const newColors = filteredColors.map((color, idx) => {
-      const id = this.state.colors.length + idx + 1;
+      const id = colors.length + idx + 1;
       return new Color(color, id);
     });
 
     this.setState({
-      colors: [...this.state.colors, ...newColors],
-      colorInput
+      colors: [...colors, ...newColors],
+      colorMatchedInput
     });
   };
 
