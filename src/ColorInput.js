@@ -1,5 +1,4 @@
 import React from "react";
-import ContentEditable from "react-contenteditable";
 
 function ColorInput({
   colorInput,
@@ -29,11 +28,13 @@ function ColorInput({
           </button>
         </div>
       </div>
-      <ContentEditable
-        className="display color-textarea"
-        onChange={updateTextArea}
-        html={colorInput}
-      />
+      <div className="display text-area">
+        <textarea
+          className="color-textarea"
+          onChange={updateTextArea}
+          value={colorInput}
+        ></textarea>
+      </div>
     </div>
   );
 }
