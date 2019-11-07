@@ -5,6 +5,7 @@
   .color-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-rows: repeat(auto-fill, 40px);
     grid-column-gap: 3px;
     grid-row-gap: 5px;
     box-sizing: border-box;
