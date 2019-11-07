@@ -34,14 +34,12 @@ function ColorItem({ color, showTitle, remove, showInfo }) {
   };
 
   return (
-    <div className={`color-container ${!showInfo ? "hideInfo" : ""}`}>
+    <div className="color-container">
       {remove && (
-        <div onClick={remove} data-color-idx={id} className="delete-btn">
-          x
-        </div>
+        <div onClick={remove} data-color-idx={id} className="delete-btn" />
       )}
       <div className={`square`} style={squareStyle} />
-      {showTitle && (
+      {showInfo && showTitle && (
         <div className="names">
           <p onClick={copyText}>#{hexColor}</p>
           <p onClick={copyText}>rgb({rgbColor.join(",")})</p>

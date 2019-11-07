@@ -3,9 +3,17 @@
   flex-direction: column;
 
   .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-column-gap: 3px;
+    grid-row-gap: 5px;
     box-sizing: border-box;
     background: #444;
     width: 100%;
+
+    &.hideInfo {
+      grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    }
   }
 }
 

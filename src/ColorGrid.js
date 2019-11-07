@@ -53,7 +53,7 @@ function ColorGrid({ colors, removeColor }) {
         showInfo={showInfo}
         sortMethod={sortMethod}
       />
-      <div className="display color-grid">
+      <div className={`display color-grid ${!showInfo ? "hideInfo" : ""}`}>
         {sortedColors.map((color, idx) => {
           return (
             <ColorItem

@@ -1,10 +1,6 @@
 .color-container {
-  display: inline-block;
+  display: flex;
   position: relative;
-  flex-direction: column;
-  width: 100px;
-  overflow: hidden;
-  margin: 2px;
   box-sizing: border-box;
 
   .delete-btn {
@@ -12,22 +8,21 @@
     position: absolute;
     cursor: pointer;
     top: 0;
-    right: 0;
+    left: 0;
     width: 15px;
     height: 15px;
     opacity: 0;
     color: $white;
+    &:after {
+      content: "x";
+    }
   }
 
   .square {
-    display: block;
-    font-family: "Courier New", Courier, monospace;
     color: $white;
     height: 40px;
     width: 40px;
-    border-radius: 2px;
-    box-shadow: 0 0px 1px 0.5px $white;
-    margin: 1px auto;
+    border-radius: 4px;
 
     &:hover {
       &:after {
@@ -52,9 +47,9 @@
   .names {
     font-size: 12px;
     text-transform: uppercase;
-    text-align: center;
     border-radius: 2px;
     z-index: 1;
+    margin-left: 3px;
 
     p {
       cursor: pointer;
@@ -67,31 +62,9 @@
     }
   }
 
-  &.hideInfo {
-    width: auto;
-    overflow: unset;
-
-    .names {
-      position: absolute;
-      display: none;
-      top: 100%;
-      background-color: rgba(255, 255, 255, 1);
-    }
-  }
-
   &:hover {
     .delete-btn {
       opacity: 1;
-    }
-
-    &.hideInfo {
-      .names {
-        display: block;
-
-        p {
-          color: $black;
-        }
-      }
     }
   }
 }
