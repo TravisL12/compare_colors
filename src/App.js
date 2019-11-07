@@ -110,9 +110,12 @@ class App extends Component {
           testColors={this.testColors}
           parseColors={this.parseColors}
           resetInputDisplay={this.resetInputDisplay}
+        />
+        <ColorGrid
+          removeColor={this.removeColor}
+          colors={colors}
           resetColorDisplay={this.resetColorDisplay}
         />
-        <ColorGrid removeColor={this.removeColor} colors={colors} />
       </div>
     );
   }

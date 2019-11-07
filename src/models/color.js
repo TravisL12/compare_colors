@@ -2,20 +2,15 @@ import { format2hex, hex2dec } from "../color-utils";
 
 export default class Color {
   constructor(color = "000000", id) {
-    if (id) {
-      this.id = id;
-    }
-
+    this.id = id;
     this.hexColor = format2hex(color);
     this.rgbColor = hex2dec(this.hexColor);
     this.createHsl();
+    [this.red, this.blue, this.green] = this.rgbColor;
 
     this.hexString = `#${this.hexColor}`;
     this.rgbString = `rgb(${[this.red, this.blue, this.green].join(",")})`;
-    this.hslString = `hsl(${this.hue}, ${this.saturation}%, ${
-      this.lightness
-    }%)`;
-    [this.red, this.blue, this.green] = this.rgbColor;
+    this.hslString = `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
   }
 
   // https://codepen.io/pankajparashar/pen/oFzIg

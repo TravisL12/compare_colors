@@ -14,6 +14,18 @@ p {
   padding: $app-padding;
 }
 
+.action-btn + .action-btn {
+  margin-left: 10px;
+}
+
+.action-btn {
+  font-size: 24px;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+}
+
 .col + .col {
   margin-left: 5px;
   margin-right: 0;

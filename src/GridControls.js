@@ -9,7 +9,8 @@ function GridControls({
   toggleInfo,
   toggleSorting,
   toggleSortMethod,
-  updateCompareColor
+  updateCompareColor,
+  resetColorDisplay
 }) {
   return (
     <div className="options-container">
@@ -74,6 +75,12 @@ function GridControls({
           disabled={!areColorsSorted}
         />
         <label htmlFor="compare-off">DeltaE</label>
+      </div>
+
+      <div className="options">
+        <button className="action-btn" onClick={resetColorDisplay}>
+          Reset Colors
+        </button>
       </div>
     </div>
   );

@@ -5,8 +5,7 @@ function ColorInput({
   updateTextArea,
   testColors,
   parseColors,
-  resetInputDisplay,
-  resetColorDisplay
+  resetInputDisplay
 }) {
   return (
     <div className="col color-input-container">
@@ -22,9 +21,6 @@ function ColorInput({
           </button>
           <button className="action-btn" onClick={resetInputDisplay}>
             Reset Text
-          </button>
-          <button className="action-btn" onClick={resetColorDisplay}>
-            Reset Colors
           </button>
         </div>
       </div>

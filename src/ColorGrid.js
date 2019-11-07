@@ -4,7 +4,7 @@ import ColorItem from "./ColorItem";
 import GridControls from "./GridControls";
 import { distanceDelta, distanceChromatic } from "./distance-utils";
 
-function ColorGrid({ colors, removeColor }) {
+function ColorGrid({ colors, removeColor, resetColorDisplay }) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));
   const [areColorsSorted, setAreColorsSorted] = useState(false);
   const [showInfo, setShowInfo] = useState(true);
@@ -52,6 +52,7 @@ function ColorGrid({ colors, removeColor }) {
         areColorsSorted={areColorsSorted}
         showInfo={showInfo}
         sortMethod={sortMethod}
+        resetColorDisplay={resetColorDisplay}
       />
       <div className={`display color-grid ${!showInfo ? "hideInfo" : ""}`}>
         {sortedColors.map((color, idx) => {
