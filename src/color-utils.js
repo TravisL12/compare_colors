@@ -75,7 +75,7 @@ export function hexAlpha(color, percent = 0.5) {
  * @return {array} array of matched values
  */
 export function matchColors(colorInput) {
-  return colorInput.match(matchRegex);
+  return colorInput.match(matchRegex) || [];
 }
 
 export function format2hex(color) {

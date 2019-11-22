@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ColorGrid from "./ColorGrid";
-import ColorInput from "./ColorInput";
 import "./styles/application.scss";
 import Color from "./models/color";
 import { matchColors } from "./color-utils";
@@ -12,61 +11,42 @@ class App extends Component {
     colors: []
   };
 
-  updateTextArea = event => {
-    this.setState({ colorInput: event.target.value });
+  updateTextArea = ({ target: { value: colorInput } }) => {
+    this.setState({ colorInput });
+  };
+
+  resetInputDisplay = () => {
+    this.setState({ colorInput: "" });
+  };
+
+  resetColorDisplay = () => {
+    this.setState({ colors: [] });
+  };
+
+  testColors = () => {
+    this.setState({ colorInput: test }, this.parseColors);
   };
 
   parseColors = () => {
     const { colorInput, colors } = this.state;
+    const matchedColors = matchColors(colorInput).map(
+      color => new Color(color)
+    );
 
-    if (!colorInput) {
-      return;
-    }
-
-    const matchedColors = matchColors(colorInput);
-
-    if (!matchedColors) {
-      return;
-    }
+    if (matchedColors.length === 0) return;
 
     const existingHex = colors.map(({ hexColor }) => hexColor);
-    const filteredColors = matchedColors.reduce((results, color) => {
-      const { hexColor } = new Color(color);
-
-      // No duplicates!
+    const newColors = matchedColors.reduce((results, color) => {
+      const { hexColor } = color;
       if (!existingHex.includes(hexColor) && !results.includes(hexColor)) {
-        results.push(hexColor);
+        results.push(color);
       }
-
       return results;
     }, []);
-
-    const newColors = filteredColors.map(color => new Color(color));
 
     this.setState({
       colors: [...colors, ...newColors]
     });
-  };
-
-  resetInputDisplay = () => {
-    this.setState({
-      colorInput: ""
-    });
-  };
-
-  resetColorDisplay = () => {
-    this.setState({
-      colors: []
-    });
-  };
-
-  testColors = () => {
-    this.setState(
-      {
-        colorInput: test
-      },
-      this.parseColors
-    );
   };
 
   removeColor = hexColor => {
@@ -84,13 +64,30 @@ class App extends Component {
 
     return (
       <div className="app-container">
-        <ColorInput
-          colorInput={colorInput}
-          updateTextArea={this.updateTextArea}
-          testColors={this.testColors}
-          parseColors={this.parseColors}
-          resetInputDisplay={this.resetInputDisplay}
-        />
+        <div className="col color-input-container">
+          <div className="options-container">
+            <div className="title">
+              <p>Enter/Paste colors (hex or rgb)</p>
+              <button onClick={this.testColors}>Test Data</button>
+            </div>
+
+            <div>
+              <button className="action-btn" onClick={this.parseColors}>
+                Parse Colors
+              </button>
+              <button className="action-btn" onClick={this.resetInputDisplay}>
+                Reset Text
+              </button>
+            </div>
+          </div>
+          <div className="display text-area">
+            <textarea
+              className="color-textarea"
+              onChange={this.updateTextArea}
+              value={colorInput}
+            ></textarea>
+          </div>
+        </div>
         <ColorGrid
           removeColor={this.removeColor}
           colors={colors}
