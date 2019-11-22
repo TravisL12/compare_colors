@@ -6,9 +6,7 @@ function GridControls({
   compareColor,
   showInfo,
   sortMethod,
-  toggleInfo,
-  toggleSorting,
-  toggleSortMethod,
+  toggle,
   updateCompareColor,
   resetColorDisplay
 }) {
@@ -17,7 +15,7 @@ function GridControls({
       <div className="options compare-color-options">
         <p>Comparison</p>
 
-        <ColorItem showTitle={false} color={compareColor} />
+        <ColorItem showInfo={false} color={compareColor} />
 
         <div className="color-inputs">
           <input
@@ -41,12 +39,12 @@ function GridControls({
 
         <button
           className={areColorsSorted ? "on" : "off"}
-          onClick={toggleSorting}
+          onClick={toggle.sorting}
         >
           Sort {areColorsSorted ? "on" : "off"}
         </button>
 
-        <button className={showInfo ? "on" : "off"} onClick={toggleInfo}>
+        <button className={showInfo ? "on" : "off"} onClick={toggle.info}>
           Info {showInfo ? "on" : "off"}
         </button>
       </div>
@@ -59,7 +57,7 @@ function GridControls({
           id="compare-on"
           name="sortOption"
           checked={sortMethod === "distanceChromatic"}
-          onChange={toggleSortMethod}
+          onChange={toggle.sort}
           value={"distanceChromatic"}
           disabled={!areColorsSorted}
         />
@@ -70,7 +68,7 @@ function GridControls({
           id="compare-off"
           name="sortOption"
           checked={sortMethod === "distanceDelta"}
-          onChange={toggleSortMethod}
+          onChange={toggle.sort}
           value={"distanceDelta"}
           disabled={!areColorsSorted}
         />

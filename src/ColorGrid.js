@@ -19,16 +19,12 @@ function ColorGrid({ colors, removeColor, resetColorDisplay }) {
     setCompareColor(new Color(value));
   };
 
-  const toggleSorting = () => {
-    setAreColorsSorted(!areColorsSorted);
-  };
-
-  const toggleInfo = () => {
-    setShowInfo(!showInfo);
-  };
-
-  const toggleSortMethod = ({ currentTarget: { value } }) => {
-    setSortMethod(value);
+  const toggle = {
+    sorting: () => setAreColorsSorted(!areColorsSorted),
+    info: () => setShowInfo(!showInfo),
+    sort: ({ currentTarget: { value } }) => {
+      setSortMethod(value);
+    }
   };
 
   const sortedColors = areColorsSorted
@@ -44,9 +40,7 @@ function ColorGrid({ colors, removeColor, resetColorDisplay }) {
   return (
     <div className="col color-grid-container">
       <GridControls
-        toggleSorting={toggleSorting}
-        toggleInfo={toggleInfo}
-        toggleSortMethod={toggleSortMethod}
+        toggle={toggle}
         updateCompareColor={updateCompareColor}
         compareColor={compareColor}
         areColorsSorted={areColorsSorted}
