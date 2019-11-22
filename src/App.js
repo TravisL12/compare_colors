@@ -38,7 +38,11 @@ class App extends Component {
     const existingHex = colors.map(({ hexColor }) => hexColor);
     const newColors = matchedColors.reduce((results, color) => {
       const { hexColor } = color;
-      if (!existingHex.includes(hexColor) && !results.includes(hexColor)) {
+      const hasDuplicateEntry = results.find(
+        color => color.hexColor === hexColor
+      );
+
+      if (!existingHex.includes(hexColor) && !hasDuplicateEntry) {
         results.push(color);
       }
       return results;
