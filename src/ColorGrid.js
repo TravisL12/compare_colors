@@ -4,7 +4,7 @@ import ColorItem from "./ColorItem";
 import GridControls from "./GridControls";
 import { distanceDelta, distanceChromatic } from "./distance-utils";
 
-function ColorGrid({ colors, removeColor }) {
+function ColorGrid({ colors, removeColor, resetColorDisplay }) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));
   const [areColorsSorted, setAreColorsSorted] = useState(false);
   const [showInfo, setShowInfo] = useState(true);
@@ -19,16 +19,12 @@ function ColorGrid({ colors, removeColor }) {
     setCompareColor(new Color(value));
   };
 
-  const toggleSorting = () => {
-    setAreColorsSorted(!areColorsSorted);
-  };
-
-  const toggleInfo = () => {
-    setShowInfo(!showInfo);
-  };
-
-  const toggleSortMethod = ({ currentTarget: { value } }) => {
-    setSortMethod(value);
+  const toggle = {
+    sorting: () => setAreColorsSorted(!areColorsSorted),
+    info: () => setShowInfo(!showInfo),
+    sort: ({ currentTarget: { value } }) => {
+      setSortMethod(value);
+    }
   };
 
   const sortedColors = areColorsSorted
@@ -44,14 +40,13 @@ function ColorGrid({ colors, removeColor }) {
   return (
     <div className="col color-grid-container">
       <GridControls
-        toggleSorting={toggleSorting}
-        toggleInfo={toggleInfo}
-        toggleSortMethod={toggleSortMethod}
+        toggle={toggle}
         updateCompareColor={updateCompareColor}
         compareColor={compareColor}
         areColorsSorted={areColorsSorted}
         showInfo={showInfo}
         sortMethod={sortMethod}
+        resetColorDisplay={resetColorDisplay}
       />
       <div className={`display color-grid ${!showInfo ? "hideInfo" : ""}`}>
         {sortedColors.map((color, idx) => {

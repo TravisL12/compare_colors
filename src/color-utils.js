@@ -1,3 +1,5 @@
+import Color from "./models/color";
+
 const matchRegex = new RegExp(
   /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){6})/,
   "gi"
@@ -79,4 +81,26 @@ export function matchColors(colorInput) {
 export function format2hex(color) {
   const hex = isColorRgb(color) ? dec2hex(color) : color;
   return hex.replace(/['#]/gi, "").toUpperCase();
+}
+
+export function copyText(event) {
+  const { target } = event;
+  const { textContent } = target;
+  const color = new Color(textContent);
+
+  // Briefly have the element that was clicked glow with its color
+  // to confirm the string has been copied
+  target.style.backgroundColor = `#${hexAlpha(color, 0.75)}`;
+  setTimeout(() => {
+    target.style.backgroundColor = null;
+  }, 250);
+
+  // Can only copy text from an HTMLInputElement
+  // Create an input, add the text to copy and remove input element
+  const inputEl = document.createElement("input");
+  inputEl.value = textContent;
+  document.body.appendChild(inputEl);
+  inputEl.select();
+  document.execCommand("copy");
+  document.body.removeChild(inputEl);
 }
