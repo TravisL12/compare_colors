@@ -1,8 +1,9 @@
-import Color from "./models/color";
+import Color from './models/color';
+import browserColorsList from './browserColorsList';
 
 const matchRegex = new RegExp(
   /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){6})/,
-  "gi"
+  'gi'
 );
 
 /**
@@ -20,9 +21,9 @@ export function isColorRgb(color) {
  */
 export function dec2array(rgbColorStr) {
   return rgbColorStr
-    .replace(/[rgb()\s]/gi, "")
-    .split(",")
-    .map(num => parseInt(num, 10));
+    .replace(/[rgb()\s]/gi, '')
+    .split(',')
+    .map((num) => parseInt(num, 10));
 }
 
 /**
@@ -33,16 +34,16 @@ export function dec2array(rgbColorStr) {
  */
 function dec2hex(rgbColor) {
   let color = rgbColor;
-  if (typeof rgbColor === "string") {
+  if (typeof rgbColor === 'string') {
     color = dec2array(color);
   }
 
   const hex = color
-    .map(c => {
+    .map((c) => {
       const num = Number(c);
       return `0${num.toString(16)}`.slice(-2);
     })
-    .join("");
+    .join('');
 
   return format2hex(hex);
 }
@@ -54,7 +55,7 @@ function dec2hex(rgbColor) {
 export function hex2dec(hex) {
   const split = [hex.slice(0, 2), hex.slice(2, 4), hex.slice(4, 6)];
 
-  return split.map(c => {
+  return split.map((c) => {
     return parseInt(c, 16);
   });
 }
@@ -75,12 +76,19 @@ export function hexAlpha(color, percent = 0.5) {
  * @return {array} array of matched values
  */
 export function matchColors(colorInput) {
-  return colorInput.match(matchRegex) || [];
+  const browserColors = Object.keys(browserColorsList)
+    .filter((color) => {
+      return colorInput.match(color);
+    })
+    .map((color) => browserColorsList[color]);
+  const regexMatches = colorInput.match(matchRegex) || [];
+
+  return regexMatches.concat(browserColors);
 }
 
 export function format2hex(color) {
   const hex = isColorRgb(color) ? dec2hex(color) : color;
-  return hex.replace(/['#]/gi, "").toUpperCase();
+  return hex.replace(/['#]/gi, '').toUpperCase();
 }
 
 export function copyText(event) {
@@ -97,10 +105,10 @@ export function copyText(event) {
 
   // Can only copy text from an HTMLInputElement
   // Create an input, add the text to copy and remove input element
-  const inputEl = document.createElement("input");
+  const inputEl = document.createElement('input');
   inputEl.value = textContent;
   document.body.appendChild(inputEl);
   inputEl.select();
-  document.execCommand("copy");
+  document.execCommand('copy');
   document.body.removeChild(inputEl);
 }
