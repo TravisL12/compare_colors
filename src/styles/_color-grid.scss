@@ -19,19 +19,17 @@
 }
 
 .compare-color-options {
-  .color-inputs {
-    @include flex;
+  input[type='color'] {
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+  }
 
-    input[type="color"] {
-      padding: 0;
-      margin: 0;
-      background: transparent;
-    }
-
-    input[type="text"] {
-      width: 50px;
-      text-align: center;
-    }
+  input[type='text'] {
+    width: 60px;
+    text-align: center;
   }
 }
 
@@ -52,15 +50,15 @@
 }
 
 .distance-options {
-  input[type="radio"] {
+  input[type='radio'] {
     display: none;
   }
 
-  input[type="radio"] + label {
+  input[type='radio'] + label {
     @extend %label;
   }
 
-  input[type="radio"]:checked + label {
+  input[type='radio']:checked + label {
     @extend %checked;
   }
 }

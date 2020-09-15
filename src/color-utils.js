@@ -1,5 +1,5 @@
 import Color from './models/color';
-import browserColorsList from './browserColorsList';
+import { browserColorsNameKey } from './browserColorsList';
 
 const matchRegex = new RegExp(
   /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){6})/,
@@ -76,11 +76,11 @@ export function hexAlpha(color, percent = 0.5) {
  * @return {array} array of matched values
  */
 export function matchColors(colorInput) {
-  const browserColors = Object.keys(browserColorsList)
+  const browserColors = Object.keys(browserColorsNameKey)
     .filter((color) => {
       return colorInput.match(color);
     })
-    .map((color) => browserColorsList[color]);
+    .map((color) => browserColorsNameKey[color]);
   const regexMatches = colorInput.match(matchRegex) || [];
 
   return regexMatches.concat(browserColors);

@@ -1,22 +1,25 @@
-import React, { useState } from "react";
-import Color from "./models/color";
-import ColorItem from "./ColorItem";
-import GridControls from "./GridControls";
-import { distanceDelta, distanceChromatic } from "./distance-utils";
+import React, { useState } from 'react';
+import Color from './models/color';
+import ColorItem from './ColorItem';
+import GridControls from './GridControls';
+import { distanceDelta, distanceChromatic } from './distance-utils';
+import { browserColorsNameKey } from './browserColorsList';
 
 function ColorGrid({ colors, removeColor, resetColorDisplay }) {
-  const [compareColor, setCompareColor] = useState(new Color("000000"));
+  const [compareColor, setCompareColor] = useState(new Color('000000'));
   const [areColorsSorted, setAreColorsSorted] = useState(false);
   const [showInfo, setShowInfo] = useState(true);
-  const [sortMethod, setSortMethod] = useState("distanceChromatic");
+  const [sortMethod, setSortMethod] = useState('distanceChromatic');
 
   const sortTypes = {
     distanceDelta,
-    distanceChromatic
+    distanceChromatic,
   };
 
   const updateCompareColor = ({ target: { value } }) => {
-    setCompareColor(new Color(value));
+    const browserColor = browserColorsNameKey[value.toLowerCase()];
+    const color = browserColor ? browserColor : value;
+    setCompareColor(new Color(color));
   };
 
   const toggle = {
@@ -24,7 +27,7 @@ function ColorGrid({ colors, removeColor, resetColorDisplay }) {
     info: () => setShowInfo(!showInfo),
     sort: ({ currentTarget: { value } }) => {
       setSortMethod(value);
-    }
+    },
   };
 
   const sortedColors = areColorsSorted
@@ -48,7 +51,7 @@ function ColorGrid({ colors, removeColor, resetColorDisplay }) {
         sortMethod={sortMethod}
         resetColorDisplay={resetColorDisplay}
       />
-      <div className={`display color-grid ${!showInfo ? "hideInfo" : ""}`}>
+      <div className={`display color-grid ${!showInfo ? 'hideInfo' : ''}`}>
         {sortedColors.map((color, idx) => {
           return (
             <ColorItem

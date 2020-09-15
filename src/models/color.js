@@ -1,20 +1,22 @@
-import { format2hex, hex2dec } from "../color-utils";
+import { format2hex, hex2dec } from '../color-utils';
+import { browserColorsHexKey } from '../browserColorsList';
 
 export default class Color {
-  constructor(color = "000000") {
+  constructor(color = '000000') {
     this.hexColor = format2hex(color);
     this.rgbColor = hex2dec(this.hexColor);
     this.createHsl();
     [this.red, this.blue, this.green] = this.rgbColor;
 
     this.hexString = `#${this.hexColor}`;
-    this.rgbString = `rgb(${[this.red, this.blue, this.green].join(",")})`;
+    this.rgbString = `rgb(${[this.red, this.blue, this.green].join(',')})`;
     this.hslString = `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
+    this.name = browserColorsHexKey[this.hexString];
   }
 
   // https://codepen.io/pankajparashar/pen/oFzIg
   createHsl() {
-    const rgb = this.rgbColor.map(i => i / 255);
+    const rgb = this.rgbColor.map((i) => i / 255);
     const r = rgb[0];
     const g = rgb[1];
     const b = rgb[2];

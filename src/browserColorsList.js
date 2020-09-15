@@ -1,4 +1,4 @@
-export default {
+export const browserColorsNameKey = {
   black: '#000000',
   navy: '#000080',
   darkblue: '#00008B',
@@ -148,3 +148,11 @@ export default {
   ivory: '#FFFFF0',
   white: '#FFFFFF',
 };
+
+export const browserColorsHexKey = Object.keys(browserColorsNameKey).reduce(
+  (acc, colorName) => {
+    acc[browserColorsNameKey[colorName]] = colorName;
+    return acc;
+  },
+  {}
+);

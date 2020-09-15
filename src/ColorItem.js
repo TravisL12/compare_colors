@@ -1,15 +1,15 @@
-import React from "react";
-import { shape, array, string, func } from "prop-types";
-import { copyText } from "./color-utils";
-
+import React from 'react';
+import { shape, array, string, func } from 'prop-types';
+import { copyText } from './color-utils';
+import { browserColorsHexKey } from './browserColorsList';
 function ColorItem({ color, remove, showInfo }) {
   const { hexColor, rgbColor } = color;
 
   const squareStyle = {
     color: `#${hexColor}`,
-    background: `#${hexColor}`
+    background: `#${hexColor}`,
   };
-
+  const browserColorName = browserColorsHexKey[`#${hexColor}`];
   return (
     <div className="color-container">
       {remove && (
@@ -19,7 +19,8 @@ function ColorItem({ color, remove, showInfo }) {
       {showInfo && (
         <div className="names">
           <p onClick={copyText}>#{hexColor}</p>
-          <p onClick={copyText}>rgb({rgbColor.join(",")})</p>
+          <p onClick={copyText}>rgb({rgbColor.join(',')})</p>
+          {browserColorName && <p>{browserColorName}</p>}
         </div>
       )}
     </div>
@@ -29,13 +30,13 @@ function ColorItem({ color, remove, showInfo }) {
 ColorItem.propTypes = {
   color: shape({
     hexColor: string.isRequired,
-    rgbColor: array.isRequired
+    rgbColor: array.isRequired,
   }).isRequired,
-  remove: func
+  remove: func,
 };
 
 ColorItem.defaultProps = {
-  remove: undefined
+  remove: undefined,
 };
 
 export default ColorItem;
