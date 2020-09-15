@@ -1,5 +1,4 @@
 import React from 'react';
-import ColorItem from './ColorItem';
 
 function GridControls({
   areColorsSorted,
