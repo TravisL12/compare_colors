@@ -552,3 +552,12 @@ gray 4	 	gray 4	#0A0A0A	10	10	10	657930
 gray 3	 	gray 3	#080808	8	8	8	526344
 gray 2	 	gray 2	#050505	5	5	5	328965
 gray 1	 	gray 1	#030303	3	3	3	197379`;
+
+export const smallTest = `
+const a = '#a000ff';
+othertext const b = '#f0f0fa';
+con = '#ff00ee';
+const c = '#fba1ff';
+const d = '#aaf0ff';
+const e = '#fd00ff';
+`;

@@ -3,7 +3,7 @@ import ColorGrid from "./ColorGrid";
 import "./styles/application.scss";
 import Color from "./models/color";
 import { matchColors, matchRegex } from "./color-utils";
-import { test } from "./testData";
+import { test, smallTest } from "./testData";
 import { distanceDelta } from "./distance-utils";
 import ContentEditable from "react-contenteditable";
 import { browserColorsNameKey } from "./browserColorsList";
@@ -27,7 +27,7 @@ class App extends Component {
   };
 
   testColors = () => {
-    this.setState({ colorInput: test }, this.parseColors);
+    this.setState({ colorInput: smallTest }, this.parseColors);
   };
 
   parseColors = () => {

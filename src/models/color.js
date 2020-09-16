@@ -11,6 +11,7 @@ export default class Color {
     this.hexString = `#${this.hexColor}`;
     this.rgbString = `rgb(${[this.red, this.blue, this.green].join(",")})`;
     this.hslString = `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
+
     if (browserColorsHexKey[this.hexString]) {
       this.name = browserColorsHexKey[this.hexString];
     }

@@ -1,9 +1,19 @@
-import Color from './models/color';
-import { browserColorsNameKey } from './browserColorsList';
+import Color from "./models/color";
+import { browserColorsNameKey } from "./browserColorsList";
 
 export const matchRegex = new RegExp(
-  /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){6})/,
-  'gi'
+  /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){3,6})/,
+  "gi"
+);
+
+// export const varMatchRegex = new RegExp(
+//   /(?<=const | var | let ).*(?=[\s+]?=[\s+]?['"]?(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){3,6})['"]?)/,
+//   "gi"
+// );
+
+export const varMatchRegex = new RegExp(
+  /(?<=const |var |let )([^\s=]+)\s?=\s?["']?(#\w*)["']?/,
+  "i"
 );
 
 /**
@@ -21,8 +31,8 @@ export function isColorRgb(color) {
  */
 export function dec2array(rgbColorStr) {
   return rgbColorStr
-    .replace(/[rgb()\s]/gi, '')
-    .split(',')
+    .replace(/[rgb()\s]/gi, "")
+    .split(",")
     .map((num) => parseInt(num, 10));
 }
 
@@ -34,7 +44,7 @@ export function dec2array(rgbColorStr) {
  */
 function dec2hex(rgbColor) {
   let color = rgbColor;
-  if (typeof rgbColor === 'string') {
+  if (typeof rgbColor === "string") {
     color = dec2array(color);
   }
 
@@ -43,7 +53,7 @@ function dec2hex(rgbColor) {
       const num = Number(c);
       return `0${num.toString(16)}`.slice(-2);
     })
-    .join('');
+    .join("");
 
   return format2hex(hex);
 }
@@ -81,14 +91,17 @@ export function matchColors(colorInput) {
       return colorInput.match(color);
     })
     .map((color) => browserColorsNameKey[color]);
+  const varRegexMatches = varMatchRegex.exec(colorInput);
   const regexMatches = colorInput.match(matchRegex) || [];
+  console.log(varRegexMatches);
+  console.log(regexMatches);
 
   return regexMatches.concat(browserColors);
 }
 
 export function format2hex(color) {
   const hex = isColorRgb(color) ? dec2hex(color) : color;
-  return hex.replace(/['#]/gi, '').toUpperCase();
+  return hex.replace(/['#]/gi, "").toUpperCase();
 }
 
 export function copyText(event) {
@@ -105,10 +118,10 @@ export function copyText(event) {
 
   // Can only copy text from an HTMLInputElement
   // Create an input, add the text to copy and remove input element
-  const inputEl = document.createElement('input');
+  const inputEl = document.createElement("input");
   inputEl.value = textContent;
   document.body.appendChild(inputEl);
   inputEl.select();
-  document.execCommand('copy');
+  document.execCommand("copy");
   document.body.removeChild(inputEl);
 }
