@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
-import ColorGrid from './ColorGrid';
-import './styles/application.scss';
-import Color from './models/color';
-import { matchColors, matchRegex } from './color-utils';
-import { test } from './testData';
-import { distanceDelta } from './distance-utils';
-import ContentEditable from 'react-contenteditable';
+import React, { Component } from "react";
+import ColorGrid from "./ColorGrid";
+import "./styles/application.scss";
+import Color from "./models/color";
+import { matchColors, matchRegex } from "./color-utils";
+import { test } from "./testData";
+import { distanceDelta } from "./distance-utils";
+import ContentEditable from "react-contenteditable";
+import { browserColorsNameKey } from "./browserColorsList";
 
 class App extends Component {
   state = {
-    colorInput: '',
+    colorInput: "",
     colors: [],
   };
 
@@ -18,7 +19,7 @@ class App extends Component {
   };
 
   resetInputDisplay = () => {
-    this.setState({ colorInput: '' });
+    this.setState({ colorInput: "" });
   };
 
   resetColorDisplay = () => {
@@ -37,21 +38,28 @@ class App extends Component {
 
     if (matchedColors.length === 0) return;
 
-    const inputEl = document.createElement('div');
+    // sanitize the HTML to not duplicate values
+    const inputEl = document.createElement("div");
     inputEl.innerHTML = colorInput;
     const strippedInput = inputEl.textContent;
 
-    const re = new RegExp(
-      `(${[...matchedColors].map(({ hexString }) => hexString).join('|')})`,
-      'gi'
-    );
-    const colorSplit = strippedInput.split(re);
+    const colorVals = matchedColors
+      .map(({ hexString, rgbString, hslString, name }) => {
+        const collection = [hexString, rgbString, hslString];
+        if (name) collection.push(name);
+        return collection;
+      })
+      .flat();
+
+    const re = new RegExp(`(${colorVals.join("|")})`, "gi");
+    const colorSplit = strippedInput.split(re).filter((val) => val);
 
     const colorDisplayedInput = colorSplit
       .map((str, idx) => {
-        if (matchRegex.test(str)) {
+        const colorMatch = browserColorsNameKey[str] || matchRegex.test(str);
+        if (colorMatch) {
           const dist = distanceDelta(new Color(str));
-          const textColor = dist > 70 ? 'black' : 'white';
+          const textColor = dist > 70 ? "black" : "white";
           return `<span
           class="tagged-color"
           id="${idx}"
@@ -61,7 +69,7 @@ class App extends Component {
 
         return str;
       })
-      .join('');
+      .join("");
 
     const existingHex = colors.map(({ hexColor }) => hexColor);
     const newColors = matchedColors.reduce((results, color) => {
