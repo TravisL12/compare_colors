@@ -59,7 +59,7 @@ class App extends Component {
         const colorMatch = browserColorsNameKey[str] || matchRegex.test(str);
         if (colorMatch) {
           const dist = distanceDelta(new Color(str));
-          const textColor = dist > 70 ? "black" : "white";
+          const textColor = dist > 70 ? "white" : "black";
           return `<span
           class="tagged-color"
           id="${idx}"

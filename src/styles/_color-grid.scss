@@ -4,22 +4,17 @@
 
   .color-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    grid-template-rows: repeat(auto-fill, 40px);
-    grid-column-gap: 3px;
-    grid-row-gap: 5px;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-rows: repeat(auto-fill, 100px);
     box-sizing: border-box;
     background: #444;
     width: 100%;
-
-    &.hideInfo {
-      grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
-    }
+    padding: 0;
   }
 }
 
 .compare-color-options {
-  input[type='color'] {
+  input[type="color"] {
     height: 40px;
     width: 40px;
     padding: 0;
@@ -27,7 +22,7 @@
     background: transparent;
   }
 
-  input[type='text'] {
+  input[type="text"] {
     width: 60px;
     text-align: center;
   }
@@ -50,15 +45,15 @@
 }
 
 .distance-options {
-  input[type='radio'] {
+  input[type="radio"] {
     display: none;
   }
 
-  input[type='radio'] + label {
+  input[type="radio"] + label {
     @extend %label;
   }
 
-  input[type='radio']:checked + label {
+  input[type="radio"]:checked + label {
     @extend %checked;
   }
 }

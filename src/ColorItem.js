@@ -1,7 +1,8 @@
-import React from 'react';
-import { shape, array, string, func } from 'prop-types';
-import { copyText } from './color-utils';
-import { browserColorsHexKey } from './browserColorsList';
+import React from "react";
+import { shape, array, string, func } from "prop-types";
+import { copyText } from "./color-utils";
+import { browserColorsHexKey } from "./browserColorsList";
+import { distanceDelta } from "./distance-utils";
 function ColorItem({ color, remove, showInfo }) {
   const { hexColor, rgbColor } = color;
 
@@ -10,19 +11,22 @@ function ColorItem({ color, remove, showInfo }) {
     background: `#${hexColor}`,
   };
   const browserColorName = browserColorsHexKey[`#${hexColor}`];
+  const textColor = distanceDelta(color) > 70 ? "black" : "white";
+
   return (
     <div className="color-container">
       {remove && (
         <div onClick={() => remove(hexColor)} className="delete-btn" />
       )}
-      <div className={`square`} style={squareStyle} />
-      {showInfo && (
-        <div className="names">
-          <p onClick={copyText}>#{hexColor}</p>
-          <p onClick={copyText}>rgb({rgbColor.join(',')})</p>
-          {browserColorName && <p>{browserColorName}</p>}
-        </div>
-      )}
+      <div className={`square`} style={squareStyle}>
+        {showInfo && (
+          <div className="names" style={{ color: textColor }}>
+            <p onClick={copyText}>#{hexColor}</p>
+            <p onClick={copyText}>rgb({rgbColor.join(",")})</p>
+            {browserColorName && <p onClick={copyText}>{browserColorName}</p>}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
