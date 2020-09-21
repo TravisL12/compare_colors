@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import ColorGrid from "./ColorGrid";
-import "./styles/application.scss";
-import Color from "./models/color";
-import { matchColors, matchRegex } from "./color-utils";
-import { test } from "./testData";
-import { distanceDelta } from "./distance-utils";
-import ContentEditable from "react-contenteditable";
-import { browserColorsNameKey } from "./browserColorsList";
+import React, { Component } from 'react';
+import ColorGrid from './ColorGrid';
+import './styles/application.scss';
+import Color from './models/color';
+import { matchColors, matchRegex } from './color-utils';
+import { test } from './testData';
+import { distanceDelta } from './distance-utils';
+import ContentEditable from 'react-contenteditable';
+import { browserColorsNameKey } from './browserColorsList';
 
 class App extends Component {
   state = {
-    colorInput: "",
+    colorInput: '',
     colors: [],
   };
 
@@ -19,7 +19,7 @@ class App extends Component {
   };
 
   resetInputDisplay = () => {
-    this.setState({ colorInput: "" });
+    this.setState({ colorInput: '' });
   };
 
   resetColorDisplay = () => {
@@ -33,13 +33,13 @@ class App extends Component {
   parseColors = () => {
     const { colorInput, colors } = this.state;
     const matchedColors = matchColors(colorInput).map(
-      (color) => new Color(color)
+      ({ color, name }) => new Color(color, name)
     );
 
     if (matchedColors.length === 0) return;
 
     // sanitize the HTML to not duplicate values
-    const inputEl = document.createElement("div");
+    const inputEl = document.createElement('div');
     inputEl.innerHTML = colorInput;
     const strippedInput = inputEl.textContent;
 
@@ -51,7 +51,7 @@ class App extends Component {
       })
       .flat();
 
-    const re = new RegExp(`(${colorVals.join("|")})`, "gi");
+    const re = new RegExp(`(${colorVals.join('|')})`, 'gi');
     const colorSplit = strippedInput.split(re).filter((val) => val);
 
     const colorDisplayedInput = colorSplit
@@ -59,7 +59,7 @@ class App extends Component {
         const colorMatch = browserColorsNameKey[str] || matchRegex.test(str);
         if (colorMatch) {
           const dist = distanceDelta(new Color(str));
-          const textColor = dist > 70 ? "black" : "white";
+          const textColor = dist > 70 ? 'black' : 'white';
           return `<span
           class="tagged-color"
           id="${idx}"
@@ -69,7 +69,7 @@ class App extends Component {
 
         return str;
       })
-      .join("");
+      .join('');
 
     const existingHex = colors.map(({ hexColor }) => hexColor);
     const newColors = matchedColors.reduce((results, color) => {

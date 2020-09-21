@@ -1,3 +1,35 @@
+export const testFile = `
+export const BLUE1 = '#4C7098';
+export const BLUE2 = '#5984B2';
+export const BLUE3 = '#699BD2';
+export const BLUE4 = '#79B2F1';
+export const BLUE5 = '#92CBFF';
+
+export const GREEN1 = '#268460';
+export const GREEN2 = '#2C9C71';
+export const GREEN3 = '#34B785';
+export const GREEN4 = '#57D09E';
+export const GREEN5 = '#7AE9B7';
+
+export const ORANGE1 = '#AD7A16';
+export const ORANGE2 = '#CB901A';
+export const ORANGE3 = '#EFA91E';
+export const ORANGE4 = '#FFC23C';
+export const ORANGE5 = '#FFDB5A';
+
+export const RED1 = '#AC341A';
+export const RED2 = '#CA3D1E';
+export const RED3 = '#EE4823';
+export const RED4 = '#FF6641';
+export const RED5 = '#FF845F';
+
+export const PURPLE1 = '#5F4795';
+export const PURPLE2 = '#7054AF';
+export const PURPLE3 = '#8463CE';
+export const PURPLE4 = '#9D81E7';
+export const PURPLE5 = '#B69AFF';
+`;
+
 export const test = `indian red	 	indian red	#B0171F	176	23	31	2037680
 crimson	 	crimson	#DC143C	220	20	60	3937500
 lightpink	 	lightpink	#FFB6C1	255	182	193	12695295
@@ -552,3 +584,134 @@ gray 4	 	gray 4	#0A0A0A	10	10	10	657930
 gray 3	 	gray 3	#080808	8	8	8	526344
 gray 2	 	gray 2	#050505	5	5	5	328965
 gray 1	 	gray 1	#030303	3	3	3	197379`;
+
+export const testGray = `
+sgi beet	 	sgi beet	#8E388E	142	56	142	9320590
+sgi slateblue	 	sgi slateblue	#7171C6	113	113	198	13005169
+sgi lightblue	 	sgi lightblue	#7D9EC0	125	158	192	12623485
+sgi teal	 	sgi teal	#388E8E	56	142	142	9342520
+sgi chartreuse	 	sgi chartreuse	#71C671	113	198	113	7456369
+sgi olivedrab	 	sgi olivedrab	#8E8E38	142	142	56	3706510
+sgi brightgray	 	sgi brightgray	#C5C1AA	197	193	170	11190725
+sgi salmon	 	sgi salmon	#C67171	198	113	113	7434694
+sgi darkgray	 	sgi darkgray	#555555	85	85	85	5592405
+sgi gray 12	 	sgi gray 12	#1E1E1E	30	30	30	1973790
+sgi gray 16	 	sgi gray 16	#282828	40	40	40	2631720
+sgi gray 32	 	sgi gray 32	#515151	81	81	81	5329233
+sgi gray 36	 	sgi gray 36	#5B5B5B	91	91	91	5987163
+sgi gray 52	 	sgi gray 52	#848484	132	132	132	8684676
+sgi gray 56	 	sgi gray 56	#8E8E8E	142	142	142	9342606
+sgi lightgray	 	sgi lightgray	#AAAAAA	170	170	170	11184810
+sgi gray 72	 	sgi gray 72	#B7B7B7	183	183	183	12040119
+sgi gray 76	 	sgi gray 76	#C1C1C1	193	193	193	12698049
+sgi gray 92	 	sgi gray 92	#EAEAEA	234	234	234	15395562
+sgi gray 96	 	sgi gray 96	#F4F4F4	244	244	244	16053492
+white*	 	white*	#FFFFFF	255	255	255	16777215
+white smoke (gray 96)	 	white smoke (gray 96)	#F5F5F5	245	245	245	16119285
+gainsboro	 	gainsboro	#DCDCDC	220	220	220	14474460
+lightgrey	 	lightgrey	#D3D3D3	211	211	211	13882323
+silver*	 	silver*	#C0C0C0	192	192	192	12632256
+darkgray	 	darkgray	#A9A9A9	169	169	169	11119017
+gray*	 	gray*	#808080	128	128	128	8421504
+dimgray (gray 42)	 	dimgray (gray 42)	#696969	105	105	105	6908265
+black*	 	black*	#000000	0	0	0	0
+gray 99	 	gray 99	#FCFCFC	252	252	252	16579836
+gray 98	 	gray 98	#FAFAFA	250	250	250	16448250
+gray 97	 	gray 97	#F7F7F7	247	247	247	16250871
+white smoke (gray 96)	 	white smoke (gray 96)	#F5F5F5	245	245	245	16119285
+gray 95	 	gray 95	#F2F2F2	242	242	242	15921906
+gray 94	 	gray 94	#F0F0F0	240	240	240	15790320
+gray 93	 	gray 93	#EDEDED	237	237	237	15592941
+gray 92	 	gray 92	#EBEBEB	235	235	235	15461355
+gray 91	 	gray 91	#E8E8E8	232	232	232	15263976
+gray 90	 	gray 90	#E5E5E5	229	229	229	15066597
+gray 89	 	gray 89	#E3E3E3	227	227	227	14935011
+gray 88	 	gray 88	#E0E0E0	224	224	224	14737632
+gray 87	 	gray 87	#DEDEDE	222	222	222	14606046
+gray 86	 	gray 86	#DBDBDB	219	219	219	14408667
+gray 85	 	gray 85	#D9D9D9	217	217	217	14277081
+gray 84	 	gray 84	#D6D6D6	214	214	214	14079702
+gray 83	 	gray 83	#D4D4D4	212	212	212	13948116
+gray 82	 	gray 82	#D1D1D1	209	209	209	13750737
+gray 81	 	gray 81	#CFCFCF	207	207	207	13619151
+gray 80	 	gray 80	#CCCCCC	204	204	204	13421772
+gray 79	 	gray 79	#C9C9C9	201	201	201	13224393
+gray 78	 	gray 78	#C7C7C7	199	199	199	13092807
+gray 77	 	gray 77	#C4C4C4	196	196	196	12895428
+gray 76	 	gray 76	#C2C2C2	194	194	194	12763842
+gray 75	 	gray 75	#BFBFBF	191	191	191	12566463
+gray 74	 	gray 74	#BDBDBD	189	189	189	12434877
+gray 73	 	gray 73	#BABABA	186	186	186	12237498
+gray 72	 	gray 72	#B8B8B8	184	184	184	12105912
+gray 71	 	gray 71	#B5B5B5	181	181	181	11908533
+gray 70	 	gray 70	#B3B3B3	179	179	179	11776947
+gray 69	 	gray 69	#B0B0B0	176	176	176	11579568
+gray 68	 	gray 68	#ADADAD	173	173	173	11382189
+gray 67	 	gray 67	#ABABAB	171	171	171	11250603
+gray 66	 	gray 66	#A8A8A8	168	168	168	11053224
+gray 65	 	gray 65	#A6A6A6	166	166	166	10921638
+gray 64	 	gray 64	#A3A3A3	163	163	163	10724259
+gray 63	 	gray 63	#A1A1A1	161	161	161	10592673
+gray 62	 	gray 62	#9E9E9E	158	158	158	10395294
+gray 61	 	gray 61	#9C9C9C	156	156	156	10263708
+gray 60	 	gray 60	#999999	153	153	153	10066329
+gray 59	 	gray 59	#969696	150	150	150	9868950
+gray 58	 	gray 58	#949494	148	148	148	9737364
+gray 57	 	gray 57	#919191	145	145	145	9539985
+gray 56	 	gray 56	#8F8F8F	143	143	143	9408399
+gray 55	 	gray 55	#8C8C8C	140	140	140	9211020
+gray 54	 	gray 54	#8A8A8A	138	138	138	9079434
+gray 53	 	gray 53	#878787	135	135	135	8882055
+gray 52	 	gray 52	#858585	133	133	133	8750469
+gray 51	 	gray 51	#828282	130	130	130	8553090
+gray 50	 	gray 50	#7F7F7F	127	127	127	8355711
+gray 49	 	gray 49	#7D7D7D	125	125	125	8224125
+gray 48	 	gray 48	#7A7A7A	122	122	122	8026746
+gray 47	 	gray 47	#787878	120	120	120	7895160
+gray 46	 	gray 46	#757575	117	117	117	7697781
+gray 45	 	gray 45	#737373	115	115	115	7566195
+gray 44	 	gray 44	#707070	112	112	112	7368816
+gray 43	 	gray 43	#6E6E6E	110	110	110	7237230
+gray 42	 	gray 42	#6B6B6B	107	107	107	7039851
+dimgray (gray 42)	 	dimgray (gray 42)	#696969	105	105	105	6908265
+gray 40	 	gray 40	#666666	102	102	102	6710886
+gray 39	 	gray 39	#636363	99	99	99	6513507
+gray 38	 	gray 38	#616161	97	97	97	6381921
+gray 37	 	gray 37	#5E5E5E	94	94	94	6184542
+gray 36	 	gray 36	#5C5C5C	92	92	92	6052956
+gray 35	 	gray 35	#595959	89	89	89	5855577
+gray 34	 	gray 34	#575757	87	87	87	5723991
+gray 33	 	gray 33	#545454	84	84	84	5526612
+gray 32	 	gray 32	#525252	82	82	82	5395026
+gray 31	 	gray 31	#4F4F4F	79	79	79	5197647
+gray 30	 	gray 30	#4D4D4D	77	77	77	5066061
+gray 29	 	gray 29	#4A4A4A	74	74	74	4868682
+gray 28	 	gray 28	#474747	71	71	71	4671303
+gray 27	 	gray 27	#454545	69	69	69	4539717
+gray 26	 	gray 26	#424242	66	66	66	4342338
+gray 25	 	gray 25	#404040	64	64	64	4210752
+gray 24	 	gray 24	#3D3D3D	61	61	61	4013373
+gray 23	 	gray 23	#3B3B3B	59	59	59	3881787
+gray 22	 	gray 22	#383838	56	56	56	3684408
+gray 21	 	gray 21	#363636	54	54	54	3552822
+gray 20	 	gray 20	#333333	51	51	51	3355443
+gray 19	 	gray 19	#303030	48	48	48	3158064
+gray 18	 	gray 18	#2E2E2E	46	46	46	3026478
+gray 17	 	gray 17	#2B2B2B	43	43	43	2829099
+gray 16	 	gray 16	#292929	41	41	41	2697513
+gray 15	 	gray 15	#262626	38	38	38	2500134
+gray 14	 	gray 14	#242424	36	36	36	2368548
+gray 13	 	gray 13	#212121	33	33	33	2171169
+gray 12	 	gray 12	#1F1F1F	31	31	31	2039583
+gray 11	 	gray 11	#1C1C1C	28	28	28	1842204
+gray 10	 	gray 10	#1A1A1A	26	26	26	1710618
+gray 9	 	gray 9	#171717	23	23	23	1513239
+gray 8	 	gray 8	#141414	20	20	20	1315860
+gray 7	 	gray 7	#121212	18	18	18	1184274
+gray 6	 	gray 6	#0F0F0F	15	15	15	986895
+gray 5	 	gray 5	#0D0D0D	13	13	13	855309
+gray 4	 	gray 4	#0A0A0A	10	10	10	657930
+gray 3	 	gray 3	#080808	8	8	8	526344
+gray 2	 	gray 2	#050505	5	5	5	328965
+gray 1	 	gray 1	#030303	3	3	3	197379
+`;

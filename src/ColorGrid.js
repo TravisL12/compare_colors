@@ -7,7 +7,7 @@ import { browserColorsNameKey } from './browserColorsList';
 
 function ColorGrid({ colors, removeColor, resetColorDisplay }) {
   const [compareColor, setCompareColor] = useState(new Color('000000'));
-  const [areColorsSorted, setAreColorsSorted] = useState(false);
+  const [areColorsSorted, setAreColorsSorted] = useState(true);
   const [showInfo, setShowInfo] = useState(true);
   const [sortMethod, setSortMethod] = useState('distanceChromatic');
 

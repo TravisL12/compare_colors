@@ -9,7 +9,7 @@ function ColorItem({ color, remove, showInfo }) {
     color: `#${hexColor}`,
     background: `#${hexColor}`,
   };
-  const browserColorName = browserColorsHexKey[`#${hexColor}`];
+  const browserColorName = color.name || browserColorsHexKey[`#${hexColor}`];
   return (
     <div className="color-container">
       {remove && (
@@ -20,7 +20,7 @@ function ColorItem({ color, remove, showInfo }) {
         <div className="names">
           <p onClick={copyText}>#{hexColor}</p>
           <p onClick={copyText}>rgb({rgbColor.join(',')})</p>
-          {browserColorName && <p>{browserColorName}</p>}
+          {browserColorName && <p onClick={copyText}>{browserColorName}</p>}
         </div>
       )}
     </div>
