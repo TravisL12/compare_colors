@@ -1,6 +1,8 @@
 $black: #444444;
-$gray: darkgray;
+$gray: rgb(212, 212, 212);
+$darkgray: rgb(133, 133, 133);
 $white: #ffffff;
+$bg-green: rgb(238, 255, 238);
 $app-padding: 20px;
 
 @mixin flex($major: center, $minor: center) {
@@ -14,16 +16,18 @@ $app-padding: 20px;
 }
 
 %label {
-  background: lightgray;
-  color: whitesmoke;
+  color: $darkgray;
   margin-top: 2px;
   padding: 6px 10px;
   width: 100px;
   text-align: left;
+  border: 1px solid $darkgray;
 }
 
 %checked {
   @extend %label;
-  background: limegreen;
-  color: green;
+  background: $bg-green;
+  color: $black;
+  font-weight: bold;
+  border: 1px solid inherit;
 }

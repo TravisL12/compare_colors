@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function GridControls({
   areColorsSorted,
@@ -30,17 +30,21 @@ function GridControls({
       </div>
 
       <div className="options sort-info-options">
-        <p>Options</p>
+        <p>Show Info</p>
+
+        <button className={showInfo ? "on" : "off"} onClick={toggle.info}>
+          Info {showInfo ? "on" : "off"}
+        </button>
+      </div>
+
+      <div className="options sort-info-options">
+        <p>Toggle Sorting</p>
 
         <button
-          className={areColorsSorted ? 'on' : 'off'}
+          className={areColorsSorted ? "on" : "off"}
           onClick={toggle.sorting}
         >
-          Sort {areColorsSorted ? 'on' : 'off'}
-        </button>
-
-        <button className={showInfo ? 'on' : 'off'} onClick={toggle.info}>
-          Info {showInfo ? 'on' : 'off'}
+          Sort {areColorsSorted ? "on" : "off"}
         </button>
       </div>
 
@@ -51,9 +55,9 @@ function GridControls({
           type="radio"
           id="compare-on"
           name="sortOption"
-          checked={sortMethod === 'distanceChromatic'}
+          checked={sortMethod === "distanceChromatic"}
           onChange={toggle.sort}
-          value={'distanceChromatic'}
+          value={"distanceChromatic"}
           disabled={!areColorsSorted}
         />
         <label htmlFor="compare-on">Chromatic</label>
@@ -62,18 +66,12 @@ function GridControls({
           type="radio"
           id="compare-off"
           name="sortOption"
-          checked={sortMethod === 'distanceDelta'}
+          checked={sortMethod === "distanceDelta"}
           onChange={toggle.sort}
-          value={'distanceDelta'}
+          value={"distanceDelta"}
           disabled={!areColorsSorted}
         />
         <label htmlFor="compare-off">DeltaE</label>
-      </div>
-
-      <div className="options">
-        <button className="action-btn" onClick={resetColorDisplay}>
-          Reset Colors
-        </button>
       </div>
     </div>
   );

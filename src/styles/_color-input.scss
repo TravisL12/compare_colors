@@ -2,13 +2,22 @@
   max-width: 700px;
 
   .options-container {
-    flex-direction: column;
-    justify-content: unset;
+    justify-content: space-between;
     align-items: unset;
 
     .title {
       @include flex(space-between);
       padding-bottom: 5px;
+    }
+
+    .options-reset-buttons {
+      @include flex("center", "flex-start");
+      gap: 2px;
+      flex-direction: column;
+
+      button {
+        width: 100px;
+      }
     }
   }
 
