@@ -8,6 +8,9 @@ import { distanceDelta } from "./distance-utils";
 import { browserColorsNameKey } from "./browserColorsList";
 
 class App extends Component {
+  highlightRef = React.createRef();
+  textRef = React.createRef();
+
   state = {
     colorInput: "",
     colorHighlight: null,
@@ -75,14 +78,12 @@ class App extends Component {
     const colorDisplayedInput = colorSplit.map((str, idx) => {
       const colorMatch = browserColorsNameKey[str] || matchRegex.test(str);
       if (colorMatch) {
-        const dist = distanceDelta(new Color(str));
-        const textColor = dist > 70 ? "black" : "white";
         return (
           <span
             className="tagged-color"
             key={idx}
             id={idx}
-            style={{ color: textColor, backgroundColor: str }}
+            style={{ color: str, backgroundColor: str }}
           >
             {str}
           </span>
@@ -93,6 +94,10 @@ class App extends Component {
     });
 
     return <div>{colorDisplayedInput}</div>;
+  };
+
+  updateScroll = (event) => {
+    this.highlightRef.current.scrollTop = event.target.scrollTop;
   };
 
   render() {
@@ -112,8 +117,12 @@ class App extends Component {
             </div>
           </div>
           <div className="display text-area">
-            <div className="color-highlight-layer">{colorHighlight}</div>
+            <div ref={this.highlightRef} className="color-highlight-layer">
+              {colorHighlight}
+            </div>
             <textarea
+              ref={this.textRef}
+              onScroll={this.updateScroll}
               className="color-textarea"
               onChange={this.updateTextArea}
               value={colorInput}
