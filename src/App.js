@@ -18,12 +18,8 @@ class App extends Component {
     this.setState({ colorInput }, this.parseColors);
   };
 
-  resetInputDisplay = () => {
-    this.setState({ colorInput: "" });
-  };
-
   resetColorDisplay = () => {
-    this.setState({ colors: [] });
+    this.setState({ colorInput: "", colorHighlight: null, colors: [] });
   };
 
   testColors = () => {
@@ -106,19 +102,13 @@ class App extends Component {
       <div className="app-container">
         <div className="col color-input-container">
           <div className="options-container">
-            <div>
-              <div className="title">
-                <p>Enter/Paste colors (hex or rgb)</p>
-              </div>
-
-              <button className="action-btn" onClick={this.parseColors}>
-                Parse Colors
-              </button>
-            </div>
+            <p className="title">
+              Enter or Paste colors (hex or rgb) below and they will be parsed
+              and displayed
+            </p>
             <div className="options-reset-buttons">
               <button onClick={this.testColors}>Test Data</button>
               <button onClick={this.resetColorDisplay}>Reset Colors</button>
-              <button onClick={this.resetInputDisplay}>Reset Text</button>
             </div>
           </div>
           <div className="display text-area">
