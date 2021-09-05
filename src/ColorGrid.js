@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import Color from './models/color';
-import ColorItem from './ColorItem';
-import GridControls from './GridControls';
-import { distanceDelta, distanceChromatic } from './distance-utils';
-import { browserColorsNameKey } from './browserColorsList';
+import React, { useState } from "react";
+import Color from "./models/color";
+import ColorItem from "./ColorItem";
+import GridControls from "./GridControls";
+import { distanceDelta, distanceChromatic } from "./distance-utils";
+import { browserColorsNameKey } from "./browserColorsList";
 
 function ColorGrid({ colors, removeColor, resetColorDisplay }) {
-  const [compareColor, setCompareColor] = useState(new Color('000000'));
+  const [compareColor, setCompareColor] = useState(new Color("000000"));
   const [areColorsSorted, setAreColorsSorted] = useState(true);
   const [showInfo, setShowInfo] = useState(true);
-  const [sortMethod, setSortMethod] = useState('distanceChromatic');
+  const [sortMethod, setSortMethod] = useState("distanceChromatic");
 
   const sortTypes = {
     distanceDelta,
@@ -23,9 +23,13 @@ function ColorGrid({ colors, removeColor, resetColorDisplay }) {
   };
 
   const toggle = {
-    sorting: () => setAreColorsSorted(!areColorsSorted),
     info: () => setShowInfo(!showInfo),
     sort: ({ currentTarget: { value } }) => {
+      if (value === "off") {
+        setAreColorsSorted(false);
+      } else {
+        setAreColorsSorted(true);
+      }
       setSortMethod(value);
     },
   };
@@ -51,7 +55,7 @@ function ColorGrid({ colors, removeColor, resetColorDisplay }) {
         sortMethod={sortMethod}
         resetColorDisplay={resetColorDisplay}
       />
-      <div className={`display color-grid ${!showInfo ? 'hideInfo' : ''}`}>
+      <div className={`display color-grid ${!showInfo ? "hideInfo" : ""}`}>
         {sortedColors.map((color, idx) => {
           return (
             <ColorItem

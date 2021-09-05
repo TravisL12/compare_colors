@@ -30,48 +30,46 @@ function GridControls({
       </div>
 
       <div className="options sort-info-options">
-        <p>Show Info</p>
+        <p>Details</p>
 
         <button className={showInfo ? "on" : "off"} onClick={toggle.info}>
-          Info {showInfo ? "on" : "off"}
-        </button>
-      </div>
-
-      <div className="options sort-info-options">
-        <p>Toggle Sorting</p>
-
-        <button
-          className={areColorsSorted ? "on" : "off"}
-          onClick={toggle.sorting}
-        >
-          Sort {areColorsSorted ? "on" : "off"}
+          {showInfo ? "On" : "Off"}
         </button>
       </div>
 
       <div className="options distance-options">
-        <p>Sorting Method?</p>
-
-        <input
-          type="radio"
-          id="compare-on"
-          name="sortOption"
-          checked={sortMethod === "distanceChromatic"}
-          onChange={toggle.sort}
-          value={"distanceChromatic"}
-          disabled={!areColorsSorted}
-        />
-        <label htmlFor="compare-on">Chromatic</label>
+        <p>Sorting</p>
 
         <input
           type="radio"
           id="compare-off"
           name="sortOption"
+          checked={sortMethod === "off"}
+          onChange={toggle.sort}
+          value={"off"}
+          disabled={!areColorsSorted}
+        />
+        <label htmlFor="compare-off">Off</label>
+
+        <input
+          type="radio"
+          id="compare-distanceChromatic"
+          name="sortOption"
+          checked={sortMethod === "distanceChromatic"}
+          onChange={toggle.sort}
+          value={"distanceChromatic"}
+        />
+        <label htmlFor="compare-distanceChromatic">Chromatic</label>
+
+        <input
+          type="radio"
+          id="compare-distanceDelta"
+          name="sortOption"
           checked={sortMethod === "distanceDelta"}
           onChange={toggle.sort}
           value={"distanceDelta"}
-          disabled={!areColorsSorted}
         />
-        <label htmlFor="compare-off">DeltaE</label>
+        <label htmlFor="compare-distanceDelta">DeltaE</label>
       </div>
     </div>
   );
