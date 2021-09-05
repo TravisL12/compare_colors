@@ -5,17 +5,17 @@ import Color from "./models/color";
 import { matchColors, matchRegex } from "./color-utils";
 import { test } from "./testData";
 import { distanceDelta } from "./distance-utils";
-import ContentEditable from "react-contenteditable";
 import { browserColorsNameKey } from "./browserColorsList";
 
 class App extends Component {
   state = {
     colorInput: "",
+    colorHighlight: null,
     colors: [],
   };
 
   updateTextArea = ({ target: { value: colorInput } }) => {
-    this.setState({ colorInput });
+    this.setState({ colorInput }, this.parseColors);
   };
 
   resetInputDisplay = () => {
@@ -31,45 +31,14 @@ class App extends Component {
   };
 
   parseColors = () => {
-    const { colorInput, colors } = this.state;
+    const { colors, colorInput } = this.state;
     const matchedColors = matchColors(colorInput).map(
       ({ color, name }) => new Color(color, name)
     );
 
-    if (matchedColors.length === 0) return;
-
-    // sanitize the HTML to not duplicate values
-    const inputEl = document.createElement("div");
-    inputEl.innerHTML = colorInput;
-    const strippedInput = inputEl.textContent;
-
-    const colorVals = matchedColors
-      .map(({ hexString, rgbString, hslString, name }) => {
-        const collection = [hexString, rgbString, hslString];
-        if (name) collection.push(name);
-        return collection;
-      })
-      .flat();
-
-    const re = new RegExp(`(${colorVals.join("|")})`, "gi");
-    const colorSplit = strippedInput.split(re).filter((val) => val);
-
-    const colorDisplayedInput = colorSplit
-      .map((str, idx) => {
-        const colorMatch = browserColorsNameKey[str] || matchRegex.test(str);
-        if (colorMatch) {
-          const dist = distanceDelta(new Color(str));
-          const textColor = dist > 70 ? "black" : "white";
-          return `<span
-          class="tagged-color"
-          id="${idx}"
-          style="color: ${textColor}; background-color: ${str};"
-        >${str}</span>`;
-        }
-
-        return str;
-      })
-      .join("");
+    if (matchedColors.length === 0) {
+      return;
+    }
 
     const existingHex = colors.map(({ hexColor }) => hexColor);
     const newColors = matchedColors.reduce((results, color) => {
@@ -84,9 +53,12 @@ class App extends Component {
       return results;
     }, []);
 
+    const updateStateColors = [...colors, ...newColors];
+    const colorHighlight = this.buildHighlight(updateStateColors);
+
     this.setState({
-      colors: [...colors, ...newColors],
-      colorInput: colorDisplayedInput,
+      colors: updateStateColors,
+      colorHighlight,
     });
   };
 
@@ -100,8 +72,49 @@ class App extends Component {
     this.setState({ colors });
   };
 
+  buildHighlight = (colors) => {
+    const { colorInput } = this.state;
+
+    const inputEl = document.createElement("div");
+    inputEl.innerHTML = colorInput;
+    const strippedInput = inputEl.textContent;
+
+    const colorVals = colors
+      .map(({ hexString, rgbString, hslString, name }) => {
+        const collection = [hexString, rgbString, hslString];
+        if (name) collection.push(name);
+        return collection;
+      })
+      .flat();
+
+    const re = new RegExp(`(${colorVals.join("|")})`, "gi");
+    const colorSplit = strippedInput.split(re).filter((val) => val);
+
+    const colorDisplayedInput = colorSplit.map((str, idx) => {
+      const colorMatch = browserColorsNameKey[str] || matchRegex.test(str);
+      if (colorMatch) {
+        const dist = distanceDelta(new Color(str));
+        const textColor = dist > 70 ? "black" : "white";
+        return (
+          <span
+            className="tagged-color"
+            key={idx}
+            id={idx}
+            style={{ color: textColor, backgroundColor: str }}
+          >
+            {str}
+          </span>
+        );
+      }
+
+      return str;
+    });
+
+    return <div className="color-highlight-layer">{colorDisplayedInput}</div>;
+  };
+
   render() {
-    const { colors, colorInput } = this.state;
+    const { colors, colorInput, colorHighlight } = this.state;
 
     return (
       <div className="app-container">
@@ -122,11 +135,14 @@ class App extends Component {
               <button onClick={this.resetInputDisplay}>Reset Text</button>
             </div>
           </div>
-          <ContentEditable
-            className="display color-textarea"
-            onChange={this.updateTextArea}
-            html={colorInput}
-          />
+          <div className="display text-area">
+            {colorHighlight}
+            <textarea
+              className="color-textarea"
+              onChange={this.updateTextArea}
+              value={colorInput}
+            />
+          </div>
         </div>
         <ColorGrid removeColor={this.removeColor} colors={colors} />
       </div>
