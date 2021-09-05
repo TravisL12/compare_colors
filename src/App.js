@@ -37,6 +37,7 @@ class App extends Component {
     );
 
     if (matchedColors.length === 0) {
+      this.setState({ colors: [], colorHighlight: null });
       return;
     }
 
@@ -53,7 +54,7 @@ class App extends Component {
       return results;
     }, []);
 
-    const updateStateColors = [...colors, ...newColors];
+    const updateStateColors = newColors;
     const colorHighlight = this.buildHighlight(updateStateColors);
 
     this.setState({
@@ -110,7 +111,7 @@ class App extends Component {
       return str;
     });
 
-    return <div className="color-highlight-layer">{colorDisplayedInput}</div>;
+    return <div>{colorDisplayedInput}</div>;
   };
 
   render() {
@@ -136,7 +137,7 @@ class App extends Component {
             </div>
           </div>
           <div className="display text-area">
-            {colorHighlight}
+            <div className="color-highlight-layer">{colorHighlight}</div>
             <textarea
               className="color-textarea"
               onChange={this.updateTextArea}
