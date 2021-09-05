@@ -31,7 +31,7 @@ class App extends Component {
   };
 
   parseColors = () => {
-    const { colors, colorInput } = this.state;
+    const { colorInput } = this.state;
     const matchedColors = matchColors(colorInput).map(
       ({ color, name }) => new Color(color, name)
     );
@@ -41,24 +41,9 @@ class App extends Component {
       return;
     }
 
-    const existingHex = colors.map(({ hexColor }) => hexColor);
-    const newColors = matchedColors.reduce((results, color) => {
-      const { hexColor } = color;
-      const hasDuplicateEntry = results.find(
-        (color) => color.hexColor === hexColor
-      );
-
-      if (!existingHex.includes(hexColor) && !hasDuplicateEntry) {
-        results.push(color);
-      }
-      return results;
-    }, []);
-
-    const updateStateColors = newColors;
-    const colorHighlight = this.buildHighlight(updateStateColors);
-
+    const colorHighlight = this.buildHighlight(matchedColors);
     this.setState({
-      colors: updateStateColors,
+      colors: matchedColors,
       colorHighlight,
     });
   };
