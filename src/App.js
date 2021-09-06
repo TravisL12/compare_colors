@@ -4,7 +4,6 @@ import "./styles/application.scss";
 import Color from "./models/color";
 import { matchColors, matchRegex } from "./color-utils";
 import { test } from "./testData";
-import { distanceDelta } from "./distance-utils";
 import { browserColorsNameKey } from "./browserColorsList";
 
 class App extends Component {
@@ -32,7 +31,7 @@ class App extends Component {
   parseColors = () => {
     const { colorInput } = this.state;
     const matchedColors = matchColors(colorInput).map(
-      ({ color, name }) => new Color(color, name)
+      ({ color, name }, id) => new Color(color, name, id)
     );
 
     if (matchedColors.length === 0) {
@@ -75,22 +74,31 @@ class App extends Component {
     const re = new RegExp(`(${colorVals.join("|")})`, "gi");
     const colorSplit = strippedInput.split(re).filter((val) => val);
 
-    const colorDisplayedInput = colorSplit.map((str, idx) => {
-      const colorMatch = browserColorsNameKey[str] || matchRegex.test(str);
+    const colorDisplayedInput = colorSplit.map((text, idx) => {
+      const colorMatch = browserColorsNameKey[text] || matchRegex.test(text);
       if (colorMatch) {
+        const findColor = colors.find((color) => {
+          const { hexString, rgbString, hslString, name } = color;
+          return [hexString, rgbString, hslString, name].includes(colorMatch);
+        });
+        const id = findColor && findColor.id ? findColor.id : idx;
         return (
           <span
             className="tagged-color"
             key={idx}
-            id={idx}
-            style={{ color: str, backgroundColor: str }}
+            id={id}
+            style={{
+              color: text,
+              backgroundColor: text,
+              borderRadius: "2px",
+            }}
           >
-            {str}
+            {text}
           </span>
         );
       }
 
-      return str;
+      return text;
     });
 
     return <div>{colorDisplayedInput}</div>;
@@ -126,6 +134,7 @@ class App extends Component {
               className="color-textarea"
               onChange={this.updateTextArea}
               value={colorInput}
+              spellCheck="false"
             />
           </div>
         </div>
