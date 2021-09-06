@@ -90,7 +90,6 @@ class App extends Component {
             style={{
               color: text,
               backgroundColor: text,
-              borderRadius: "2px",
             }}
           >
             {text}

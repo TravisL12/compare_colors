@@ -46,6 +46,7 @@
   .color-textarea {
     @extend %text-layer;
     z-index: 2;
+
     background: transparent;
   }
 }
