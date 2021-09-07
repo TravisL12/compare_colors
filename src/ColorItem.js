@@ -2,7 +2,7 @@ import React from "react";
 import { shape, array, string, func } from "prop-types";
 import { copyText } from "./color-utils";
 import { browserColorsHexKey } from "./browserColorsList";
-function ColorItem({ color, remove, showInfo }) {
+function ColorItem({ color, showInfo }) {
   const { hexColor, rgbColor } = color;
 
   const squareStyle = {

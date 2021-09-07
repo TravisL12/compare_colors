@@ -40,13 +40,13 @@
   .color-highlight-layer {
     @extend %text-layer;
     z-index: 1;
-    color: transparent;
   }
 
   .color-textarea {
     @extend %text-layer;
+    color: transparent;
     z-index: 2;
-
+    caret-color: black;
     background: transparent;
   }
 }

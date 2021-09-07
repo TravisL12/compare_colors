@@ -5,6 +5,7 @@ import Color from "./models/color";
 import { matchColors, matchRegex } from "./color-utils";
 import { test } from "./testData";
 import { browserColorsNameKey } from "./browserColorsList";
+import { uniqBy } from "lodash";
 
 class App extends Component {
   highlightRef = React.createRef();
@@ -38,10 +39,11 @@ class App extends Component {
       this.setState({ colors: [], colorHighlight: null });
       return;
     }
-
+    const colors = uniqBy(matchedColors, (x) => x.rgbString);
     const colorHighlight = this.buildHighlight(matchedColors);
+
     this.setState({
-      colors: matchedColors,
+      colors,
       colorHighlight,
     });
   };
@@ -75,20 +77,20 @@ class App extends Component {
     const colorSplit = strippedInput.split(re).filter((val) => val);
 
     const colorDisplayedInput = colorSplit.map((text, idx) => {
-      const colorMatch = browserColorsNameKey[text] || matchRegex.test(text);
+      const colorMatch =
+        browserColorsNameKey[text] || matchRegex.test(text) ? text : false;
       if (colorMatch) {
         const findColor = colors.find((color) => {
           const { hexString, rgbString, hslString, name } = color;
           return [hexString, rgbString, hslString, name].includes(colorMatch);
         });
-        const id = findColor && findColor.id ? findColor.id : idx;
         return (
           <span
             className="tagged-color"
             key={idx}
-            id={id}
+            id={findColor.id}
             style={{
-              color: text,
+              color: "white",
               backgroundColor: text,
             }}
           >
