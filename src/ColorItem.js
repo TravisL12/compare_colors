@@ -2,8 +2,8 @@ import React from "react";
 import { shape, array, string, func } from "prop-types";
 import { copyText } from "./color-utils";
 import { browserColorsHexKey } from "./browserColorsList";
-function ColorItem({ color, showInfo }) {
-  const { hexColor, rgbColor } = color;
+function ColorItem({ color, showInfo, showHighlight }) {
+  const { hexColor, rgbColor, id } = color;
 
   const squareStyle = {
     color: `#${hexColor}`,
@@ -12,7 +12,11 @@ function ColorItem({ color, showInfo }) {
   const browserColorName = color.name || browserColorsHexKey[`#${hexColor}`];
   return (
     <div className="color-container">
-      <div className={`square`} style={squareStyle} />
+      <div
+        className={`square`}
+        onClick={() => showHighlight(id)}
+        style={squareStyle}
+      />
       {showInfo && (
         <div className="names">
           <p onClick={copyText}>#{hexColor}</p>

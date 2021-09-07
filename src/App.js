@@ -117,6 +117,13 @@ class App extends Component {
     this.highlightRef.current.scrollTop = event.target.scrollTop;
   };
 
+  showHighlight = (id) => {
+    console.log("color id", id);
+    const color = document.getElementById(id);
+    color.style.background = "magenta";
+    color.scrollIntoView({ behavior: "smooth" });
+  };
+
   render() {
     const { colors, colorInput, colorHighlight } = this.state;
 
@@ -147,7 +154,11 @@ class App extends Component {
             />
           </div>
         </div>
-        <ColorGrid removeColor={this.removeColor} colors={colors} />
+        <ColorGrid
+          removeColor={this.removeColor}
+          colors={colors}
+          showHighlight={this.showHighlight}
+        />
       </div>
     );
   }

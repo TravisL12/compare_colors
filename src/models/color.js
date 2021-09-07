@@ -3,7 +3,7 @@ import { browserColorsHexKey } from "../browserColorsList";
 
 export default class Color {
   constructor(color = "000000", name, id) {
-    this.id = id;
+    this.id = id + 1;
     this.hexColor = format2hex(color);
     this.rgbColor = hex2dec(this.hexColor);
     this.createHsl();
