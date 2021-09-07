@@ -3,7 +3,7 @@ import { browserColorsNameKey } from "./browserColorsList";
 
 export const matchRegex = new RegExp(
   /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){6})/,
-  "gi"
+  "ig"
 );
 
 /**
@@ -82,9 +82,9 @@ export function matchColors(colorInput) {
     })
     .map((name) => ({ name, color: browserColorsNameKey[name] }));
 
-  const regexMatches =
-    (colorInput.match(matchRegex) || []).map((color) => ({ color })) || [];
-
+  const regexMatches = (colorInput.match(matchRegex) || []).map((color) => ({
+    color,
+  }));
   return regexMatches.concat(browserColors);
 }
 

@@ -6,7 +6,6 @@ import { matchColors, matchRegex } from "./color-utils";
 import { test } from "./testData";
 import { browserColorsNameKey } from "./browserColorsList";
 import { uniqBy } from "lodash";
-import { distanceDelta } from "./distance-utils";
 
 const App = () => {
   const highlightRef = useRef();
@@ -35,7 +34,8 @@ const App = () => {
   };
 
   const parseColors = () => {
-    const matchedColors = matchColors(colorInput.toLowerCase()).map(
+    const parsedColors = matchColors(colorInput.toLowerCase());
+    const matchedColors = parsedColors.map(
       ({ color, name }, id) => new Color(color, name, id)
     );
 
@@ -46,22 +46,16 @@ const App = () => {
     }
 
     const uniqColors = uniqBy(matchedColors, (x) => x.rgbString);
-    const colorHighlight = buildHighlight(matchedColors);
+    const colorHighlight = buildHighlight(parsedColors);
 
     setColors(uniqColors);
     setColorHighlight(colorHighlight);
   };
 
-  const buildHighlight = (matchedColors) => {
-    const colorVals = matchedColors
-      .map(({ hexString, rgbString, hslString, name }) => {
-        const collection = [hexString, rgbString, hslString];
-        if (name) collection.push(name);
-        return collection;
-      })
-      .flat();
+  const buildHighlight = (parsedColors) => {
+    const colorVals = parsedColors.map(({ name, color }) => name || color);
 
-    const re = new RegExp(`(${colorVals.join("|")})`, "gi");
+    const re = new RegExp(`(${colorVals.join("|")})`, "i");
     const colorSplit = colorInput.split(re).filter((val) => val);
     const colorDisplayedInput = colorSplit.map((text, idx) => {
       const lowCaseText = text.toLowerCase();
@@ -71,21 +65,13 @@ const App = () => {
           : false;
 
       if (colorMatch) {
-        const findColor = matchedColors.find((color) => {
-          const { hexString, rgbString, hslString, name } = color;
-          return [hexString, rgbString, hslString, name]
-            .map((x) => (x ? x.toLowerCase() : x))
-            .includes(colorMatch.trim().toLowerCase());
-        });
-        const dist = findColor ? distanceDelta(findColor) : 0;
-        const textColor = dist > 70 ? "black" : "white";
         return (
           <span
             className="tagged-color"
             key={idx}
-            id={findColor ? findColor.id : idx}
+            id={idx}
             style={{
-              color: textColor,
+              color: "white",
               backgroundColor: text,
             }}
           >
