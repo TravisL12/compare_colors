@@ -6,7 +6,7 @@ import { distanceDelta, distanceChromatic } from "./distance-utils";
 import { browserColorsNameKey } from "./browserColorsList";
 import { SORT_OFF } from "./constants";
 
-function ColorGrid({ colors, removeColor, resetColorDisplay }) {
+function ColorGrid({ colors, resetColorDisplay }) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));
   const [showInfo, setShowInfo] = useState(true);
   const [sortMethod, setSortMethod] = useState(SORT_OFF);
@@ -53,14 +53,7 @@ function ColorGrid({ colors, removeColor, resetColorDisplay }) {
       />
       <div className={`display color-grid ${!showInfo ? "hideInfo" : ""}`}>
         {sortedColors.map((color, idx) => {
-          return (
-            <ColorItem
-              color={color}
-              showInfo={showInfo}
-              remove={removeColor}
-              key={idx}
-            />
-          );
+          return <ColorItem color={color} showInfo={showInfo} key={idx} />;
         })}
       </div>
     </div>
