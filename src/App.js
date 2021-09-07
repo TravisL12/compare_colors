@@ -69,6 +69,7 @@ const App = () => {
         browserColorsNameKey[lowCaseText] || matchRegex.test(lowCaseText)
           ? lowCaseText
           : false;
+
       if (colorMatch) {
         const findColor = matchedColors.find((color) => {
           const { hexString, rgbString, hslString, name } = color;
