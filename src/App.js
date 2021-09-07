@@ -52,13 +52,6 @@ const App = () => {
     setColorHighlight(colorHighlight);
   };
 
-  const removeColor = (hexColor) => {
-    const newColors = colors.filter((color) => {
-      return color.hexColor !== hexColor;
-    });
-    setColors(newColors);
-  };
-
   const buildHighlight = (matchedColors) => {
     const colorVals = matchedColors
       .map(({ hexString, rgbString, hslString, name }) => {
@@ -137,7 +130,7 @@ const App = () => {
           />
         </div>
       </div>
-      <ColorGrid removeColor={removeColor} colors={colors} />
+      <ColorGrid colors={colors} />
     </div>
   );
 };
