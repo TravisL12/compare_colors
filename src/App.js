@@ -6,6 +6,7 @@ import { matchColors, matchRegex } from "./color-utils";
 import { test } from "./testData";
 import { browserColorsNameKey } from "./browserColorsList";
 import { uniqBy } from "lodash";
+import { distanceDelta } from "./distance-utils";
 
 class App extends Component {
   highlightRef = React.createRef();
@@ -31,12 +32,12 @@ class App extends Component {
 
   parseColors = () => {
     const { colorInput } = this.state;
-    const matchedColors = matchColors(colorInput).map(
+    const matchedColors = matchColors(colorInput.toLowerCase()).map(
       ({ color, name }, id) => new Color(color, name, id)
     );
 
     if (matchedColors.length === 0) {
-      this.setState({ colors: [], colorHighlight: null });
+      this.setState({ colors: [], colorHighlight: colorInput });
       return;
     }
     const colors = uniqBy(matchedColors, (x) => x.rgbString);
@@ -76,21 +77,26 @@ class App extends Component {
     const re = new RegExp(`(${colorVals.join("|")})`, "gi");
     const colorSplit = strippedInput.split(re).filter((val) => val);
 
-    const colorDisplayedInput = colorSplit.map((text, idx) => {
+    const colorDisplayedInput = colorSplit.map((colorText, idx) => {
+      const text = colorText.toLowerCase();
       const colorMatch =
         browserColorsNameKey[text] || matchRegex.test(text) ? text : false;
       if (colorMatch) {
         const findColor = colors.find((color) => {
           const { hexString, rgbString, hslString, name } = color;
-          return [hexString, rgbString, hslString, name].includes(colorMatch);
+          return [hexString, rgbString, hslString, name]
+            .map((x) => (x ? x.toLowerCase() : x))
+            .includes(colorMatch.toLowerCase());
         });
+        const dist = distanceDelta(findColor);
+        const textColor = dist > 70 ? "black" : "white";
         return (
           <span
             className="tagged-color"
             key={idx}
             id={findColor.id}
             style={{
-              color: "white",
+              color: textColor,
               backgroundColor: text,
             }}
           >
