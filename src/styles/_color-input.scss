@@ -1,3 +1,19 @@
+%text-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 11px;
+  overflow-y: scroll;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  border: 1px solid;
+  padding: 6px;
+  background-color: $white;
+  width: 100%;
+}
+
 .color-input-container {
   max-width: 700px;
 
@@ -21,13 +37,16 @@
     }
   }
 
+  .color-highlight-layer {
+    @extend %text-layer;
+    z-index: 1;
+  }
+
   .color-textarea {
-    height: 100%;
-    width: 100%;
-    font-size: 11px;
-    box-sizing: border-box;
-    background-color: $white;
-    overflow-y: scroll;
-    white-space: pre-wrap;
+    @extend %text-layer;
+    color: transparent;
+    z-index: 2;
+    caret-color: black;
+    background: transparent;
   }
 }

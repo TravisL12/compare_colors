@@ -2,6 +2,7 @@
 
 * {
   box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -48,12 +49,12 @@ p {
   }
 
   .display {
+    position: relative;
     width: 100%;
     box-sizing: border-box;
     flex: 1;
     overflow: scroll;
     margin-top: 5px;
-    padding: 10px;
   }
 }
 

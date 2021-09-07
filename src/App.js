@@ -4,26 +4,26 @@ import "./styles/application.scss";
 import Color from "./models/color";
 import { matchColors, matchRegex } from "./color-utils";
 import { test } from "./testData";
-import { distanceDelta } from "./distance-utils";
-import ContentEditable from "react-contenteditable";
 import { browserColorsNameKey } from "./browserColorsList";
+import { uniqBy } from "lodash";
+import { distanceDelta } from "./distance-utils";
 
 class App extends Component {
+  highlightRef = React.createRef();
+  textRef = React.createRef();
+
   state = {
     colorInput: "",
+    colorHighlight: null,
     colors: [],
   };
 
   updateTextArea = ({ target: { value: colorInput } }) => {
-    this.setState({ colorInput });
-  };
-
-  resetInputDisplay = () => {
-    this.setState({ colorInput: "" });
+    this.setState({ colorInput }, this.parseColors);
   };
 
   resetColorDisplay = () => {
-    this.setState({ colors: [] });
+    this.setState({ colorInput: "", colorHighlight: null, colors: [] });
   };
 
   testColors = () => {
@@ -31,62 +31,21 @@ class App extends Component {
   };
 
   parseColors = () => {
-    const { colorInput, colors } = this.state;
-    const matchedColors = matchColors(colorInput).map(
-      ({ color, name }) => new Color(color, name)
+    const { colorInput } = this.state;
+    const matchedColors = matchColors(colorInput.toLowerCase()).map(
+      ({ color, name }, id) => new Color(color, name, id)
     );
 
-    if (matchedColors.length === 0) return;
-
-    // sanitize the HTML to not duplicate values
-    const inputEl = document.createElement("div");
-    inputEl.innerHTML = colorInput;
-    const strippedInput = inputEl.textContent;
-
-    const colorVals = matchedColors
-      .map(({ hexString, rgbString, hslString, name }) => {
-        const collection = [hexString, rgbString, hslString];
-        if (name) collection.push(name);
-        return collection;
-      })
-      .flat();
-
-    const re = new RegExp(`(${colorVals.join("|")})`, "gi");
-    const colorSplit = strippedInput.split(re).filter((val) => val);
-
-    const colorDisplayedInput = colorSplit
-      .map((str, idx) => {
-        const colorMatch = browserColorsNameKey[str] || matchRegex.test(str);
-        if (colorMatch) {
-          const dist = distanceDelta(new Color(str));
-          const textColor = dist > 70 ? "black" : "white";
-          return `<span
-          class="tagged-color"
-          id="${idx}"
-          style="color: ${textColor}; background-color: ${str};"
-        >${str}</span>`;
-        }
-
-        return str;
-      })
-      .join("");
-
-    const existingHex = colors.map(({ hexColor }) => hexColor);
-    const newColors = matchedColors.reduce((results, color) => {
-      const { hexColor } = color;
-      const hasDuplicateEntry = results.find(
-        (color) => color.hexColor === hexColor
-      );
-
-      if (!existingHex.includes(hexColor) && !hasDuplicateEntry) {
-        results.push(color);
-      }
-      return results;
-    }, []);
+    if (matchedColors.length === 0) {
+      this.setState({ colors: [], colorHighlight: colorInput });
+      return;
+    }
+    const colors = uniqBy(matchedColors, (x) => x.rgbString);
+    const colorHighlight = this.buildHighlight(matchedColors);
 
     this.setState({
-      colors: [...colors, ...newColors],
-      colorInput: colorDisplayedInput,
+      colors,
+      colorHighlight,
     });
   };
 
@@ -100,33 +59,91 @@ class App extends Component {
     this.setState({ colors });
   };
 
+  buildHighlight = (colors) => {
+    const { colorInput } = this.state;
+
+    const inputEl = document.createElement("div");
+    inputEl.innerHTML = colorInput;
+    const strippedInput = inputEl.textContent;
+
+    const colorVals = colors
+      .map(({ hexString, rgbString, hslString, name }) => {
+        const collection = [hexString, rgbString, hslString];
+        if (name) collection.push(name);
+        return collection;
+      })
+      .flat();
+
+    const re = new RegExp(`(${colorVals.join("|")})`, "gi");
+    const colorSplit = strippedInput.split(re).filter((val) => val);
+
+    const colorDisplayedInput = colorSplit.map((colorText, idx) => {
+      const text = colorText.toLowerCase();
+      const colorMatch =
+        browserColorsNameKey[text] || matchRegex.test(text) ? text : false;
+      if (colorMatch) {
+        const findColor = colors.find((color) => {
+          const { hexString, rgbString, hslString, name } = color;
+          return [hexString, rgbString, hslString, name]
+            .map((x) => (x ? x.toLowerCase() : x))
+            .includes(colorMatch.toLowerCase());
+        });
+        const dist = distanceDelta(findColor);
+        const textColor = dist > 70 ? "black" : "white";
+        return (
+          <span
+            className="tagged-color"
+            key={idx}
+            id={findColor.id}
+            style={{
+              color: textColor,
+              backgroundColor: text,
+            }}
+          >
+            {text}
+          </span>
+        );
+      }
+
+      return text;
+    });
+
+    return <div>{colorDisplayedInput}</div>;
+  };
+
+  updateScroll = (event) => {
+    this.highlightRef.current.scrollTop = event.target.scrollTop;
+  };
+
   render() {
-    const { colors, colorInput } = this.state;
+    const { colors, colorInput, colorHighlight } = this.state;
 
     return (
       <div className="app-container">
         <div className="col color-input-container">
           <div className="options-container">
-            <div>
-              <div className="title">
-                <p>Enter/Paste colors (hex or rgb)</p>
-              </div>
-
-              <button className="action-btn" onClick={this.parseColors}>
-                Parse Colors
-              </button>
-            </div>
+            <p className="title">
+              Enter or Paste colors (hex or rgb) below and they will be parsed
+              and displayed
+            </p>
             <div className="options-reset-buttons">
               <button onClick={this.testColors}>Test Data</button>
               <button onClick={this.resetColorDisplay}>Reset Colors</button>
-              <button onClick={this.resetInputDisplay}>Reset Text</button>
             </div>
           </div>
-          <ContentEditable
-            className="display color-textarea"
-            onChange={this.updateTextArea}
-            html={colorInput}
-          />
+          <div className="display text-area">
+            <div ref={this.highlightRef} className="color-highlight-layer">
+              {colorHighlight}
+            </div>
+            <textarea
+              ref={this.textRef}
+              onScroll={this.updateScroll}
+              className="color-textarea"
+              onChange={this.updateTextArea}
+              value={colorInput}
+              spellCheck="false"
+            />
+          </div>
         </div>
         <ColorGrid removeColor={this.removeColor} colors={colors} />
       </div>

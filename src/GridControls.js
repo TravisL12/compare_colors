@@ -1,4 +1,5 @@
 import React from "react";
+import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "./constants";
 
 function GridControls({
   areColorsSorted,
@@ -46,7 +47,7 @@ function GridControls({
           name="sortOption"
           checked={sortMethod === "off"}
           onChange={toggle.sort}
-          value={"off"}
+          value={SORT_OFF}
           disabled={!areColorsSorted}
         />
         <label htmlFor="compare-off">Off</label>
@@ -57,7 +58,7 @@ function GridControls({
           name="sortOption"
           checked={sortMethod === "distanceChromatic"}
           onChange={toggle.sort}
-          value={"distanceChromatic"}
+          value={SORT_CHROMATIC}
         />
         <label htmlFor="compare-distanceChromatic">Chromatic</label>
 
@@ -67,7 +68,7 @@ function GridControls({
           name="sortOption"
           checked={sortMethod === "distanceDelta"}
           onChange={toggle.sort}
-          value={"distanceDelta"}
+          value={SORT_DELTA}
         />
         <label htmlFor="compare-distanceDelta">DeltaE</label>
       </div>

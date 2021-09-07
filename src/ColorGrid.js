@@ -4,12 +4,13 @@ import ColorItem from "./ColorItem";
 import GridControls from "./GridControls";
 import { distanceDelta, distanceChromatic } from "./distance-utils";
 import { browserColorsNameKey } from "./browserColorsList";
+import { SORT_OFF } from "./constants";
 
 function ColorGrid({ colors, removeColor, resetColorDisplay }) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));
-  const [areColorsSorted, setAreColorsSorted] = useState(true);
   const [showInfo, setShowInfo] = useState(true);
-  const [sortMethod, setSortMethod] = useState("distanceChromatic");
+  const [sortMethod, setSortMethod] = useState(SORT_OFF);
+  const areColorsSorted = sortMethod !== SORT_OFF;
 
   const sortTypes = {
     distanceDelta,
@@ -25,11 +26,6 @@ function ColorGrid({ colors, removeColor, resetColorDisplay }) {
   const toggle = {
     info: () => setShowInfo(!showInfo),
     sort: ({ currentTarget: { value } }) => {
-      if (value === "off") {
-        setAreColorsSorted(false);
-      } else {
-        setAreColorsSorted(true);
-      }
       setSortMethod(value);
     },
   };
