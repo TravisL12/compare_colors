@@ -10,8 +10,8 @@ export default class Color {
     [this.red, this.blue, this.green] = this.rgbColor;
 
     this.hexString = `#${this.hexColor}`;
-    this.rgbString = `rgb(${[this.red, this.blue, this.green].join(",")})`;
-    this.hslString = `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
+    this.rgbString = `rgb(${this.red},${this.blue},${this.green})`;
+    this.hslString = `hsl(${this.hue},${this.saturation}%,${this.lightness}%)`;
 
     if (name) {
       this.name = name;

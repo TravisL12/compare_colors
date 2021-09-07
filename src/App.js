@@ -60,10 +60,6 @@ const App = () => {
   };
 
   const buildHighlight = (matchedColors) => {
-    const inputEl = document.createElement("div");
-    inputEl.innerHTML = colorInput;
-    const strippedInput = inputEl.textContent;
-
     const colorVals = matchedColors
       .map(({ hexString, rgbString, hslString, name }) => {
         const collection = [hexString, rgbString, hslString];
@@ -73,8 +69,7 @@ const App = () => {
       .flat();
 
     const re = new RegExp(`(${colorVals.join("|")})`, "gi");
-    const colorSplit = strippedInput.split(re).filter((val) => val);
-
+    const colorSplit = colorInput.split(re).filter((val) => val);
     const colorDisplayedInput = colorSplit.map((text, idx) => {
       const lowCaseText = text.toLowerCase();
       const colorMatch =
@@ -86,15 +81,15 @@ const App = () => {
           const { hexString, rgbString, hslString, name } = color;
           return [hexString, rgbString, hslString, name]
             .map((x) => (x ? x.toLowerCase() : x))
-            .includes(colorMatch.toLowerCase());
+            .includes(colorMatch.trim().toLowerCase());
         });
-        const dist = distanceDelta(findColor);
+        const dist = findColor ? distanceDelta(findColor) : 0;
         const textColor = dist > 70 ? "black" : "white";
         return (
           <span
             className="tagged-color"
             key={idx}
-            id={findColor.id}
+            id={findColor ? findColor.id : idx}
             style={{
               color: textColor,
               backgroundColor: text,

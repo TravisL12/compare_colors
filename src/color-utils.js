@@ -6,29 +6,6 @@ export const matchRegex = new RegExp(
   "gi"
 );
 
-const groupColors = (text) => {
-  let idx = 0;
-  let count = 0;
-  const BREAK_LOOP = 5000;
-  const groups = [];
-  const re = new RegExp(
-    /(?<= const | var | let )([^\s=]+)\s?=\s?["']?(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){6})["']?/,
-    "i"
-  );
-
-  while (count < BREAK_LOOP && idx >= 0) {
-    const match = text.slice(idx).match(re);
-    if (match && match.index) {
-      groups.push({ name: match[1], color: match[2] });
-      idx = match.index + idx;
-    } else {
-      idx = -1;
-    }
-    count++;
-  }
-  return groups;
-};
-
 /**
  *
  * @param {string} color
@@ -99,21 +76,16 @@ export function hexAlpha(color, percent = 0.5) {
  * @return {array} array of matched values
  */
 export function matchColors(colorInput) {
-  const groups = groupColors(colorInput);
-  const groupedColors = groups.map(({ color }) => color);
-
   const browserColors = Object.keys(browserColorsNameKey)
     .filter((color) => {
       return colorInput.match(color);
     })
-    .map((name) => ({ name, color: browserColorsNameKey[name] }))
-    .filter(({ color }) => !groupedColors.includes(color));
+    .map((name) => ({ name, color: browserColorsNameKey[name] }));
 
-  const regexMatches = (
-    (colorInput.match(matchRegex) || []).map((color) => ({ color })) || []
-  ).filter(({ color }) => !groupedColors.includes(color));
+  const regexMatches =
+    (colorInput.match(matchRegex) || []).map((color) => ({ color })) || [];
 
-  return regexMatches.concat(browserColors).concat(groups);
+  return regexMatches.concat(browserColors);
 }
 
 export function format2hex(color) {
