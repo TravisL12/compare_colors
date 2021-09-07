@@ -77,16 +77,18 @@ class App extends Component {
     const re = new RegExp(`(${colorVals.join("|")})`, "gi");
     const colorSplit = strippedInput.split(re).filter((val) => val);
 
-    const colorDisplayedInput = colorSplit.map((colorText, idx) => {
-      const text = colorText.toLowerCase();
+    const colorDisplayedInput = colorSplit.map((text, idx) => {
+      const lowerText = text.toLowerCase();
       const colorMatch =
-        browserColorsNameKey[text] || matchRegex.test(text) ? text : false;
+        browserColorsNameKey[lowerText] || matchRegex.test(lowerText)
+          ? lowerText
+          : false;
       if (colorMatch) {
         const findColor = colors.find((color) => {
           const { hexString, rgbString, hslString, name } = color;
           return [hexString, rgbString, hslString, name]
             .map((x) => (x ? x.toLowerCase() : x))
-            .includes(colorMatch.toLowerCase());
+            .includes(colorMatch);
         });
         const dist = distanceDelta(findColor);
         const textColor = dist > 70 ? "black" : "white";
