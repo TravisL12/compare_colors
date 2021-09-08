@@ -8,13 +8,10 @@ function GridControls({
   sortMethod,
   toggle,
   updateCompareColor,
-  resetColorDisplay,
 }) {
   return (
     <div className="options-container">
       <div className="options compare-color-options">
-        <p>Comparison</p>
-
         <input
           type="color"
           id="compare-color-type"
@@ -31,16 +28,12 @@ function GridControls({
       </div>
 
       <div className="options sort-info-options">
-        <p>Details</p>
-
         <button className={showInfo ? "on" : "off"} onClick={toggle.info}>
-          {showInfo ? "On" : "Off"}
+          {showInfo ? "Details On" : "Details Off"}
         </button>
       </div>
 
       <div className="options distance-options">
-        <p>Sorting</p>
-
         <input
           type="radio"
           id="compare-off"
@@ -50,7 +43,7 @@ function GridControls({
           value={SORT_OFF}
           disabled={!areColorsSorted}
         />
-        <label htmlFor="compare-off">Off</label>
+        <label htmlFor="compare-off">Sort Off</label>
 
         <input
           type="radio"
@@ -60,7 +53,7 @@ function GridControls({
           onChange={toggle.sort}
           value={SORT_CHROMATIC}
         />
-        <label htmlFor="compare-distanceChromatic">Chromatic</label>
+        <label htmlFor="compare-distanceChromatic">Chromatic Sort</label>
 
         <input
           type="radio"
@@ -70,7 +63,7 @@ function GridControls({
           onChange={toggle.sort}
           value={SORT_DELTA}
         />
-        <label htmlFor="compare-distanceDelta">DeltaE</label>
+        <label htmlFor="compare-distanceDelta">DeltaE Sort</label>
       </div>
     </div>
   );

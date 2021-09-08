@@ -1,7 +1,7 @@
 import Color from "../models/color";
 import { browserColorsByName } from "../browserColorsList";
 import { hexAlpha } from "./hexadecimal-utils";
-
+const COPY_FADE_DELAY = 500;
 const rgbRe = `rgb\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*\\)`;
 const hexRe = `#\\"?[a-f0-9]{6}\\"?`; // hex regex https://stackoverflow.com/questions/41258980/split-string-on-hex-colour
 const hslRe = `hsl\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}%\\s*,\\s*\\d{1,3}%\\s*\\)`;
@@ -35,10 +35,10 @@ export function copyText(event) {
 
   // Briefly have the element that was clicked glow with its color
   // to confirm the string has been copied
-  target.style.backgroundColor = `#${hexAlpha(color, 0.75)}`;
+  target.style.backgroundColor = `#${hexAlpha(color, 0.9)}`;
   setTimeout(() => {
     target.style.backgroundColor = null;
-  }, 250);
+  }, COPY_FADE_DELAY);
 
   // Can only copy text from an HTMLInputElement
   // Create an input, add the text to copy and remove input element

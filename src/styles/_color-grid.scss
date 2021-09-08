@@ -5,24 +5,25 @@
   .color-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    grid-template-rows: repeat(auto-fill, 40px);
+    grid-template-rows: repeat(auto-fill, $row-height);
     grid-column-gap: 3px;
     grid-row-gap: 5px;
     box-sizing: border-box;
-    background: $darkgray;
+    background: $white;
     padding: 10px;
     width: 100%;
+    border: 1px solid;
 
     &.hideInfo {
-      grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax($row-height, 1fr));
     }
   }
 }
 
 .compare-color-options {
   input[type="color"] {
-    height: 40px;
-    width: 40px;
+    height: $row-height;
+    width: $row-height;
     padding: 0;
     margin: 0;
     background: transparent;

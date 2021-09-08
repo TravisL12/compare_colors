@@ -18,9 +18,6 @@
   max-width: 700px;
 
   .options-container {
-    justify-content: space-between;
-    align-items: unset;
-
     .title {
       @include flex(space-between);
       padding-bottom: 5px;
@@ -48,5 +45,9 @@
     z-index: 2;
     caret-color: black;
     background: transparent;
+  }
+
+  textarea {
+    resize: none;
   }
 }
