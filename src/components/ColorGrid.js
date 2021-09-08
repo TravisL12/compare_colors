@@ -46,7 +46,6 @@ function ColorGrid({ colors, resetColorDisplay }) {
         toggle={toggle}
         updateCompareColor={updateCompareColor}
         compareColor={compareColor}
-        areColorsSorted={areColorsSorted}
         showInfo={showInfo}
         sortMethod={sortMethod}
         resetColorDisplay={resetColorDisplay}

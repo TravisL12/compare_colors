@@ -5,7 +5,7 @@ import styled from "styled-components";
 const SGridControl = styled.div`
   display: flex;
   flex-direction: column;
-  gap:
+  gap: 10px;
   width: 100%;
 `;
 
@@ -30,7 +30,6 @@ const SOptions = styled.div`
 `;
 
 function GridControls({
-  areColorsSorted,
   compareColor,
   showInfo,
   sortMethod,
@@ -70,7 +69,6 @@ function GridControls({
             checked={sortMethod === "off"}
             onChange={toggle.sort}
             value={SORT_OFF}
-            disabled={!areColorsSorted}
           />
           <label htmlFor="compare-off">Sort Off</label>
 
