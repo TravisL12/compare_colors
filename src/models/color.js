@@ -1,27 +1,39 @@
-import { browserColorsHexKey } from "../browserColorsList";
+import { browserColorsByName, browserColorsByHex } from "../browserColorsList";
 import { format2hex, hex2dec } from "../utilities/hexadecimal-utils";
-
+import { hslDec2array, isColorHsl } from "../utilities/hsl-utils";
 export default class Color {
-  constructor(color = "000000", name, id) {
+  constructor(color = "000000", id) {
     this.id = id + 1;
-    this.hexColor = format2hex(color);
+    this.initialColor = color;
+
+    if (browserColorsByName[color]) {
+      this.name = color;
+      this.initialColor = browserColorsByName[color];
+    }
+
+    if (browserColorsByHex[this.initialColor]) {
+      this.name = browserColorsByHex[this.hexString];
+    }
+
+    this.hexColor = format2hex(this.initialColor);
     this.rgbColor = hex2dec(this.hexColor);
-    this.createHsl();
+
+    if (isColorHsl(this.initialColor)) {
+      const [h, s, l] = hslDec2array(this.initialColor);
+      this.calculateHsl(h, s, l);
+    } else {
+      this.generateHsl();
+    }
+
     [this.red, this.blue, this.green] = this.rgbColor;
 
     this.hexString = `#${this.hexColor}`;
     this.rgbString = `rgb(${this.red},${this.blue},${this.green})`;
     this.hslString = `hsl(${this.hue},${this.saturation}%,${this.lightness}%)`;
-
-    if (name) {
-      this.name = name;
-    } else if (browserColorsHexKey[this.hexString]) {
-      this.name = browserColorsHexKey[this.hexString];
-    }
   }
 
   // https://codepen.io/pankajparashar/pen/oFzIg
-  createHsl() {
+  generateHsl() {
     const [r, g, b] = this.rgbColor.map((i) => i / 255);
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
@@ -50,6 +62,10 @@ export default class Color {
       h /= 6;
     }
 
+    this.calculateHsl(h, s, l);
+  }
+
+  calculateHsl(h, s, l) {
     this.hue = (h * 360 + 0.5) | 0;
     this.saturation = (s * 100 + 0.5) | 0;
     this.lightness = (l * 100 + 0.5) | 0;

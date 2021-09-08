@@ -1,6 +1,6 @@
 import React from "react";
 import { copyText } from "../utilities/color-utils";
-import { browserColorsHexKey } from "../browserColorsList";
+import { browserColorsByHex } from "../browserColorsList";
 
 function ColorItem({ color, showInfo }) {
   const { hexColor, rgbColor, id, hue, saturation, lightness } = color;
@@ -10,7 +10,7 @@ function ColorItem({ color, showInfo }) {
     background: `#${hexColor}`,
   };
 
-  const browserColorName = color.name || browserColorsHexKey[`#${hexColor}`];
+  const browserColorName = color.name || browserColorsByHex[`#${hexColor}`];
   return (
     <div className="color-container">
       <div className={`square`} style={squareStyle} />

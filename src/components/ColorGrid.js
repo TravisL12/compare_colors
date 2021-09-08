@@ -3,7 +3,7 @@ import Color from "../models/color";
 import ColorItem from "./ColorItem";
 import GridControls from "./GridControls";
 import { distanceDelta, distanceChromatic } from "../utilities/distance-utils";
-import { browserColorsNameKey } from "../browserColorsList";
+import { browserColorsByName } from "../browserColorsList";
 import { SORT_OFF } from "../constants";
 
 function ColorGrid({ colors, resetColorDisplay }) {
@@ -18,7 +18,7 @@ function ColorGrid({ colors, resetColorDisplay }) {
   };
 
   const updateCompareColor = ({ target: { value } }) => {
-    const browserColor = browserColorsNameKey[value.toLowerCase()];
+    const browserColor = browserColorsByName[value.toLowerCase()];
     const color = browserColor ? browserColor : value;
     setCompareColor(new Color(color));
   };

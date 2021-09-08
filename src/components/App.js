@@ -7,10 +7,10 @@ import {
   matchColors,
   matchRegex,
 } from "../utilities/color-utils";
-import { testFile as test } from "../testData";
-import { browserColorsNameKey } from "../browserColorsList";
+import { test } from "../testData";
+import { browserColorsByName } from "../browserColorsList";
 import { uniqBy } from "lodash";
-import { distanceDelta } from "../utilities/distance-utils";
+import { distanceChromatic } from "../utilities/distance-utils";
 
 const App = () => {
   const highlightRef = useRef();
@@ -41,14 +41,13 @@ const App = () => {
   const parseColors = () => {
     const parsedColors = matchColors(colorInput.toLowerCase());
     const matchedColors = parsedColors.map(
-      ({ color, name }, id) => new Color(color, name, id)
+      ({ color, name }, id) => new Color(name || color, id)
     );
     if (matchedColors.length === 0) {
       setColors([]);
       setColorHighlight(colorInput);
       return;
     }
-
     const uniqColors = uniqBy(matchedColors, (x) => x.rgbString);
     const colorHighlight = buildHighlight(parsedColors, matchedColors);
 
@@ -65,7 +64,7 @@ const App = () => {
     const colorDisplayedInput = colorSplit.map((text, idx) => {
       const lowCaseText = text.toLowerCase();
       const colorMatch =
-        browserColorsNameKey[lowCaseText] || matchRegex.test(lowCaseText)
+        browserColorsByName[lowCaseText] || matchRegex.test(lowCaseText)
           ? lowCaseText
           : false;
 
@@ -76,8 +75,8 @@ const App = () => {
             .map((x) => (x ? x.toLowerCase() : x))
             .includes(colorMatch.trim().toLowerCase());
         });
-        const dist = findColor ? distanceDelta(findColor) : 0;
-        const textColor = dist > 70 ? "black" : "white";
+        const dist = findColor ? distanceChromatic(findColor) : 0;
+        const textColor = dist > 300 ? "black" : "white";
 
         return (
           <span

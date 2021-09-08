@@ -1,12 +1,12 @@
 import Color from "../models/color";
-import { browserColorsNameKey } from "../browserColorsList";
+import { browserColorsByName } from "../browserColorsList";
 import { hexAlpha } from "./hexadecimal-utils";
 
 const rgbRe = `rgb\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*\\)`;
 const hexRe = `#\\"?[a-f0-9]{6}\\"?`; // hex regex https://stackoverflow.com/questions/41258980/split-string-on-hex-colour
 const hslRe = `hsl\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}%\\s*,\\s*\\d{1,3}%\\s*\\)`;
 export const highlightRegex = (nameVals) =>
-  new RegExp(`(${rgbRe}|${hexRe}|${hslRe}|${nameVals.join("\\b|\\b")})`, "gi");
+  new RegExp(`(${rgbRe}|${hexRe}|${hslRe}|${nameVals.join("|")})`, "gi");
 
 export const matchRegex = new RegExp(`(${rgbRe}|${hexRe}|${hslRe})`, "gi");
 
@@ -16,11 +16,11 @@ export const matchRegex = new RegExp(`(${rgbRe}|${hexRe}|${hslRe})`, "gi");
  * @return {array} array of matched values
  */
 export function matchColors(colorInput) {
-  const browserColors = Object.keys(browserColorsNameKey)
+  const browserColors = Object.keys(browserColorsByName)
     .filter((color) => {
       return colorInput.match(color);
     })
-    .map((name) => ({ name, color: browserColorsNameKey[name] }));
+    .map((name) => ({ name, color: browserColorsByName[name] }));
 
   const regexMatches = (colorInput.match(matchRegex) || []).map((color) => ({
     color,
