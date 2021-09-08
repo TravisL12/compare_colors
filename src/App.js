@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ColorGrid from "./ColorGrid";
 import "./styles/application.scss";
 import Color from "./models/color";
-import { matchColors, matchRegex } from "./color-utils";
+import { highlightRegex, matchColors, matchRegex } from "./color-utils";
 import { test } from "./testData";
 import { browserColorsNameKey } from "./browserColorsList";
 import { uniqBy } from "lodash";
@@ -53,10 +53,11 @@ const App = () => {
   };
 
   const buildHighlight = (parsedColors) => {
-    const colorVals = parsedColors.map(({ name, color }) => name || color);
+    const colorVals = parsedColors.map(({ name }) => name).filter((x) => x);
+    const colorSplit = colorInput
+      .split(highlightRegex(colorVals))
+      .filter((x) => x);
 
-    const re = new RegExp(`(${colorVals.join("|")})`, "i");
-    const colorSplit = colorInput.split(re).filter((val) => val);
     const colorDisplayedInput = colorSplit.map((text, idx) => {
       const lowCaseText = text.toLowerCase();
       const colorMatch =
@@ -64,23 +65,21 @@ const App = () => {
           ? lowCaseText
           : false;
 
-      if (colorMatch) {
-        return (
-          <span
-            className="tagged-color"
-            key={idx}
-            id={idx}
-            style={{
-              color: "white",
-              backgroundColor: text,
-            }}
-          >
-            {text}
-          </span>
-        );
-      }
-
-      return text;
+      return !colorMatch ? (
+        text
+      ) : (
+        <span
+          className="tagged-color"
+          key={idx}
+          id={idx}
+          style={{
+            color: "white",
+            backgroundColor: text,
+          }}
+        >
+          {text}
+        </span>
+      );
     });
 
     return <div>{colorDisplayedInput}</div>;

@@ -1,6 +1,14 @@
 import Color from "./models/color";
 import { browserColorsNameKey } from "./browserColorsList";
 
+export const highlightRegex = (vals) =>
+  new RegExp(
+    `(rgb\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*\\)|#\\"?[a-f0-9]{6}\\"?|${vals.join(
+      "|"
+    )})`,
+    "gi"
+  );
+
 export const matchRegex = new RegExp(
   /(rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)|#([0-9]|[a-f]){6})/,
   "ig"
