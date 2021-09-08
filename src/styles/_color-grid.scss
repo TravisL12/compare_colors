@@ -20,21 +20,6 @@
   }
 }
 
-.compare-color-options {
-  input[type="color"] {
-    height: $row-height;
-    width: $row-height;
-    padding: 0;
-    margin: 0;
-    background: transparent;
-  }
-
-  input[type="text"] {
-    width: 60px;
-    text-align: center;
-  }
-}
-
 .sort-info-options {
   button {
     width: 100px;
