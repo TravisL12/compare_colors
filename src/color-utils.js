@@ -1,6 +1,7 @@
 import Color from "./models/color";
 import { browserColorsNameKey } from "./browserColorsList";
 
+// hex regex https://stackoverflow.com/questions/41258980/split-string-on-hex-colour
 export const highlightRegex = (vals) =>
   new RegExp(
     `(rgb\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*\\)|#\\"?[a-f0-9]{6}\\"?|${vals.join(
