@@ -1,4 +1,4 @@
-import Color from "./models/color";
+import Color from "../models/color";
 
 // Found at: https://github.com/antimatter15/rgb-lab/blob/master/color.js
 export function rgb2lab(rgb) {

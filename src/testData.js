@@ -1,4 +1,20 @@
 export const testFile = `
+hsl(69,33%,45%)
+
+hsl(59,97%,52%)
+
+hsl(19,54%,62%)
+
+hsl(159,81%,71%)
+
+hsl(58,100%,79%)
+hsl(44,95%,33%)
+hsl(44,56%,39%)
+hsl(255,56%,46%)
+hsl(113,56%,58%)
+hsl(42,72%,70%)
+hsl(11,77%,38%)
+
 export const BLUE1 = '#4C7098';
 export const BLUE2 = '#5984B2';
 export const BLUE3 = '#699BD2';
@@ -7,27 +23,23 @@ export const BLUE5 = '#92CBFF';
 
 export const GREEN1 = '#268460';
 export const GREEN2 = '#2C9C71';
-export const GREEN3 = '#34B785';
-export const GREEN4 = '#57D09E';
-export const GREEN5 = '#7AE9B7';
-
-export const ORANGE1 = '#AD7A16';
-export const ORANGE2 = '#CB901A';
-export const ORANGE3 = '#EFA91E';
-export const ORANGE4 = '#FFC23C';
-export const ORANGE5 = '#FFDB5A';
-
-export const RED1 = '#AC341A';
-export const RED2 = '#CA3D1E';
-export const RED3 = '#EE4823';
 export const RED4 = '#FF6641';
 export const RED5 = '#FF845F';
 
 export const PURPLE1 = '#5F4795';
 export const PURPLE2 = '#7054AF';
-export const PURPLE3 = '#8463CE';
-export const PURPLE4 = '#9D81E7';
-export const PURPLE5 = '#B69AFF';
+
+
+rgb(141,153,77)
+rgb(251,247,14)
+rgb(210,139,106)
+rgb(121,241,199)
+rgb(255,251,148)
+rgb(164,121,4)
+rgb(155,125,44)
+rgb(84,52,183)
+rgb(102,208,88)
+rgb(234,201,123
 `;
 
 export const test = `indian red	 	indian red	#B0171F	176	23	31	2037680

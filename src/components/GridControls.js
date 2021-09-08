@@ -1,5 +1,5 @@
 import React from "react";
-import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "./constants";
+import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "../constants";
 
 function GridControls({
   areColorsSorted,

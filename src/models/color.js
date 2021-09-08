@@ -1,9 +1,9 @@
-import { format2hex, hex2dec } from "../color-utils";
 import { browserColorsHexKey } from "../browserColorsList";
+import { format2hex, hex2dec } from "../utilities/hexadecimal-utils";
 
 export default class Color {
   constructor(color = "000000", name, id) {
-    this.id = id;
+    this.id = id + 1;
     this.hexColor = format2hex(color);
     this.rgbColor = hex2dec(this.hexColor);
     this.createHsl();
@@ -22,12 +22,9 @@ export default class Color {
 
   // https://codepen.io/pankajparashar/pen/oFzIg
   createHsl() {
-    const rgb = this.rgbColor.map((i) => i / 255);
-    const r = rgb[0];
-    const g = rgb[1];
-    const b = rgb[2];
-    const max = Math.max(...rgb);
-    const min = Math.min(...rgb);
+    const [r, g, b] = this.rgbColor.map((i) => i / 255);
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
     let h = 0;
     let s = 0;
     let l = (max + min) / 2;
@@ -53,7 +50,7 @@ export default class Color {
       h /= 6;
     }
 
-    this.hue = (h * 100 + 0.5) | 0;
+    this.hue = (h * 360 + 0.5) | 0;
     this.saturation = (s * 100 + 0.5) | 0;
     this.lightness = (l * 100 + 0.5) | 0;
   }

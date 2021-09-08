@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Color from "./models/color";
+import Color from "../models/color";
 import ColorItem from "./ColorItem";
 import GridControls from "./GridControls";
-import { distanceDelta, distanceChromatic } from "./distance-utils";
-import { browserColorsNameKey } from "./browserColorsList";
-import { SORT_OFF } from "./constants";
+import { distanceDelta, distanceChromatic } from "../utilities/distance-utils";
+import { browserColorsNameKey } from "../browserColorsList";
+import { SORT_OFF } from "../constants";
 
 function ColorGrid({ colors, resetColorDisplay }) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));
