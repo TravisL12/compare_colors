@@ -10,7 +10,7 @@ import { test } from "../testData";
 import { browserColorsByName } from "../browserColorsList";
 import { uniqBy } from "lodash";
 import { distanceChromatic } from "../utilities/distance-utils";
-import { SApp, SColumn, STextAreaDisplay } from "../styles/App.style";
+import { SApp, SColumn, SFlex, STextAreaDisplay } from "../styles/App.style";
 
 const App = () => {
   const highlightRef = useRef();
@@ -105,17 +105,19 @@ const App = () => {
   return (
     <SApp>
       <SColumn>
-        <div>
-          <h1>ChromaExtract</h1>
-          <p>
-            Enter or Paste colors (hex or rgb) below and they will be parsed and
-            displayed
-          </p>
+        <SFlex>
           <div>
+            <h1>ChromaExtract</h1>
+            <p>
+              Enter or Paste colors (hex or rgb) below and they will be parsed
+              and displayed
+            </p>
+          </div>
+          <SFlex column>
             <button onClick={testColors}>Test Data</button>
             <button onClick={resetColorDisplay}>Reset Colors</button>
-          </div>
-        </div>
+          </SFlex>
+        </SFlex>
         <STextAreaDisplay>
           <div ref={highlightRef} className="color-highlight-layer">
             {colorHighlight}

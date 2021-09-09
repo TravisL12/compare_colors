@@ -2,9 +2,7 @@ import styled from "styled-components";
 
 const black = "#444444";
 const gray = "rgb(212, 212, 212)";
-const darkgray = "rgb(133, 133, 133)";
 const white = "#ffffff";
-const bgGreen = "rgb(238, 255, 238)";
 const appPadding = "20px";
 const rowHeight = "50px";
 
@@ -23,6 +21,15 @@ const textLayer = `
   width: 100%;
 `;
 
+export const SFlex = styled.div`
+  display: flex;
+  flex-direction: ${(props) => (props.column ? "column" : "row")};
+  gap: ${(props) => (props.gap ? `${props.gap}px` : 0)};
+  justify-content: ${(props) => (props.justify ? props.justify : "flex-start")};
+  align-items: ${(props) =>
+    props.alignItems ? props.alignItems : "flex-start"};
+`;
+
 export const SApp = styled.div`
   display: flex;
   padding: ${appPadding};
@@ -30,25 +37,16 @@ export const SApp = styled.div`
   height: 100vh;
 `;
 
-export const SColumn = styled.div`
+export const SColumn = styled(SFlex)`
   position: relative;
-  display: flex;
   flex-direction: column;
+  gap: 10px;
   max-width: 1400px;
   width: 100%;
   height: 100%;
   background: ${gray};
   border-radius: 4px;
   padding: 10px;
-
-  .display {
-    position: relative;
-    width: 100%;
-    box-sizing: border-box;
-    flex: 1;
-    overflow: scroll;
-    margin-top: 5px;
-  }
 `;
 
 export const STextAreaDisplay = styled.div`
@@ -80,17 +78,6 @@ export const STextAreaDisplay = styled.div`
 export const SOptions = styled.div`
   display: flex;
   justify-content: space-between;
-
-  .options-reset-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 2px;
-    flex-direction: column;
-
-    button {
-      width: 100px;
-    }
-  }
 `;
 
 export const SColorGridDisplay = styled.div`
@@ -98,15 +85,15 @@ export const SColorGridDisplay = styled.div`
   grid-template-columns: ${(props) =>
     props.showInfo
       ? "repeat(auto-fill, minmax(150px, 1fr));"
-      : "repeat(auto-fill, minmax(40px, 1fr));"}
-  grid-template-rows: repeat(auto-fill, 40px);
+      : `repeat(auto-fill, minmax(${rowHeight}, 1fr));`}
+  grid-template-rows: repeat(auto-fill, ${rowHeight});
   grid-column-gap: 3px;
   grid-row-gap: 5px;
   box-sizing: border-box;
   background: white;
   padding: 10px;
   width: 100%;
-  border: 1px solid;
+  border: 1px solid ${black};
   flex: 1;
   overflow: auto;
 
@@ -122,8 +109,8 @@ export const SGridControl = styled.div`
 
 export const SColorInputOptions = styled.div`
   input[type="color"] {
-    height: 40px;
-    width: 40px;
+    height: ${rowHeight};
+    width: ${rowHeight};
     padding: 0;
     margin: 0;
     background: transparent;
@@ -141,8 +128,8 @@ export const SColorItem = styled.div`
   box-sizing: border-box;
 
   .square {
-    height: 40px;
-    width: 40px;
+    height: ${rowHeight};
+    width: ${rowHeight};
     border-radius: 2px;
     border: 1px solid ${black};
 
@@ -171,10 +158,12 @@ export const SColorItem = styled.div`
       transition: 0.1s linear background-color;
     }
   }
+`;
 
-  &:hover {
-    .delete-btn {
-      opacity: 1;
-    }
-  }
+export const SDisplayedColor = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  border: 1px solid ${black};
 `;

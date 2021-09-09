@@ -3,7 +3,7 @@ import { copyText } from "../utilities/color-utils";
 import { browserColorsByHex } from "../browserColorsList";
 import { SColorItem } from "../styles/App.style";
 
-function ColorItem({ color, showInfo }) {
+function ColorItem({ color, showInfo, setDisplayedColor }) {
   const { hexColor, rgbColor, hue, saturation, lightness } = color;
 
   const squareStyle = {
@@ -15,7 +15,11 @@ function ColorItem({ color, showInfo }) {
 
   return (
     <SColorItem>
-      <div className={`square`} style={squareStyle} />
+      <div
+        className={`square`}
+        style={squareStyle}
+        onClick={() => setDisplayedColor(color)}
+      />
       {showInfo && (
         <div className="names">
           <p onClick={copyText}>#{hexColor}</p>

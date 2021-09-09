@@ -6,10 +6,12 @@ import { distanceDelta, distanceChromatic } from "../utilities/distance-utils";
 import { browserColorsByName } from "../browserColorsList";
 import { SORT_OFF } from "../constants";
 import { SColumn, SColorGridDisplay } from "../styles/App.style";
+import DisplayedColor from "./DisplayedColor";
 
 function ColorGrid({ colors, resetColorDisplay }) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));
   const [showInfo, setShowInfo] = useState(true);
+  const [displayedColor, setDisplayedColor] = useState(null);
   const [sortMethod, setSortMethod] = useState(SORT_OFF);
   const areColorsSorted = sortMethod !== SORT_OFF;
 
@@ -41,6 +43,8 @@ function ColorGrid({ colors, resetColorDisplay }) {
         )
     : colors;
 
+  const colorCount = sortedColors.length;
+
   return (
     <SColumn>
       <GridControls
@@ -51,9 +55,17 @@ function ColorGrid({ colors, resetColorDisplay }) {
         sortMethod={sortMethod}
         resetColorDisplay={resetColorDisplay}
       />
+      {!!colorCount && <DisplayedColor displayedColor={displayedColor} />}
       <SColorGridDisplay showInfo={showInfo}>
         {sortedColors.map((color, idx) => {
-          return <ColorItem color={color} showInfo={showInfo} key={idx} />;
+          return (
+            <ColorItem
+              setDisplayedColor={setDisplayedColor}
+              color={color}
+              showInfo={showInfo}
+              key={idx}
+            />
+          );
         })}
       </SColorGridDisplay>
     </SColumn>
