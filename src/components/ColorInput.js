@@ -1,26 +1,12 @@
 import React, { useRef, useMemo } from "react";
-import { test } from "../testData";
 import { H1, SColumn, SFlex, STextAreaDisplay } from "../styles/App.style";
 import { highlightRegex, matchRegex } from "../utilities/color-utils";
 import { browserColorsByName } from "../browserColorsList";
 import { distanceChromatic } from "../utilities/distance-utils";
 
-const ColorInput = ({ colors, colorInput, setColorInput, setColors }) => {
+const ColorInput = ({ colors, colorInput, onTextChange }) => {
   const highlightRef = useRef();
   const textRef = useRef();
-
-  const updateTextArea = ({ target: { value } }) => {
-    setColorInput(value);
-  };
-
-  const testColors = () => {
-    setColorInput(test);
-  };
-
-  const resetColorDisplay = () => {
-    setColorInput("");
-    setColors([]);
-  };
 
   const updateScroll = (event) => {
     highlightRef.current.scrollTop = event.target.scrollTop;
@@ -79,10 +65,6 @@ const ColorInput = ({ colors, colorInput, setColorInput, setColors }) => {
             displayed
           </p>
         </div>
-        <SFlex column>
-          <button onClick={testColors}>Test</button>
-          <button onClick={resetColorDisplay}>Reset</button>
-        </SFlex>
       </SFlex>
       <STextAreaDisplay>
         <div ref={highlightRef} className="color-highlight-layer">
@@ -92,7 +74,7 @@ const ColorInput = ({ colors, colorInput, setColorInput, setColors }) => {
           ref={textRef}
           onScroll={updateScroll}
           className="color-textarea"
-          onChange={updateTextArea}
+          onChange={onTextChange}
           value={colorInput}
           spellCheck="false"
         />
