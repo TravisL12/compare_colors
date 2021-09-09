@@ -10,7 +10,13 @@ import { test } from "../testData";
 import { browserColorsByName } from "../browserColorsList";
 import { uniqBy } from "lodash";
 import { distanceChromatic } from "../utilities/distance-utils";
-import { SApp, SColumn, SFlex, STextAreaDisplay } from "../styles/App.style";
+import {
+  H1,
+  SApp,
+  SColumn,
+  SFlex,
+  STextAreaDisplay,
+} from "../styles/App.style";
 
 const App = () => {
   const highlightRef = useRef();
@@ -107,7 +113,7 @@ const App = () => {
       <SColumn>
         <SFlex>
           <div>
-            <h1>ChromaExtract</h1>
+            <H1>ChromaExtract</H1>
             <p>
               Enter or Paste colors (hex or rgb) below and they will be parsed
               and displayed

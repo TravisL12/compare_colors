@@ -28,6 +28,10 @@ const textLayer = `
   ${boldBorder}
 `;
 
+export const H1 = styled.h1`
+  margin-bottom: 5px;
+`;
+
 export const SFlex = styled.div`
   display: flex;
   flex-direction: ${(props) => (props.column ? "column" : "row")};
