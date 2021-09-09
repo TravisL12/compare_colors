@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import Color from "../models/color";
+import Color from "../../models/color";
 import ColorItem from "./ColorItem";
 import GridControls from "./GridControls";
-import { distanceDelta, distanceChromatic } from "../utilities/distance-utils";
-import { browserColorsByName } from "../browserColorsList";
-import { SORT_OFF } from "../constants";
-import { SColumn, SColorGridDisplay } from "../styles/App.style";
+import {
+  distanceDelta,
+  distanceChromatic,
+} from "../../utilities/distance-utils";
+import { browserColorsByName } from "../../browserColorsList";
+import { SORT_OFF } from "../../constants";
+import { SColumn, SColorGridDisplay } from "../../styles/App.style";
 import DisplayedColor from "./DisplayedColor";
 
 function ColorGrid({ colors, resetColorDisplay }) {

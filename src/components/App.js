@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import ColorGrid from "./ColorGrid";
+import ColorGrid from "./ColorGrid/";
 import Color from "../models/color";
 import { matchColors } from "../utilities/color-utils";
 import { uniqBy } from "lodash";
 import { SApp } from "../styles/App.style";
-import ColorInput from "./ColorInput";
-import { test } from "../testData";
+import ColorInput from "./ColorInput/";
+import { testFile as test } from "../testData";
 
 const App = () => {
   const [colorInput, setColorInput] = useState(test);

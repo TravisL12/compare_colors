@@ -1,8 +1,15 @@
-import React, { useRef, useMemo } from "react";
-import { H1, SColumn, SFlex, STextAreaDisplay } from "../styles/App.style";
-import { highlightRegex, matchRegex } from "../utilities/color-utils";
-import { browserColorsByName } from "../browserColorsList";
-import { distanceChromatic } from "../utilities/distance-utils";
+import React, { useMemo } from "react";
+import { H1, SColumn, SFlex } from "../../styles/App.style";
+import { highlightRegex, matchRegex } from "../../utilities/color-utils";
+import { browserColorsByName } from "../../browserColorsList";
+import { distanceChromatic } from "../../utilities/distance-utils";
+import ColorTextArea from "./ColorTextArea";
+import styled from "styled-components";
+
+const STaggedColor = styled.span`
+  color: ${(props) => props.color};
+  background-color: ${(props) => props.background};
+`;
 
 const ColorInput = ({
   colors,
@@ -11,14 +18,11 @@ const ColorInput = ({
   resetColorDisplay,
   onTextChange,
 }) => {
-  const highlightRef = useRef();
-  const textRef = useRef();
-
-  const updateScroll = (event) => {
-    highlightRef.current.scrollTop = event.target.scrollTop;
-  };
-
   const colorHighlight = useMemo(() => {
+    if (!colors.length) {
+      return null;
+    }
+
     const colorNames = colors.map(({ name }) => name).filter((x) => x);
     const colorSplit = colorInput
       .split(highlightRegex(colorNames))
@@ -42,17 +46,14 @@ const ColorInput = ({
         const textColor = dist > 300 ? "black" : "white";
 
         return (
-          <span
-            className="tagged-color"
+          <STaggedColor
             key={idx}
-            id={findColor ? findColor.id : idx}
-            style={{
-              color: textColor,
-              backgroundColor: text,
-            }}
+            id={findColor.id}
+            color={textColor}
+            background={text}
           >
             {text}
-          </span>
+          </STaggedColor>
         );
       }
       return text;
@@ -76,19 +77,11 @@ const ColorInput = ({
           <button onClick={resetColorDisplay}>Reset</button>
         </SFlex>
       </SFlex>
-      <STextAreaDisplay>
-        <div ref={highlightRef} className="color-highlight-layer">
-          {colorHighlight}
-        </div>
-        <textarea
-          ref={textRef}
-          onScroll={updateScroll}
-          className="color-textarea"
-          onChange={onTextChange}
-          value={colorInput}
-          spellCheck="false"
-        />
-      </STextAreaDisplay>
+      <ColorTextArea
+        colorHighlight={colorHighlight}
+        onTextChange={onTextChange}
+        colorInput={colorInput}
+      />
     </SColumn>
   );
 };
