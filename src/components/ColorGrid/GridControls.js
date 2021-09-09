@@ -1,6 +1,6 @@
 import React from "react";
 import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "../../constants";
-import { SOptions } from "../App/App.style";
+import { SButton, SOptions } from "../App/App.style";
 import { SGridControl, SColorInputOptions } from "./ColorGrid.style";
 
 function GridControls({
@@ -30,9 +30,9 @@ function GridControls({
 
       <SOptions>
         <div>
-          <button className={showInfo ? "on" : "off"} onClick={toggle.info}>
+          <SButton className={showInfo ? "on" : "off"} onClick={toggle.info}>
             {showInfo ? "Details On" : "Details Off"}
-          </button>
+          </SButton>
         </div>
 
         <div>

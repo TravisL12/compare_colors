@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { H1, SColumn, SFlex } from "../App/App.style";
+import { H1, SButton, SColumn, SFlex } from "../App/App.style";
 import { highlightRegex, matchRegex } from "../../utilities/color-utils";
 import { browserColorsByName } from "../../browserColorsList";
 import { distanceChromatic } from "../../utilities/distance-utils";
@@ -60,7 +60,7 @@ const ColorInput = ({
 
   return (
     <SColumn>
-      <SFlex>
+      <SFlex style={{ width: "100%" }}>
         <div>
           <H1>ChromaExtract</H1>
           <p>
@@ -68,9 +68,14 @@ const ColorInput = ({
             displayed
           </p>
         </div>
-        <SFlex>
-          <button onClick={testColors}>Test</button>
-          <button onClick={resetColorDisplay}>Reset</button>
+        <SFlex
+          alignItems="flex-end"
+          justify="flex-end"
+          gap={10}
+          style={{ height: "100%", flex: 1 }}
+        >
+          <SButton onClick={testColors}>Test</SButton>
+          <SButton onClick={resetColorDisplay}>Reset</SButton>
         </SFlex>
       </SFlex>
       <ColorTextArea

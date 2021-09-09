@@ -5,10 +5,10 @@ import { matchColors } from "../../utilities/color-utils";
 import { uniqBy } from "lodash";
 import { SApp } from "./App.style";
 import ColorInput from "../ColorInput";
-import { test } from "../../testData";
+import { demoText, test } from "../../testData";
 
 const App = () => {
-  const [colorInput, setColorInput] = useState("");
+  const [colorInput, setColorInput] = useState(demoText);
   const [colors, setColors] = useState([]);
 
   const updateTextArea = ({ target: { value } }) => {

@@ -18,7 +18,7 @@ const textLayer = `
   left: 0;
   right: 0;
   bottom: 0;
-  font-size: 11px;
+  font-size: 18px;
   overflow-y: scroll;
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -41,11 +41,18 @@ export const SFlex = styled.div`
     props.alignItems ? props.alignItems : "flex-start"};
 `;
 
-export const SApp = styled.div`
+export const SOptions = styled.div`
   display: flex;
-  padding: 10px;
-  gap: 10px;
-  height: 100vh;
+  justify-content: space-between;
+`;
+
+export const SButton = styled.button`
+  background: transparent;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+  color: ${black};
 `;
 
 export const SColumn = styled(SFlex)`
@@ -58,6 +65,14 @@ export const SColumn = styled(SFlex)`
   background: ${gray};
   border-radius: ${borderRadius};
   padding: 10px;
+`;
+
+export const SApp = styled.div`
+  display: flex;
+  padding: 10px;
+  gap: 10px;
+  height: 100vh;
+  color: ${black};
 `;
 
 export const STextAreaDisplay = styled.div`
@@ -84,9 +99,4 @@ export const STextAreaDisplay = styled.div`
   textarea {
     resize: none;
   }
-`;
-
-export const SOptions = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;

@@ -2,6 +2,7 @@ import { startCase } from "lodash";
 import React from "react";
 import styled from "styled-components";
 import { copyText } from "../../utilities/color-utils";
+import { SButton } from "../App/App.style";
 import { SDisplayedColor, SDisplayedColorDetails } from "./ColorGrid.style";
 
 const SColor = styled.div`
@@ -11,15 +12,10 @@ const SColor = styled.div`
   border-radius: inherit;
 `;
 
-const SRemoveBtn = styled.button`
+const SBtnContainer = styled.div`
   position: absolute;
   bottom: 5px;
   right: 5px;
-  background: transparent;
-  border: none;
-  padding: 0;
-  text-decoration: underline;
-  cursor: pointer;
 `;
 
 function DisplayedColor({ displayedColor, removeDisplayedColor }) {
@@ -57,7 +53,9 @@ function DisplayedColor({ displayedColor, removeDisplayedColor }) {
           </li>
         </SDisplayedColorDetails>
       </div>
-      <SRemoveBtn onClick={removeDisplayedColor}>Close</SRemoveBtn>
+      <SBtnContainer>
+        <SButton onClick={removeDisplayedColor}>Close</SButton>
+      </SBtnContainer>
     </SDisplayedColor>
   );
 }
