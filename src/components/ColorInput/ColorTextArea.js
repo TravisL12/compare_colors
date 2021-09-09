@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { STextAreaDisplay } from "../../styles/App.style";
+import { STextAreaDisplay } from "../App/App.style";
 
 const ColorTextArea = ({ colorHighlight, onTextChange, colorInput }) => {
   const highlightRef = useRef();

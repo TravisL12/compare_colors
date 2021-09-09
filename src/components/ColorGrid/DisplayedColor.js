@@ -1,5 +1,5 @@
 import React from "react";
-import { SDisplayedColor } from "../../styles/App.style";
+import { SDisplayedColor } from "./ColorGrid.style";
 import ColorItem from "./ColorItem";
 
 function DisplayedColor({ displayedColor }) {

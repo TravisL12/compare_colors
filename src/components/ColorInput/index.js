@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { H1, SColumn, SFlex } from "../../styles/App.style";
+import { H1, SColumn, SFlex } from "../App/App.style";
 import { highlightRegex, matchRegex } from "../../utilities/color-utils";
 import { browserColorsByName } from "../../browserColorsList";
 import { distanceChromatic } from "../../utilities/distance-utils";

@@ -1,7 +1,7 @@
 import React from "react";
 import { copyText } from "../../utilities/color-utils";
 import { browserColorsByHex } from "../../browserColorsList";
-import { SColorItem } from "../../styles/App.style";
+import { SColorItem } from "./ColorGrid.style";
 
 function ColorItem({ color, showInfo, setDisplayedColor }) {
   const { hexColor, rgbColor, hue, saturation, lightness } = color;

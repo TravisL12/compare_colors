@@ -8,7 +8,8 @@ import {
 } from "../../utilities/distance-utils";
 import { browserColorsByName } from "../../browserColorsList";
 import { SORT_OFF } from "../../constants";
-import { SColumn, SColorGridDisplay } from "../../styles/App.style";
+import { SColumn } from "../App/App.style";
+import { SColorGridDisplay } from "./ColorGrid.style";
 import DisplayedColor from "./DisplayedColor";
 
 function ColorGrid({ colors, resetColorDisplay }) {

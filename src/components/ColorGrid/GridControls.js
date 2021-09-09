@@ -1,10 +1,7 @@
 import React from "react";
 import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "../../constants";
-import {
-  SGridControl,
-  SColorInputOptions,
-  SOptions,
-} from "../../styles/App.style";
+import { SOptions } from "../App/App.style";
+import { SGridControl, SColorInputOptions } from "./ColorGrid.style";
 
 function GridControls({
   compareColor,
