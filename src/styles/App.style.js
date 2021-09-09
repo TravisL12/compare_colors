@@ -41,12 +41,6 @@ export const SColumn = styled.div`
   border-radius: 4px;
   padding: 10px;
 
-  .title {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 5px;
-  }
-
   .display {
     position: relative;
     width: 100%;
@@ -74,7 +68,7 @@ export const STextAreaDisplay = styled.div`
     ${textLayer}
     color: transparent;
     z-index: 2;
-    caret-color: black;
+    caret-color: ${black};
     background: transparent;
   }
 
@@ -86,12 +80,6 @@ export const STextAreaDisplay = styled.div`
 export const SOptions = styled.div`
   display: flex;
   justify-content: space-between;
-
-  .title {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 5px;
-  }
 
   .options-reset-buttons {
     display: flex;
@@ -107,7 +95,10 @@ export const SOptions = styled.div`
 
 export const SColorGridDisplay = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: ${(props) =>
+    props.showInfo
+      ? "repeat(auto-fill, minmax(150px, 1fr));"
+      : "repeat(auto-fill, minmax(40px, 1fr));"}
   grid-template-rows: repeat(auto-fill, 40px);
   grid-column-gap: 3px;
   grid-row-gap: 5px;
@@ -119,9 +110,7 @@ export const SColorGridDisplay = styled.div`
   flex: 1;
   overflow: auto;
 
-  &.hideInfo {
-    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
-  }
+
 `;
 
 export const SGridControl = styled.div`
@@ -155,7 +144,7 @@ export const SColorItem = styled.div`
     height: 40px;
     width: 40px;
     border-radius: 2px;
-    border: 1px solid black;
+    border: 1px solid ${black};
 
     &:hover {
       &:after {

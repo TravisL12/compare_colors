@@ -105,12 +105,13 @@ const App = () => {
   return (
     <SApp>
       <SColumn>
-        <div className="options-container">
-          <p className="title">
+        <div>
+          <h1>ChromaExtract</h1>
+          <p>
             Enter or Paste colors (hex or rgb) below and they will be parsed and
             displayed
           </p>
-          <div className="options-reset-buttons">
+          <div>
             <button onClick={testColors}>Test Data</button>
             <button onClick={resetColorDisplay}>Reset Colors</button>
           </div>

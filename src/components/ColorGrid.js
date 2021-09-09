@@ -51,7 +51,7 @@ function ColorGrid({ colors, resetColorDisplay }) {
         sortMethod={sortMethod}
         resetColorDisplay={resetColorDisplay}
       />
-      <SColorGridDisplay>
+      <SColorGridDisplay showInfo={showInfo}>
         {sortedColors.map((color, idx) => {
           return <ColorItem color={color} showInfo={showInfo} key={idx} />;
         })}
