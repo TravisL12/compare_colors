@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import ColorGrid from "./ColorGrid";
-import "../styles/application.scss";
 import Color from "../models/color";
 import {
   highlightRegex,
