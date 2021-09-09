@@ -11,6 +11,7 @@ import { test } from "../testData";
 import { browserColorsByName } from "../browserColorsList";
 import { uniqBy } from "lodash";
 import { distanceChromatic } from "../utilities/distance-utils";
+import { SApp, SColumn, STextAreaDisplay } from "../styles/App.style";
 
 const App = () => {
   const highlightRef = useRef();
@@ -103,8 +104,8 @@ const App = () => {
   };
 
   return (
-    <div className="app-container">
-      <div className="col color-input-container">
+    <SApp>
+      <SColumn>
         <div className="options-container">
           <p className="title">
             Enter or Paste colors (hex or rgb) below and they will be parsed and
@@ -115,7 +116,7 @@ const App = () => {
             <button onClick={resetColorDisplay}>Reset Colors</button>
           </div>
         </div>
-        <div className="display text-area">
+        <STextAreaDisplay>
           <div ref={highlightRef} className="color-highlight-layer">
             {colorHighlight}
           </div>
@@ -127,10 +128,10 @@ const App = () => {
             value={colorInput}
             spellCheck="false"
           />
-        </div>
-      </div>
+        </STextAreaDisplay>
+      </SColumn>
       <ColorGrid colors={colors} />
-    </div>
+    </SApp>
   );
 };
 

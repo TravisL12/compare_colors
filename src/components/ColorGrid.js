@@ -5,6 +5,25 @@ import GridControls from "./GridControls";
 import { distanceDelta, distanceChromatic } from "../utilities/distance-utils";
 import { browserColorsByName } from "../browserColorsList";
 import { SORT_OFF } from "../constants";
+import styled from "styled-components";
+import { SColumn } from "../styles/App.style";
+
+const SColorGridDisplay = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-rows: repeat(auto-fill, 40px);
+  grid-column-gap: 3px;
+  grid-row-gap: 5px;
+  box-sizing: border-box;
+  background: $white;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid;
+
+  &.hideInfo {
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  }
+`;
 
 function ColorGrid({ colors, resetColorDisplay }) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));
@@ -41,7 +60,7 @@ function ColorGrid({ colors, resetColorDisplay }) {
     : colors;
 
   return (
-    <div className="col color-grid-container">
+    <SColumn>
       <GridControls
         toggle={toggle}
         updateCompareColor={updateCompareColor}
@@ -50,12 +69,12 @@ function ColorGrid({ colors, resetColorDisplay }) {
         sortMethod={sortMethod}
         resetColorDisplay={resetColorDisplay}
       />
-      <div className={`display color-grid ${!showInfo ? "hideInfo" : ""}`}>
+      <SColorGridDisplay>
         {sortedColors.map((color, idx) => {
           return <ColorItem color={color} showInfo={showInfo} key={idx} />;
         })}
-      </div>
-    </div>
+      </SColorGridDisplay>
+    </SColumn>
   );
 }
 
