@@ -3,19 +3,12 @@ import ColorGrid from "./ColorGrid";
 import Color from "../models/color";
 import { matchColors } from "../utilities/color-utils";
 import { uniqBy } from "lodash";
-import { SApp, SFlex } from "../styles/App.style";
+import { SApp } from "../styles/App.style";
 import ColorInput from "./ColorInput";
 import { test } from "../testData";
-import styled from "styled-components";
-
-const TestContainer = styled.div`
-  position: absolute;
-  right: 10px;
-  z-index: 10000;
-`;
 
 const App = () => {
-  const [colorInput, setColorInput] = useState("");
+  const [colorInput, setColorInput] = useState(test);
   const [colors, setColors] = useState([]);
 
   const updateTextArea = ({ target: { value } }) => {
@@ -55,16 +48,12 @@ const App = () => {
 
   return (
     <SApp>
-      <TestContainer>
-        <SFlex gap={10}>
-          <button onClick={testColors}>Test</button>
-          <button onClick={resetColorDisplay}>Reset</button>
-        </SFlex>
-      </TestContainer>
       <ColorInput
         colors={colors}
         colorInput={colorInput}
         onTextChange={updateTextArea}
+        testColors={testColors}
+        resetColorDisplay={resetColorDisplay}
       />
       <ColorGrid colors={uniqBy(colors, (x) => x.rgbString)} />
     </SApp>

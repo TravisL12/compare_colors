@@ -4,7 +4,13 @@ import { highlightRegex, matchRegex } from "../utilities/color-utils";
 import { browserColorsByName } from "../browserColorsList";
 import { distanceChromatic } from "../utilities/distance-utils";
 
-const ColorInput = ({ colors, colorInput, onTextChange }) => {
+const ColorInput = ({
+  colors,
+  colorInput,
+  testColors,
+  resetColorDisplay,
+  onTextChange,
+}) => {
   const highlightRef = useRef();
   const textRef = useRef();
 
@@ -65,6 +71,10 @@ const ColorInput = ({ colors, colorInput, onTextChange }) => {
             displayed
           </p>
         </div>
+        <SFlex>
+          <button onClick={testColors}>Test</button>
+          <button onClick={resetColorDisplay}>Reset</button>
+        </SFlex>
       </SFlex>
       <STextAreaDisplay>
         <div ref={highlightRef} className="color-highlight-layer">
