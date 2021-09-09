@@ -15,10 +15,12 @@ const SColorGridDisplay = styled.div`
   grid-column-gap: 3px;
   grid-row-gap: 5px;
   box-sizing: border-box;
-  background: $white;
+  background: white;
   padding: 10px;
   width: 100%;
   border: 1px solid;
+  flex: 1;
+  overflow: auto;
 
   &.hideInfo {
     grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
