@@ -8,14 +8,14 @@ export default class Color {
 
     if (browserColorsByName[color]) {
       this.name = color;
-      this.initialColor = browserColorsByName[color];
+      this.hexString = browserColorsByName[color];
     }
 
     if (browserColorsByHex[this.initialColor]) {
       this.name = browserColorsByHex[this.hexString];
     }
 
-    this.hexColor = format2hex(this.initialColor);
+    this.hexColor = format2hex(this.hexString || this.initialColor);
     this.rgbColor = hex2dec(this.hexColor);
 
     if (isColorHsl(this.initialColor)) {

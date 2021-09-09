@@ -3,11 +3,10 @@ import styled from "styled-components";
 const black = "#444444";
 const gray = "rgb(212, 212, 212)";
 const white = "#ffffff";
-const appPadding = "20px";
 const rowHeight = "50px";
 
 const boldBorder = `
-  border: 6px solid ${black};
+  border: 4px solid ${black};
   border-radius: 5px;
   box-shadow: inset 0px 0px 15px 2px rgba(0, 0, 0, 0.2);
 `;
@@ -43,7 +42,7 @@ export const SFlex = styled.div`
 
 export const SApp = styled.div`
   display: flex;
-  padding: ${appPadding};
+  padding: 10px;
   gap: 10px;
   height: 100vh;
 `;
