@@ -1,10 +1,19 @@
 import React from "react";
 import { SDisplayedColor } from "../styles/App.style";
+import ColorItem from "./ColorItem";
 
 function DisplayedColor({ displayedColor }) {
   return (
     <SDisplayedColor>
-      {displayedColor ? displayedColor.hexString : "Select a color"}
+      {displayedColor ? (
+        <ColorItem
+          setDisplayedColor={() => {}}
+          color={displayedColor}
+          showInfo={true}
+        />
+      ) : (
+        "Select a color"
+      )}
     </SDisplayedColor>
   );
 }

@@ -6,6 +6,12 @@ const white = "#ffffff";
 const appPadding = "20px";
 const rowHeight = "50px";
 
+const boldBorder = `
+  border: 6px solid ${black};
+  border-radius: 5px;
+  box-shadow: inset 0px 0px 15px 2px rgba(0, 0, 0, 0.2);
+`;
+
 const textLayer = `
   position: absolute;
   top: 0;
@@ -16,9 +22,10 @@ const textLayer = `
   overflow-y: scroll;
   white-space: pre-wrap;
   word-wrap: break-word;
-  padding: 6px;
+  padding: 15px;
   background-color: ${white};
   width: 100%;
+  ${boldBorder}
 `;
 
 export const SFlex = styled.div`
@@ -93,11 +100,9 @@ export const SColorGridDisplay = styled.div`
   background: white;
   padding: 10px;
   width: 100%;
-  border: 1px solid ${black};
   flex: 1;
   overflow: auto;
-
-
+  ${boldBorder}
 `;
 
 export const SGridControl = styled.div`
@@ -164,6 +169,8 @@ export const SDisplayedColor = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   height: 150px;
-  border: 1px solid ${black};
+
+  ${boldBorder}
 `;
