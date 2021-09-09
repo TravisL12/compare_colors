@@ -1,14 +1,21 @@
 import React, { useState } from "react";
-import Color from "../models/color";
+import Color from "../../models/color";
 import ColorItem from "./ColorItem";
 import GridControls from "./GridControls";
-import { distanceDelta, distanceChromatic } from "../utilities/distance-utils";
-import { browserColorsByName } from "../browserColorsList";
-import { SORT_OFF } from "../constants";
+import {
+  distanceDelta,
+  distanceChromatic,
+} from "../../utilities/distance-utils";
+import { browserColorsByName } from "../../browserColorsList";
+import { SORT_OFF } from "../../constants";
+import { SColumn } from "../App/App.style";
+import { SColorGridDisplay } from "./ColorGrid.style";
+import DisplayedColor from "./DisplayedColor";
 
 function ColorGrid({ colors, resetColorDisplay }) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));
   const [showInfo, setShowInfo] = useState(true);
+  const [displayedColor, setDisplayedColor] = useState(null);
   const [sortMethod, setSortMethod] = useState(SORT_OFF);
   const areColorsSorted = sortMethod !== SORT_OFF;
 
@@ -16,6 +23,8 @@ function ColorGrid({ colors, resetColorDisplay }) {
     distanceDelta,
     distanceChromatic,
   };
+
+  const removeDisplayedColor = () => setDisplayedColor(null);
 
   const updateCompareColor = ({ target: { value } }) => {
     const browserColor = browserColorsByName[value.toLowerCase()];
@@ -40,23 +49,37 @@ function ColorGrid({ colors, resetColorDisplay }) {
         )
     : colors;
 
+  const colorCount = sortedColors.length;
+
   return (
-    <div className="col color-grid-container">
+    <SColumn>
       <GridControls
         toggle={toggle}
         updateCompareColor={updateCompareColor}
         compareColor={compareColor}
-        areColorsSorted={areColorsSorted}
         showInfo={showInfo}
         sortMethod={sortMethod}
         resetColorDisplay={resetColorDisplay}
       />
-      <div className={`display color-grid ${!showInfo ? "hideInfo" : ""}`}>
+      {!!colorCount && (
+        <DisplayedColor
+          displayedColor={displayedColor}
+          removeDisplayedColor={removeDisplayedColor}
+        />
+      )}
+      <SColorGridDisplay showInfo={showInfo}>
         {sortedColors.map((color, idx) => {
-          return <ColorItem color={color} showInfo={showInfo} key={idx} />;
+          return (
+            <ColorItem
+              setDisplayedColor={setDisplayedColor}
+              color={color}
+              showInfo={showInfo}
+              key={idx}
+            />
+          );
         })}
-      </div>
-    </div>
+      </SColorGridDisplay>
+    </SColumn>
   );
 }
 

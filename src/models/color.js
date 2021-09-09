@@ -8,14 +8,10 @@ export default class Color {
 
     if (browserColorsByName[color]) {
       this.name = color;
-      this.initialColor = browserColorsByName[color];
+      this.hexString = browserColorsByName[color];
     }
 
-    if (browserColorsByHex[this.initialColor]) {
-      this.name = browserColorsByHex[this.hexString];
-    }
-
-    this.hexColor = format2hex(this.initialColor);
+    this.hexColor = format2hex(this.hexString || this.initialColor);
     this.rgbColor = hex2dec(this.hexColor);
 
     if (isColorHsl(this.initialColor)) {
@@ -27,9 +23,15 @@ export default class Color {
 
     [this.red, this.blue, this.green] = this.rgbColor;
 
-    this.hexString = `#${this.hexColor}`;
-    this.rgbString = `rgb(${this.red},${this.blue},${this.green})`;
-    this.hslString = `hsl(${this.hue},${this.saturation}%,${this.lightness}%)`;
+    this.hexString = `#${this.hexColor}`.toUpperCase();
+    this.rgbString =
+      `rgb(${this.red},${this.blue},${this.green})`.toUpperCase();
+    this.hslString =
+      `hsl(${this.hue},${this.saturation}%,${this.lightness}%)`.toUpperCase();
+
+    if (browserColorsByHex[this.hexString]) {
+      this.name = browserColorsByHex[this.hexString];
+    }
   }
 
   // https://codepen.io/pankajparashar/pen/oFzIg
