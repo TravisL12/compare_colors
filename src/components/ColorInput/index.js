@@ -20,7 +20,7 @@ const ColorInput = ({
 }) => {
   const colorHighlight = useMemo(() => {
     if (!colors.length) {
-      return null;
+      return colorInput;
     }
 
     const colorNames = colors.map(({ name }) => name).filter((x) => x);
@@ -48,7 +48,7 @@ const ColorInput = ({
         return (
           <STaggedColor
             key={idx}
-            id={findColor.id}
+            id={findColor ? findColor.id : idx}
             color={textColor}
             background={text}
           >
