@@ -1,6 +1,7 @@
 import { startCase } from "lodash";
 import React from "react";
 import styled from "styled-components";
+import { copyText } from "../../utilities/color-utils";
 import { SDisplayedColor, SDisplayedColorDetails } from "./ColorGrid.style";
 
 const SColor = styled.div`
@@ -42,9 +43,18 @@ function DisplayedColor({ displayedColor, removeDisplayedColor }) {
               <span>&nbsp;</span>
             )}
           </li>
-          <li>Hex: {displayedColor.hexString}</li>
-          <li>RGB: {displayedColor.rgbString}</li>
-          <li>HSL: {displayedColor.hslString}</li>
+          <li>
+            <span>Hex:</span>
+            <span onClick={copyText}>{displayedColor.hexString}</span>
+          </li>
+          <li>
+            <span>RGB:</span>
+            <span onClick={copyText}>{displayedColor.rgbString}</span>
+          </li>
+          <li>
+            <span>HSL:</span>
+            <span onClick={copyText}>{displayedColor.hslString}</span>
+          </li>
         </SDisplayedColorDetails>
       </div>
       <SRemoveBtn onClick={removeDisplayedColor}>Close</SRemoveBtn>

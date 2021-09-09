@@ -93,4 +93,17 @@ export const SDisplayedColorDetails = styled.ul`
   flex-direction: column;
   gap: 3px;
   padding: 10px 0;
+
+  li {
+    display: flex;
+    gap: 20px;
+
+    span:first-child {
+      width: 40px;
+    }
+    span:nth-child(2) {
+      cursor: pointer;
+      transition: 0.1s linear background-color;
+    }
+  }
 `;

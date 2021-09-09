@@ -8,7 +8,7 @@ import ColorInput from "../ColorInput";
 import { test } from "../../testData";
 
 const App = () => {
-  const [colorInput, setColorInput] = useState(test);
+  const [colorInput, setColorInput] = useState("");
   const [colors, setColors] = useState([]);
 
   const updateTextArea = ({ target: { value } }) => {

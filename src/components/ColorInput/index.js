@@ -4,12 +4,6 @@ import { highlightRegex, matchRegex } from "../../utilities/color-utils";
 import { browserColorsByName } from "../../browserColorsList";
 import { distanceChromatic } from "../../utilities/distance-utils";
 import ColorTextArea from "./ColorTextArea";
-import styled from "styled-components";
-
-const STaggedColor = styled.span`
-  color: ${(props) => props.color};
-  background-color: ${(props) => props.background};
-`;
 
 const ColorInput = ({
   colors,
@@ -46,14 +40,16 @@ const ColorInput = ({
         const textColor = dist > 300 ? "black" : "white";
 
         return (
-          <STaggedColor
+          <span
             key={idx}
             id={findColor ? findColor.id : idx}
-            color={textColor}
-            background={text}
+            style={{
+              color: textColor,
+              backgroundColor: text,
+            }}
           >
             {text}
-          </STaggedColor>
+          </span>
         );
       }
       return text;

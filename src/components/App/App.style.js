@@ -4,10 +4,11 @@ export const black = "#444444";
 export const gray = "rgb(212, 212, 212)";
 export const white = "#ffffff";
 export const rowHeight = "50px";
+export const borderRadius = "5px";
 
 export const boldBorder = `
   border: 4px solid ${black};
-  border-radius: 5px;
+  border-radius: ${borderRadius};
   box-shadow: inset 0px 0px 15px 2px rgba(0, 0, 0, 0.2);
 `;
 
@@ -55,7 +56,7 @@ export const SColumn = styled(SFlex)`
   width: 100%;
   height: 100%;
   background: ${gray};
-  border-radius: 4px;
+  border-radius: ${borderRadius};
   padding: 10px;
 `;
 
