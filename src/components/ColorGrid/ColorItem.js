@@ -3,7 +3,7 @@ import { copyText } from "../../utilities/color-utils";
 import { browserColorsByHex } from "../../browserColorsList";
 import { SColorItem } from "./ColorGrid.style";
 
-function ColorItem({ color, showInfo, setDisplayedColor }) {
+function ColorItem({ color, showInfo, setDisplayedColor, isSelected }) {
   const { hexColor, rgbColor, hue, saturation, lightness } = color;
 
   const squareStyle = {
@@ -14,9 +14,9 @@ function ColorItem({ color, showInfo, setDisplayedColor }) {
   const browserColorName = color.name || browserColorsByHex[`#${hexColor}`];
 
   return (
-    <SColorItem>
+    <SColorItem isSelected={isSelected}>
       <div
-        className={`square`}
+        className="square"
         style={squareStyle}
         onClick={() => setDisplayedColor(color)}
       />

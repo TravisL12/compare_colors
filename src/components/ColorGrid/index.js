@@ -69,8 +69,13 @@ function ColorGrid({ colors, resetColorDisplay }) {
       )}
       <SColorGridDisplay showInfo={showInfo}>
         {sortedColors.map((color, idx) => {
+          const isSelected = displayedColor
+            ? color.id === displayedColor.id
+            : false;
+
           return (
             <ColorItem
+              isSelected={isSelected}
               setDisplayedColor={setDisplayedColor}
               color={color}
               showInfo={showInfo}
