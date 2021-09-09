@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { black, boldBorder, rowHeight } from "../App/App.style";
+import { black, boldBorder, rowHeight, SFlex } from "../App/App.style";
 
 export const SColorGridDisplay = styled.div`
   display: grid;
@@ -79,11 +79,18 @@ export const SColorItem = styled.div`
   }
 `;
 
-export const SDisplayedColor = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+export const SDisplayedColor = styled(SFlex)`
+  position: relative;
+  background: white;
   width: 100%;
   height: 150px;
-  ${boldBorder}
+  border-top-left-radius: ${(props) => (props.noColor ? 0 : "15px")};
+  border-bottom-left-radius: ${(props) => (props.noColor ? 0 : "15px")};
+`;
+
+export const SDisplayedColorDetails = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 0;
 `;

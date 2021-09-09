@@ -24,6 +24,8 @@ function ColorGrid({ colors, resetColorDisplay }) {
     distanceChromatic,
   };
 
+  const removeDisplayedColor = () => setDisplayedColor(null);
+
   const updateCompareColor = ({ target: { value } }) => {
     const browserColor = browserColorsByName[value.toLowerCase()];
     const color = browserColor ? browserColor : value;
@@ -59,7 +61,12 @@ function ColorGrid({ colors, resetColorDisplay }) {
         sortMethod={sortMethod}
         resetColorDisplay={resetColorDisplay}
       />
-      {!!colorCount && <DisplayedColor displayedColor={displayedColor} />}
+      {!!colorCount && (
+        <DisplayedColor
+          displayedColor={displayedColor}
+          removeDisplayedColor={removeDisplayedColor}
+        />
+      )}
       <SColorGridDisplay showInfo={showInfo}>
         {sortedColors.map((color, idx) => {
           return (
