@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const black = "#444444";
 export const gray = "rgb(212, 212, 212)";
+export const lightgray = "#ececec";
 export const white = "#ffffff";
 export const rowHeight = "50px";
 export const borderRadius = "5px";

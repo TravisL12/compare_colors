@@ -53,9 +53,11 @@ function DisplayedColor({ displayedColor, removeDisplayedColor }) {
           </li>
         </SDisplayedColorDetails>
       </div>
-      <SBtnContainer>
-        <SButton onClick={removeDisplayedColor}>Close</SButton>
-      </SBtnContainer>
+      {removeDisplayedColor && (
+        <SBtnContainer>
+          <SButton onClick={removeDisplayedColor}>Close</SButton>
+        </SBtnContainer>
+      )}
     </SDisplayedColor>
   );
 }

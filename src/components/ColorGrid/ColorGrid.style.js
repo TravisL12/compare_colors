@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { black, boldBorder, gray, rowHeight, SFlex } from "../App/App.style";
+import {
+  black,
+  boldBorder,
+  lightgray,
+  rowHeight,
+  SFlex,
+} from "../App/App.style";
 
 export const SColorGridDisplay = styled.div`
   display: grid;
@@ -45,7 +51,7 @@ export const SColorItem = styled.div`
   display: flex;
   position: relative;
   box-sizing: border-box;
-  background: ${(props) => (props.isSelected ? gray : "inherit")};
+  font-weight: ${(props) => (props.isSelected ? "bold" : "inherit")};
 
   .square {
     height: ${rowHeight};
@@ -61,6 +67,7 @@ export const SColorItem = styled.div`
   }
 
   .names {
+    background: ${(props) => (props.isSelected ? lightgray : "inherit")};
     font-size: 12px;
     text-transform: uppercase;
     border-radius: 2px;
