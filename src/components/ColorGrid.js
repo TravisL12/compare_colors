@@ -5,27 +5,7 @@ import GridControls from "./GridControls";
 import { distanceDelta, distanceChromatic } from "../utilities/distance-utils";
 import { browserColorsByName } from "../browserColorsList";
 import { SORT_OFF } from "../constants";
-import styled from "styled-components";
-import { SColumn } from "../styles/App.style";
-
-const SColorGridDisplay = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  grid-template-rows: repeat(auto-fill, 40px);
-  grid-column-gap: 3px;
-  grid-row-gap: 5px;
-  box-sizing: border-box;
-  background: white;
-  padding: 10px;
-  width: 100%;
-  border: 1px solid;
-  flex: 1;
-  overflow: auto;
-
-  &.hideInfo {
-    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
-  }
-`;
+import { SColumn, SColorGridDisplay } from "../styles/App.style";
 
 function ColorGrid({ colors, resetColorDisplay }) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));

@@ -1,33 +1,10 @@
 import React from "react";
 import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "../constants";
-import styled from "styled-components";
-
-const SGridControl = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-`;
-
-const SColorInputOptions = styled.div`
-  input[type="color"] {
-    height: 40px;
-    width: 40px;
-    padding: 0;
-    margin: 0;
-    background: transparent;
-  }
-
-  input[type="text"] {
-    width: 60px;
-    text-align: center;
-  }
-`;
-
-const SOptions = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
+import {
+  SGridControl,
+  SColorInputOptions,
+  SOptions,
+} from "../styles/App.style";
 
 function GridControls({
   compareColor,
