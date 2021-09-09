@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ColorGrid from "./ColorGrid";
 import Color from "../models/color";
 import { matchColors } from "../utilities/color-utils";
@@ -14,7 +14,7 @@ const App = () => {
     parseColors();
   }, [colorInput]);
 
-  const parseColors = () => {
+  const parseColors = useCallback(() => {
     const parsedColors = matchColors(colorInput.toLowerCase());
 
     if (parsedColors.length === 0) {
@@ -32,7 +32,7 @@ const App = () => {
     }
 
     setColors(matchedColors);
-  };
+  }, [colorInput]);
 
   return (
     <SApp>

@@ -27,9 +27,9 @@ const ColorInput = ({ colors, colorInput, setColorInput, setColors }) => {
   };
 
   const colorHighlight = useMemo(() => {
-    const colorVals = colors.map(({ name }) => name).filter((x) => x);
+    const colorNames = colors.map(({ name }) => name).filter((x) => x);
     const colorSplit = colorInput
-      .split(highlightRegex(colorVals))
+      .split(highlightRegex(colorNames))
       .filter((x) => x);
 
     const colorDisplayedInput = colorSplit.map((text, idx) => {
