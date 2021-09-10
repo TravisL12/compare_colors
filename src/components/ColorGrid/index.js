@@ -10,7 +10,6 @@ import { browserColorsByName } from "../../browserColorsList";
 import { SORT_CHROMATIC, SORT_OFF } from "../../constants";
 import { SColumn } from "../App/App.style";
 import { SColorGridDisplay } from "./ColorGrid.style";
-import DisplayedColor from "./DisplayedColor";
 
 function ColorGrid({ colors, resetColorDisplay }) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));
@@ -51,8 +50,6 @@ function ColorGrid({ colors, resetColorDisplay }) {
         )
     : colors;
 
-  const colorCount = sortedColors.length;
-
   return (
     <SColumn>
       <GridControls
@@ -62,13 +59,9 @@ function ColorGrid({ colors, resetColorDisplay }) {
         showInfo={showInfo}
         sortMethod={sortMethod}
         resetColorDisplay={resetColorDisplay}
+        displayedColor={displayedColor}
+        removeDisplayedColor={removeDisplayedColor}
       />
-      {!!colorCount && (
-        <DisplayedColor
-          displayedColor={displayedColor}
-          removeDisplayedColor={removeDisplayedColor}
-        />
-      )}
       <SColorGridDisplay showInfo={showInfo}>
         {sortedColors.map((color, idx) => {
           const isSelected = displayedColor

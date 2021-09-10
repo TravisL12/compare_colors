@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {
   black,
   boldBorder,
+  borderRadius,
   lightgray,
   rowHeight,
   SFlex,
@@ -34,11 +35,18 @@ export const SGridControl = styled.div`
 
 export const SColorInputOptions = styled(SFlex)`
   input[type="color"] {
+    position: absolute;
+    visibility: hidden;
+    bottom: 0;
+  }
+
+  input[type="color"] + label {
+    background: ${(props) => props.color};
+    display: block;
     height: ${rowHeight};
     width: ${rowHeight};
-    padding: 0;
-    margin: 0;
-    background: transparent;
+    border-radius: ${borderRadius};
+    z-index: 1;
   }
 
   input[type="text"] {
@@ -114,4 +122,17 @@ export const SDisplayedColorDetails = styled.ul`
       transition: 0.1s linear background-color;
     }
   }
+`;
+
+export const SColor = styled.div`
+  background: ${(props) => props.color};
+  height: 100%;
+  width: 25%;
+  border-radius: inherit;
+`;
+
+export const SBtnContainer = styled.div`
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 `;

@@ -1,9 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import { startCase } from "lodash";
+
 import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "../../constants";
-import { getDifferenceColor } from "../../utilities/color-utils";
+import { getDifferenceColor, copyText } from "../../utilities/color-utils";
 import { borderRadius, SButton, SFlex, SOptions } from "../App/App.style";
-import { SGridControl, SColorInputOptions } from "./ColorGrid.style";
+import {
+  SGridControl,
+  SColorInputOptions,
+  SDisplayedColor,
+  SDisplayedColorDetails,
+  SColor,
+  SBtnContainer,
+} from "./ColorGrid.style";
 
 const COMPARE_COLORS = ["red", "orange", "yellow", "lime", "blue", "violet"];
 
@@ -24,18 +33,26 @@ function GridControls({
   sortMethod,
   toggle,
   updateCompareColor,
+  displayedColor,
+  removeDisplayedColor,
 }) {
   return (
     <SGridControl>
-      <SColorInputOptions justify="space-between">
+      <SColorInputOptions
+        justify="space-between"
+        color={compareColor.hexString}
+      >
         <SFlex column>
           <p>Sort Colors</p>
-          <input
-            type="color"
-            id="compare-color-type"
-            onChange={updateCompareColor}
-            value={compareColor.hexString}
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              type="color"
+              id="compare-color-type"
+              onChange={updateCompareColor}
+              value={compareColor.hexString}
+            />
+            <label htmlFor="compare-color-type" />
+          </div>
           <input
             type="text"
             id="compare-color-text"
@@ -59,12 +76,6 @@ function GridControls({
       </SColorInputOptions>
 
       <SOptions>
-        <div>
-          <SButton className={showInfo ? "on" : "off"} onClick={toggle.info}>
-            {showInfo ? "Details On" : "Details Off"}
-          </SButton>
-        </div>
-
         <div>
           <input
             type="radio"
@@ -96,6 +107,50 @@ function GridControls({
           />
           <label htmlFor="compare-distanceDelta">DeltaE Sort</label>
         </div>
+      </SOptions>
+
+      <SDisplayedColor justify="center" gap={10}>
+        {!displayedColor ? (
+          "Select a color"
+        ) : (
+          <>
+            <SColor color={displayedColor.hexString} />
+            <div style={{ flex: 1 }}>
+              <SDisplayedColorDetails>
+                <li>
+                  {displayedColor.name ? (
+                    startCase(displayedColor.name)
+                  ) : (
+                    <span>&nbsp;</span>
+                  )}
+                </li>
+                <li>
+                  <span>Hex:</span>
+                  <span onClick={copyText}>{displayedColor.hexString}</span>
+                </li>
+                <li>
+                  <span>RGB:</span>
+                  <span onClick={copyText}>{displayedColor.rgbString}</span>
+                </li>
+                <li>
+                  <span>HSL:</span>
+                  <span onClick={copyText}>{displayedColor.hslString}</span>
+                </li>
+              </SDisplayedColorDetails>
+            </div>
+            {removeDisplayedColor && (
+              <SBtnContainer>
+                <SButton onClick={removeDisplayedColor}>Close</SButton>
+              </SBtnContainer>
+            )}
+          </>
+        )}
+      </SDisplayedColor>
+
+      <SOptions>
+        <SButton className={showInfo ? "on" : "off"} onClick={toggle.info}>
+          {showInfo ? "Details On" : "Details Off"}
+        </SButton>
       </SOptions>
     </SGridControl>
   );
