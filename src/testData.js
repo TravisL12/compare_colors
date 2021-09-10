@@ -13,9 +13,8 @@ RGB: rgb(200, 100, 50), rgb(100, 255, 50), rgb(50, 10, 200)
 Browser Colors: lightblue, magenta, pink, yellow, cornsilk, dodgerblue
 
 Use the color comparison and sorting options to find a color or the closest match.
-`;
 
-export const testFile = `
+Extra Colors:
 hsl(69,33%,45%)
 
 hsl(59,97%,52%)

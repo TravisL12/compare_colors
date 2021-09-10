@@ -7,7 +7,7 @@ import {
   distanceChromatic,
 } from "../../utilities/distance-utils";
 import { browserColorsByName } from "../../browserColorsList";
-import { SORT_OFF } from "../../constants";
+import { SORT_CHROMATIC, SORT_OFF } from "../../constants";
 import { SColumn } from "../App/App.style";
 import { SColorGridDisplay } from "./ColorGrid.style";
 import DisplayedColor from "./DisplayedColor";
@@ -30,6 +30,9 @@ function ColorGrid({ colors, resetColorDisplay }) {
     const browserColor = browserColorsByName[value.toLowerCase()];
     const color = browserColor ? browserColor : value;
     setCompareColor(new Color(color));
+    if (!areColorsSorted) {
+      setSortMethod(SORT_CHROMATIC);
+    }
   };
 
   const toggle = {

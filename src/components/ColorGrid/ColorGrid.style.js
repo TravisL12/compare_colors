@@ -32,7 +32,7 @@ export const SGridControl = styled.div`
   width: 100%;
 `;
 
-export const SColorInputOptions = styled.div`
+export const SColorInputOptions = styled(SFlex)`
   input[type="color"] {
     height: ${rowHeight};
     width: ${rowHeight};

@@ -19,7 +19,7 @@ const textLayer = `
   left: 0;
   right: 0;
   bottom: 0;
-  font-size: 18px;
+  font-size: 14px;
   overflow-y: scroll;
   white-space: pre-wrap;
   word-wrap: break-word;

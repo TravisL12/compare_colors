@@ -1,7 +1,18 @@
 import React from "react";
 import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "../../constants";
-import { SButton, SOptions } from "../App/App.style";
+import { SButton, SFlex, SOptions } from "../App/App.style";
 import { SGridControl, SColorInputOptions } from "./ColorGrid.style";
+
+const COMPARE_COLORS = ["red", "orange", "yellow", "lime", "blue", "violet"];
+
+const CompareColor = ({ color, updateCompareColor }) => {
+  return (
+    <div
+      onClick={() => updateCompareColor({ target: { value: color } })}
+      style={{ background: color, height: "50px", width: "50px" }}
+    />
+  );
+};
 
 function GridControls({
   compareColor,
@@ -12,20 +23,32 @@ function GridControls({
 }) {
   return (
     <SGridControl>
+      <p>Sort Colors</p>
       <SColorInputOptions>
-        <input
-          type="color"
-          id="compare-color-type"
-          onChange={updateCompareColor}
-          value={compareColor.hexString}
-        />
-        <input
-          type="text"
-          id="compare-color-text"
-          onChange={updateCompareColor}
-          value={compareColor.name || compareColor.hexColor}
-          placeholder="#000000 (Default)"
-        />
+        <div>
+          <input
+            type="color"
+            id="compare-color-type"
+            onChange={updateCompareColor}
+            value={compareColor.hexString}
+          />
+          <input
+            type="text"
+            id="compare-color-text"
+            onChange={updateCompareColor}
+            value={compareColor.name || compareColor.hexColor}
+            placeholder="#000000 (Default)"
+          />
+        </div>
+        <SFlex>
+          {COMPARE_COLORS.map((color) => (
+            <CompareColor
+              idx={color}
+              color={color}
+              updateCompareColor={updateCompareColor}
+            />
+          ))}
+        </SFlex>
       </SColorInputOptions>
 
       <SOptions>
