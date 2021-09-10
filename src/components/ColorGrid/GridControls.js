@@ -1,7 +1,7 @@
 import React from "react";
 import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "../../constants";
 import { copyText } from "../../utilities/color-utils";
-import { SButton, SFlex, SOptions } from "../App/App.style";
+import { SButton, SFlex, SOptions, SRadioButton } from "../App/App.style";
 import {
   SGridControl,
   SColorInputOptions,
@@ -28,7 +28,7 @@ function GridControls({
   return (
     <SGridControl>
       <SDisplayedColor column>
-        <SFlex gap={4} style={{ width: "100%", height: "50%" }}>
+        <SSelectedColor gap={4}>
           <SLabelColor color={compareColor.hexString}>
             <input
               type="color"
@@ -47,14 +47,14 @@ function GridControls({
               />
             </div>
           </SLabelColor>
-          <SFlex column>
+          <SFlex justify="space-between" style={{ flex: 1 }}>
             <SColorInputOptions
               justify="space-between"
               color={compareColor.hexString}
             >
               <div>
                 <strong>Comparison</strong>
-                <SFlex gap={10}>
+                <SFlex gap={5}>
                   {COMPARE_COLORS.map((color) => (
                     <SCompareColor
                       key={color}
@@ -67,86 +67,86 @@ function GridControls({
                 </SFlex>
               </div>
             </SColorInputOptions>
-
-            <SOptions>
-              <div>
-                <input
-                  type="radio"
-                  id="compare-off"
-                  name="sortOption"
-                  checked={sortMethod === "off"}
-                  onChange={toggle.sort}
-                  value={SORT_OFF}
-                />
-                <label htmlFor="compare-off">Sort Off</label>
-
-                <input
-                  type="radio"
-                  id="compare-distanceChromatic"
-                  name="sortOption"
-                  checked={sortMethod === "distanceChromatic"}
-                  onChange={toggle.sort}
-                  value={SORT_CHROMATIC}
-                />
-                <label htmlFor="compare-distanceChromatic">
-                  Chromatic Sort
-                </label>
-
-                <input
-                  type="radio"
-                  id="compare-distanceDelta"
-                  name="sortOption"
-                  checked={sortMethod === "distanceDelta"}
-                  onChange={toggle.sort}
-                  value={SORT_DELTA}
-                />
-                <label htmlFor="compare-distanceDelta">DeltaE Sort</label>
-              </div>
-            </SOptions>
           </SFlex>
-        </SFlex>
-
+        </SSelectedColor>
+        <hr />
         <SSelectedColor gap={4}>
           <SColor
             color={displayedColor ? displayedColor.hexString : "transparent"}
           >
             <span>{displayedColor && displayedColor.name}</span>
           </SColor>
-          <strong>Selected</strong>
-          {!displayedColor ? (
-            <SFlex
-              justify="center"
-              alignItems="center"
-              style={{ height: "100%" }}
-            >
-              No comparison color selected
-            </SFlex>
-          ) : (
-            <SDisplayedColorDetails>
-              <li>
-                <span>Hex:</span>
-                <span onClick={copyText}>{displayedColor.hexString}</span>
-              </li>
-              <li>
-                <span>RGB:</span>
-                <span onClick={copyText}>{displayedColor.rgbString}</span>
-              </li>
-              <li>
-                <span>HSL:</span>
-                <span onClick={copyText}>{displayedColor.hslString}</span>
-              </li>
-            </SDisplayedColorDetails>
-          )}
+          <div>
+            <strong>
+              {!displayedColor ? "Nothing Selected" : "Selection"}
+            </strong>
+            {displayedColor && (
+              <SDisplayedColorDetails>
+                <li>
+                  <span>Hex:</span>
+                  <span onClick={copyText}>{displayedColor.hexString}</span>
+                </li>
+                <li>
+                  <span>RGB:</span>
+                  <span onClick={copyText}>{displayedColor.rgbString}</span>
+                </li>
+                <li>
+                  <span>HSL:</span>
+                  <span onClick={copyText}>{displayedColor.hslString}</span>
+                </li>
+              </SDisplayedColorDetails>
+            )}
+          </div>
 
           {displayedColor && (
             <SBtnContainer>
-              <SButton onClick={removeDisplayedColor}>Close</SButton>
+              <SButton onClick={removeDisplayedColor}>Deselect</SButton>
             </SBtnContainer>
           )}
         </SSelectedColor>
       </SDisplayedColor>
 
       <SOptions>
+        <SFlex>
+          <SOptions gap={10}>
+            <SRadioButton>
+              <input
+                type="radio"
+                id="compare-distanceChromatic"
+                name="sortOption"
+                checked={sortMethod === "distanceChromatic"}
+                onChange={toggle.sort}
+                value={SORT_CHROMATIC}
+              />
+              <label htmlFor="compare-distanceChromatic">Chromatic Sort</label>
+            </SRadioButton>
+
+            <SRadioButton>
+              <input
+                type="radio"
+                id="compare-distanceDelta"
+                name="sortOption"
+                checked={sortMethod === "distanceDelta"}
+                onChange={toggle.sort}
+                value={SORT_DELTA}
+              />
+              <label htmlFor="compare-distanceDelta">DeltaE Sort</label>
+            </SRadioButton>
+
+            <SRadioButton>
+              <input
+                type="radio"
+                id="compare-off"
+                name="sortOption"
+                checked={sortMethod === "off"}
+                onChange={toggle.sort}
+                value={SORT_OFF}
+              />
+              <label htmlFor="compare-off">No Sorting</label>
+            </SRadioButton>
+          </SOptions>
+        </SFlex>
+
         <SButton className={showInfo ? "on" : "off"} onClick={toggle.info}>
           {showInfo ? "Details On" : "Details Off"}
         </SButton>

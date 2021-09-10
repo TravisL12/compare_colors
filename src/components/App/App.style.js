@@ -42,8 +42,7 @@ export const SFlex = styled.div`
     props.alignItems ? props.alignItems : "flex-start"};
 `;
 
-export const SOptions = styled.div`
-  display: flex;
+export const SOptions = styled(SFlex)`
   justify-content: space-between;
 `;
 
@@ -54,6 +53,24 @@ export const SButton = styled.button`
   text-decoration: underline;
   cursor: pointer;
   color: ${black};
+  font-size: 14px;
+`;
+
+export const SRadioButton = styled.div`
+  input[type="radio"] {
+    display: none;
+  }
+
+  input[type="radio"] + label {
+    text-decoration: none;
+    cursor: pointer;
+    color: ${black};
+    font-size: 14px;
+  }
+
+  input[type="radio"]:checked + label {
+    text-decoration: underline;
+  }
 `;
 
 export const SColumn = styled(SFlex)`

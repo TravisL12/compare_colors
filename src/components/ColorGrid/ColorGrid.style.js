@@ -32,6 +32,13 @@ export const SGridControl = styled.div`
   flex-direction: column;
   gap: 10px;
   width: 100%;
+
+  hr {
+    margin: 1px 0;
+    width: 100%;
+    border: none;
+    box-shadow: 0 0 0px 0.5px ${black};
+  }
 `;
 
 export const SColorInputOptions = styled(SFlex)`
@@ -113,7 +120,6 @@ export const SDisplayedColorDetails = styled.ul`
 export const SSelectedColor = styled(SFlex)`
   width: 100%;
   height: 50%;
-  border-top: 1px solid ${black};
 `;
 
 export const SColor = styled.div`
@@ -178,6 +184,7 @@ export const SLabelColor = styled.div`
     height: 100%;
     width: 100%;
     z-index: 1;
+    cursor: crosshair;
   }
 `;
 
