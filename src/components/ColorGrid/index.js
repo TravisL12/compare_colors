@@ -28,8 +28,7 @@ function ColorGrid({ colors, resetColorDisplay }) {
 
   const updateCompareColor = ({ target: { value } }) => {
     const browserColor = browserColorsByName[value.toLowerCase()];
-    const color = browserColor ? browserColor : value;
-    setCompareColor(new Color(color));
+    setCompareColor(new Color(browserColor || value));
     if (!areColorsSorted) {
       setSortMethod(SORT_CHROMATIC);
     }

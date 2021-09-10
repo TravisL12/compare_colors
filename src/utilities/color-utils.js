@@ -1,6 +1,8 @@
 import Color from "../models/color";
 import { browserColorsByName } from "../browserColorsList";
 import { hexAlpha } from "./hexadecimal-utils";
+import { distanceChromatic } from "./distance-utils";
+import { black, white } from "../components/App/App.style";
 const COPY_FADE_DELAY = 500;
 const rgbRe = `rgb\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*\\)`;
 const hexRe = `#\\"?[a-f0-9]{6}\\"?`; // hex regex https://stackoverflow.com/questions/41258980/split-string-on-hex-colour
@@ -48,4 +50,10 @@ export function copyText(event) {
   inputEl.select();
   document.execCommand("copy");
   document.body.removeChild(inputEl);
+}
+
+export function getDifferenceColor(color) {
+  const colorObj = typeof color === "object" ? color : new Color(color);
+  const dist = colorObj ? distanceChromatic(colorObj) : 0;
+  return dist > 300 ? black : white;
 }

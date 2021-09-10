@@ -1,18 +1,22 @@
 import React from "react";
+import styled from "styled-components";
 import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "../../constants";
-import { SButton, SFlex, SOptions } from "../App/App.style";
+import { getDifferenceColor } from "../../utilities/color-utils";
+import { borderRadius, SButton, SFlex, SOptions } from "../App/App.style";
 import { SGridControl, SColorInputOptions } from "./ColorGrid.style";
 
 const COMPARE_COLORS = ["red", "orange", "yellow", "lime", "blue", "violet"];
 
-const CompareColor = ({ color, updateCompareColor }) => {
-  return (
-    <div
-      onClick={() => updateCompareColor({ target: { value: color } })}
-      style={{ background: color, height: "50px", width: "50px" }}
-    />
-  );
-};
+const SCompareColor = styled.div`
+  cursor: pointer;
+  background: ${(props) => props.color};
+  height: 30px;
+  width: 50px;
+  border-radius: ${borderRadius};
+  &:hover {
+    border: 1px solid ${(props) => getDifferenceColor(props.color)};
+  }
+`;
 
 function GridControls({
   compareColor,
@@ -23,9 +27,9 @@ function GridControls({
 }) {
   return (
     <SGridControl>
-      <p>Sort Colors</p>
-      <SColorInputOptions>
-        <div>
+      <SColorInputOptions justify="space-between">
+        <SFlex column>
+          <p>Sort Colors</p>
           <input
             type="color"
             id="compare-color-type"
@@ -39,16 +43,19 @@ function GridControls({
             value={compareColor.name || compareColor.hexColor}
             placeholder="#000000 (Default)"
           />
-        </div>
-        <SFlex>
-          {COMPARE_COLORS.map((color) => (
-            <CompareColor
-              idx={color}
-              color={color}
-              updateCompareColor={updateCompareColor}
-            />
-          ))}
         </SFlex>
+        <div>
+          <p>Quick compare</p>
+          <SFlex gap={10}>
+            {COMPARE_COLORS.map((color) => (
+              <SCompareColor
+                key={color}
+                onClick={() => updateCompareColor({ target: { value: color } })}
+                color={color}
+              />
+            ))}
+          </SFlex>
+        </div>
       </SColorInputOptions>
 
       <SOptions>

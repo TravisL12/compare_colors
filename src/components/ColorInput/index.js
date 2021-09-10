@@ -1,8 +1,11 @@
 import React, { useMemo } from "react";
 import { H1, SButton, SColumn, SFlex } from "../App/App.style";
-import { highlightRegex, matchRegex } from "../../utilities/color-utils";
+import {
+  getDifferenceColor,
+  highlightRegex,
+  matchRegex,
+} from "../../utilities/color-utils";
 import { browserColorsByName } from "../../browserColorsList";
-import { distanceChromatic } from "../../utilities/distance-utils";
 import ColorTextArea from "./ColorTextArea";
 
 const ColorInput = ({
@@ -36,8 +39,8 @@ const ColorInput = ({
             .map((x) => (x ? x.toLowerCase() : x))
             .includes(colorMatch.trim().toLowerCase());
         });
-        const dist = findColor ? distanceChromatic(findColor) : 0;
-        const textColor = dist > 300 ? "black" : "white";
+
+        const textColor = getDifferenceColor(findColor);
 
         return (
           <span
