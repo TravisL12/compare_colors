@@ -63,14 +63,12 @@ const ColorInput = ({
 
   return (
     <SColumn>
-      <SFlex style={{ width: "100%" }}>
-        <div>
-          <H1>ChromaExtract</H1>
-          <p>
-            Enter or Paste colors (hex or rgb) below and they will be parsed and
-            displayed
-          </p>
-        </div>
+      <SFlex column style={{ width: "100%" }}>
+        <H1>ChromaExtract</H1>
+        <p>
+          Enter or Paste colors (hex or rgb) below and they will be parsed and
+          displayed
+        </p>
         <SFlex
           alignItems="flex-end"
           justify="flex-end"

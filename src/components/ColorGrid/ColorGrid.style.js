@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { getDifferenceColor } from "../../utilities/color-utils";
 import {
   black,
   boldBorder,
@@ -34,21 +35,6 @@ export const SGridControl = styled.div`
 `;
 
 export const SColorInputOptions = styled(SFlex)`
-  input[type="color"] {
-    position: absolute;
-    visibility: hidden;
-    bottom: 0;
-  }
-
-  input[type="color"] + label {
-    background: ${(props) => props.color};
-    display: block;
-    height: ${rowHeight};
-    width: ${rowHeight};
-    border-radius: ${borderRadius};
-    z-index: 1;
-  }
-
   input[type="text"] {
     width: 60px;
     text-align: center;
@@ -66,6 +52,7 @@ export const SColorItem = styled.div`
     width: ${rowHeight};
     border-radius: 2px;
     border: 1px solid ${black};
+    cursor: pointer;
 
     &:hover {
       &:after {
@@ -96,23 +83,22 @@ export const SColorItem = styled.div`
 `;
 
 export const SDisplayedColor = styled(SFlex)`
+  ${boldBorder}
   position: relative;
   background: white;
   width: 100%;
-  height: 150px;
-  border-top-left-radius: ${(props) => (props.noColor ? 0 : "15px")};
-  border-bottom-left-radius: ${(props) => (props.noColor ? 0 : "15px")};
+  height: 300px;
 `;
 
 export const SDisplayedColorDetails = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  padding: 10px 0;
+  gap: 4px;
+  height: 100%;
+  justify-content: center;
 
   li {
     display: flex;
-    gap: 20px;
 
     span:first-child {
       width: 40px;
@@ -124,15 +110,84 @@ export const SDisplayedColorDetails = styled.ul`
   }
 `;
 
+export const SSelectedColor = styled(SFlex)`
+  width: 100%;
+  height: 50%;
+  border-top: 1px solid ${black};
+`;
+
 export const SColor = styled.div`
+  position: relative;
   background: ${(props) => props.color};
   height: 100%;
   width: 25%;
-  border-radius: inherit;
+  max-width: 150px;
+
+  span {
+    position: absolute;
+    top: 0;
+    right: 1px;
+    width: 75%;
+    text-align: right;
+    font-size: 14px;
+    color: ${(props) => getDifferenceColor(props.color)};
+  }
 `;
 
 export const SBtnContainer = styled.div`
   position: absolute;
   bottom: 5px;
   right: 5px;
+`;
+
+export const SLabelColor = styled.div`
+  position: relative;
+  height: 100%;
+  width: 25%;
+  max-width: 150px;
+
+  .color-text-input {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 75%;
+
+    input[type="text"] {
+      background: transparent;
+      width: 100%;
+      color: ${(props) => getDifferenceColor(props.color)};
+      border: none;
+      text-align: right;
+    }
+
+    input[type="text"]:focus {
+      background: rgba(255, 255, 255, 0.75);
+      color: black;
+    }
+  }
+
+  input[type="color"] {
+    position: absolute;
+    visibility: hidden;
+    bottom: 0;
+  }
+
+  input[type="color"] + label {
+    background: ${(props) => props.color};
+    display: block;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+  }
+`;
+
+export const SCompareColor = styled.div`
+  cursor: pointer;
+  background: ${(props) => props.color};
+  height: 30px;
+  width: 50px;
+  border-radius: ${borderRadius};
+  &:hover {
+    border: 1px solid ${(props) => getDifferenceColor(props.color)};
+  }
 `;
