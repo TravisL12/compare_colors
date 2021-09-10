@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { STextAreaDisplay } from "../App/App.style";
+import { SFlex, STextAreaDisplay } from "../App/App.style";
 
 const ColorTextArea = ({ colorHighlight, onTextChange, colorInput }) => {
   const highlightRef = useRef();
@@ -10,19 +10,21 @@ const ColorTextArea = ({ colorHighlight, onTextChange, colorInput }) => {
   };
 
   return (
-    <STextAreaDisplay>
-      <div ref={highlightRef} className="color-highlight-layer">
-        {colorHighlight}
-      </div>
-      <textarea
-        ref={textRef}
-        onScroll={updateScroll}
-        className="color-textarea"
-        onChange={onTextChange}
-        value={colorInput}
-        spellCheck="false"
-      />
-    </STextAreaDisplay>
+    <SFlex column fullWidth style={{ flex: 1, overflow: "auto" }}>
+      <STextAreaDisplay>
+        <div ref={highlightRef} className="color-highlight-layer">
+          {colorHighlight}
+        </div>
+        <textarea
+          ref={textRef}
+          onScroll={updateScroll}
+          className="color-textarea"
+          onChange={onTextChange}
+          value={colorInput}
+          spellCheck="false"
+        />
+      </STextAreaDisplay>
+    </SFlex>
   );
 };
 

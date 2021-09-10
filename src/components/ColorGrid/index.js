@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Color from "../../models/color";
 import ColorItem from "./ColorItem";
 import GridControls from "./GridControls";
@@ -8,7 +8,7 @@ import {
 } from "../../utilities/distance-utils";
 import { browserColorsByName } from "../../browserColorsList";
 import { SORT_CHROMATIC, SORT_OFF } from "../../constants";
-import { SColumn } from "../App/App.style";
+import { SColumn, SFlex } from "../App/App.style";
 import { SColorGridDisplay } from "./ColorGrid.style";
 
 function ColorGrid({ colors, resetColorDisplay }) {
@@ -18,12 +18,18 @@ function ColorGrid({ colors, resetColorDisplay }) {
   const [sortMethod, setSortMethod] = useState(SORT_OFF);
   const areColorsSorted = sortMethod !== SORT_OFF;
 
+  useEffect(() => {
+    if (!colors || colors.length === 0) {
+      setDisplayedColor(null);
+    } else if (colors && !displayedColor) {
+      setDisplayedColor(colors[0]);
+    }
+  }, [colors, displayedColor]);
+
   const sortTypes = {
     distanceDelta,
     distanceChromatic,
   };
-
-  const removeDisplayedColor = () => setDisplayedColor(null);
 
   const updateCompareColor = ({ target: { value } }) => {
     const browserColor = browserColorsByName[value.toLowerCase()];
@@ -60,25 +66,26 @@ function ColorGrid({ colors, resetColorDisplay }) {
         sortMethod={sortMethod}
         resetColorDisplay={resetColorDisplay}
         displayedColor={displayedColor}
-        removeDisplayedColor={removeDisplayedColor}
       />
-      <SColorGridDisplay showInfo={showInfo}>
-        {sortedColors.map((color, idx) => {
-          const isSelected = displayedColor
-            ? color.id === displayedColor.id
-            : false;
+      <SFlex column fullWidth style={{ flex: 1, overflow: "auto" }}>
+        <SColorGridDisplay showInfo={showInfo}>
+          {sortedColors.map((color, idx) => {
+            const isSelected = displayedColor
+              ? color.id === displayedColor.id
+              : false;
 
-          return (
-            <ColorItem
-              isSelected={isSelected}
-              setDisplayedColor={setDisplayedColor}
-              color={color}
-              showInfo={showInfo}
-              key={idx}
-            />
-          );
-        })}
-      </SColorGridDisplay>
+            return (
+              <ColorItem
+                isSelected={isSelected}
+                setDisplayedColor={setDisplayedColor}
+                color={color}
+                showInfo={showInfo}
+                key={idx}
+              />
+            );
+          })}
+        </SColorGridDisplay>
+      </SFlex>
     </SColumn>
   );
 }

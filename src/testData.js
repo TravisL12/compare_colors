@@ -55,7 +55,7 @@ rgb(164,121,4)
 rgb(155,125,44)
 rgb(84,52,183)
 rgb(102,208,88)
-rgb(234,201,123
+rgb(234,201,123)
 `;
 
 export const test = `indian red	 	indian red	#B0171F	176	23	31	2037680

@@ -1,14 +1,13 @@
 import React from "react";
 import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "../../constants";
 import { copyText } from "../../utilities/color-utils";
-import { SButton, SFlex, SOptions, SRadioButton } from "../App/App.style";
+import { H2, SButton, SFlex, SOptions, SRadioButton } from "../App/App.style";
 import {
   SGridControl,
   SColorInputOptions,
   SDisplayedColor,
   SDisplayedColorDetails,
   SColor,
-  SBtnContainer,
   SLabelColor,
   SSelectedColor,
   SCompareColor,
@@ -23,7 +22,6 @@ function GridControls({
   toggle,
   updateCompareColor,
   displayedColor,
-  removeDisplayedColor,
 }) {
   return (
     <SGridControl>
@@ -97,59 +95,58 @@ function GridControls({
               </SDisplayedColorDetails>
             )}
           </div>
-
-          {displayedColor && (
-            <SBtnContainer>
-              <SButton onClick={removeDisplayedColor}>Deselect</SButton>
-            </SBtnContainer>
-          )}
         </SSelectedColor>
       </SDisplayedColor>
 
-      <SOptions>
-        <SFlex>
-          <SOptions gap={10}>
-            <SRadioButton>
-              <input
-                type="radio"
-                id="compare-distanceChromatic"
-                name="sortOption"
-                checked={sortMethod === "distanceChromatic"}
-                onChange={toggle.sort}
-                value={SORT_CHROMATIC}
-              />
-              <label htmlFor="compare-distanceChromatic">Chromatic Sort</label>
-            </SRadioButton>
+      <SOptions column>
+        <H2>Extracted Color Values</H2>
+        <SFlex fullWidth justify="space-between" alignItems="center">
+          <SFlex>
+            <SOptions gap={10}>
+              <SRadioButton>
+                <input
+                  type="radio"
+                  id="compare-distanceChromatic"
+                  name="sortOption"
+                  checked={sortMethod === "distanceChromatic"}
+                  onChange={toggle.sort}
+                  value={SORT_CHROMATIC}
+                />
+                <label htmlFor="compare-distanceChromatic">
+                  Chromatic Sort
+                </label>
+              </SRadioButton>
 
-            <SRadioButton>
-              <input
-                type="radio"
-                id="compare-distanceDelta"
-                name="sortOption"
-                checked={sortMethod === "distanceDelta"}
-                onChange={toggle.sort}
-                value={SORT_DELTA}
-              />
-              <label htmlFor="compare-distanceDelta">DeltaE Sort</label>
-            </SRadioButton>
+              <SRadioButton>
+                <input
+                  type="radio"
+                  id="compare-distanceDelta"
+                  name="sortOption"
+                  checked={sortMethod === "distanceDelta"}
+                  onChange={toggle.sort}
+                  value={SORT_DELTA}
+                />
+                <label htmlFor="compare-distanceDelta">DeltaE Sort</label>
+              </SRadioButton>
 
-            <SRadioButton>
-              <input
-                type="radio"
-                id="compare-off"
-                name="sortOption"
-                checked={sortMethod === "off"}
-                onChange={toggle.sort}
-                value={SORT_OFF}
-              />
-              <label htmlFor="compare-off">No Sorting</label>
-            </SRadioButton>
-          </SOptions>
+              <SRadioButton>
+                <input
+                  type="radio"
+                  id="compare-off"
+                  name="sortOption"
+                  checked={sortMethod === "off"}
+                  onChange={toggle.sort}
+                  value={SORT_OFF}
+                />
+                <label htmlFor="compare-off">No Sorting</label>
+              </SRadioButton>
+            </SOptions>
+          </SFlex>
+
+          <SButton className={showInfo ? "on" : "off"} onClick={toggle.info}>
+            {showInfo ? "Details On" : "Details Off"}
+          </SButton>
         </SFlex>
-
-        <SButton className={showInfo ? "on" : "off"} onClick={toggle.info}>
-          {showInfo ? "Details On" : "Details Off"}
-        </SButton>
       </SOptions>
     </SGridControl>
   );

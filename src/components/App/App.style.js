@@ -33,11 +33,16 @@ export const H1 = styled.h1`
   margin-bottom: 5px;
 `;
 
+export const H2 = styled.h2`
+  margin-bottom: 5px;
+`;
+
 export const SFlex = styled.div`
   display: flex;
   flex-direction: ${(props) => (props.column ? "column" : "row")};
   gap: ${(props) => (props.gap ? `${props.gap}px` : 0)};
   justify-content: ${(props) => (props.justify ? props.justify : "flex-start")};
+  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
   align-items: ${(props) =>
     props.alignItems ? props.alignItems : "flex-start"};
 `;
@@ -99,7 +104,6 @@ export const STextAreaDisplay = styled.div`
   box-sizing: border-box;
   flex: 1;
   overflow: scroll;
-  margin-top: 5px;
 
   .color-highlight-layer {
     ${textLayer}

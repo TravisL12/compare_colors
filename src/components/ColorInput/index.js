@@ -59,11 +59,11 @@ const ColorInput = ({
     });
 
     return <div>{colorDisplayedInput}</div>;
-  }, [colors]);
+  }, [colors, colorInput]);
 
   return (
     <SColumn>
-      <SFlex column style={{ width: "100%" }}>
+      <SFlex column fullWidth>
         <H1>ChromaExtract</H1>
         <p>
           Enter or Paste colors (hex or rgb) below and they will be parsed and
