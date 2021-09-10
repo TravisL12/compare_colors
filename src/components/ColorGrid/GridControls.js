@@ -28,7 +28,7 @@ function GridControls({
   return (
     <SGridControl>
       <SDisplayedColor column>
-        <SFlex style={{ width: "100%", height: "50%" }}>
+        <SFlex gap={4} style={{ width: "100%", height: "50%" }}>
           <SLabelColor color={compareColor.hexString}>
             <input
               type="color"
@@ -53,7 +53,7 @@ function GridControls({
               color={compareColor.hexString}
             >
               <div>
-                <p>Quick compare</p>
+                <strong>Comparison</strong>
                 <SFlex gap={10}>
                   {COMPARE_COLORS.map((color) => (
                     <SCompareColor
@@ -106,12 +106,13 @@ function GridControls({
           </SFlex>
         </SFlex>
 
-        <SSelectedColor gap={10}>
+        <SSelectedColor gap={4}>
           <SColor
             color={displayedColor ? displayedColor.hexString : "transparent"}
           >
             <span>{displayedColor && displayedColor.name}</span>
           </SColor>
+          <strong>Selected</strong>
           {!displayedColor ? (
             <SFlex
               justify="center"
