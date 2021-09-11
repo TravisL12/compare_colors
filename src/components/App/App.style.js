@@ -4,6 +4,7 @@ export const black = "#444444";
 export const gray = "rgb(212, 212, 212)";
 export const lightgray = "#ececec";
 export const white = "#ffffff";
+export const logoGreen = "#003c08";
 export const rowHeight = "50px";
 export const borderRadius = "5px";
 
@@ -29,12 +30,23 @@ const textLayer = `
   ${boldBorder}
 `;
 
+const logoFont = `
+  font-family: 'Tinos', serif;
+`;
+
 export const H1 = styled.h1`
   margin-bottom: 5px;
 `;
 
 export const H2 = styled.h2`
   margin-bottom: 5px;
+`;
+
+export const SLogo = styled(H1)`
+  ${logoFont}
+  margin: 0;
+  font-size: 72px;
+  color: ${logoGreen};
 `;
 
 export const SFlex = styled.div`
@@ -96,6 +108,11 @@ export const SApp = styled.div`
   gap: 10px;
   height: 100vh;
   color: ${black};
+
+  p {
+    ${logoFont}
+    font-size: 18px;
+  }
 `;
 
 export const STextAreaDisplay = styled.div`

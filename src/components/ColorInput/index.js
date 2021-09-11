@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { H1, SButton, SColumn, SFlex } from "../App/App.style";
+import { H1, SButton, SColumn, SFlex, SLogo } from "../App/App.style";
 import {
   getDifferenceColor,
   highlightRegex,
@@ -64,7 +64,8 @@ const ColorInput = ({
   return (
     <SColumn>
       <SFlex column fullWidth>
-        <H1>ChromaExtract</H1>
+        <SLogo>ChromaExtract</SLogo>
+
         <p>
           Enter or Paste colors (hex or rgb) below and they will be parsed and
           displayed
