@@ -23,6 +23,11 @@ function ColorGrid({ colors, resetColorDisplay }) {
       setDisplayedColor(null);
     } else if (colors && !displayedColor) {
       setDisplayedColor(colors[0]);
+    } else if (colors && displayedColor) {
+      const isDisplayedInColors = colors.find(
+        (color) => color.hexString === displayedColor.hexString
+      );
+      if (!isDisplayedInColors) setDisplayedColor(colors[0]);
     }
   }, [colors, displayedColor]);
 
