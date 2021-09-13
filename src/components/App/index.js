@@ -19,6 +19,10 @@ const App = () => {
     setColorInput(test);
   };
 
+  const instructionColors = () => {
+    setColorInput(demoText);
+  };
+
   const resetColorDisplay = () => {
     setColorInput("");
     setColors([]);
@@ -53,6 +57,7 @@ const App = () => {
         colorInput={colorInput}
         onTextChange={updateTextArea}
         testColors={testColors}
+        instructionColors={instructionColors}
         resetColorDisplay={resetColorDisplay}
       />
       <ColorGrid colors={uniqBy(colors, (x) => x.rgbString)} />

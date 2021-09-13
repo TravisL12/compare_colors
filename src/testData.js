@@ -1,20 +1,15 @@
 export const demoText = `Welcome to ChromaExtract!
 
-This tool helps:
-* Display colors within your color files
-* Find a closest match color for a color you're looking for
+* Paste/enter in text with colors (rgb, hexadecimal, or HSL) in it
+* Use the comparison and color sorting options to find the closest match in your color file
 
-Start by typing or pasting in some text that has colors you want to extract!
-
-You can use:
 Hexadecimal: #00ff00, #ff1129, #f0f011
 HSL: hsl(200, 50%, 50%), hsl(150, 29%, 80%), hsl(350, 90%, 10%)
 RGB: rgb(200, 100, 50), rgb(100, 255, 50), rgb(50, 10, 200)
 Browser Colors: lightblue, magenta, pink, yellow, cornsilk, dodgerblue
 
-Use the color comparison and sorting options to find a color or the closest match.
 
-Extra Colors:
+Example color file text:
 hsl(69,33%,45%)
 
 hsl(59,97%,52%)
