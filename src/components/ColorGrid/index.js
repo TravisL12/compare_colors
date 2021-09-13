@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Color from "../../models/color";
 import ColorItem from "./ColorItem";
-import GridControls from "./GridControls";
+import ComparisonPanel from "./ComparisonPanel";
 import {
   distanceDelta,
   distanceChromatic,
 } from "../../utilities/distance-utils";
 import { browserColorsByName } from "../../browserColorsList";
-import { SORT_CHROMATIC, SORT_OFF } from "../../constants";
-import { SColumn, SFlex } from "../App/App.style";
+import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "../../constants";
+import {
+  SColumn,
+  H2,
+  SButton,
+  SFlex,
+  SOptions,
+  SRadioButton,
+} from "../App/App.style";
 import { SColorGridDisplay } from "./ColorGrid.style";
 
 function ColorGrid({ colors, resetColorDisplay }) {
@@ -19,9 +26,12 @@ function ColorGrid({ colors, resetColorDisplay }) {
   const areColorsSorted = sortMethod !== SORT_OFF;
 
   useEffect(() => {
-    if (!colors || colors.length === 0) {
+    const hasNoMatches = !colors || colors.length === 0;
+    const isDisplayedColorCurrent = colors && !displayedColor;
+
+    if (hasNoMatches) {
       setDisplayedColor(null);
-    } else if (colors && !displayedColor) {
+    } else if (isDisplayedColorCurrent) {
       setDisplayedColor(colors[0]);
     } else if (colors && displayedColor) {
       const isDisplayedInColors = colors.find(
@@ -63,7 +73,7 @@ function ColorGrid({ colors, resetColorDisplay }) {
 
   return (
     <SColumn>
-      <GridControls
+      <ComparisonPanel
         toggle={toggle}
         updateCompareColor={updateCompareColor}
         compareColor={compareColor}
@@ -72,6 +82,56 @@ function ColorGrid({ colors, resetColorDisplay }) {
         resetColorDisplay={resetColorDisplay}
         displayedColor={displayedColor}
       />
+      <SOptions column fullWidth>
+        <H2>Extracted Color Values</H2>
+        <SFlex fullWidth justify="space-between" alignItems="center">
+          <SFlex>
+            <SOptions gap={10}>
+              <SRadioButton>
+                <input
+                  type="radio"
+                  id="compare-distanceChromatic"
+                  name="sortOption"
+                  checked={sortMethod === "distanceChromatic"}
+                  onChange={toggle.sort}
+                  value={SORT_CHROMATIC}
+                />
+                <label htmlFor="compare-distanceChromatic">
+                  Chromatic Sort
+                </label>
+              </SRadioButton>
+
+              <SRadioButton>
+                <input
+                  type="radio"
+                  id="compare-distanceDelta"
+                  name="sortOption"
+                  checked={sortMethod === "distanceDelta"}
+                  onChange={toggle.sort}
+                  value={SORT_DELTA}
+                />
+                <label htmlFor="compare-distanceDelta">DeltaE Sort</label>
+              </SRadioButton>
+
+              <SRadioButton>
+                <input
+                  type="radio"
+                  id="compare-off"
+                  name="sortOption"
+                  checked={sortMethod === "off"}
+                  onChange={toggle.sort}
+                  value={SORT_OFF}
+                />
+                <label htmlFor="compare-off">No Sorting</label>
+              </SRadioButton>
+            </SOptions>
+          </SFlex>
+
+          <SButton className={showInfo ? "on" : "off"} onClick={toggle.info}>
+            {showInfo ? "Details On" : "Details Off"}
+          </SButton>
+        </SFlex>
+      </SOptions>
       <SFlex column fullWidth style={{ flex: 1, overflow: "auto" }}>
         <SColorGridDisplay showInfo={showInfo}>
           {sortedColors.map((color, idx) => {

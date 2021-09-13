@@ -27,11 +27,10 @@ export const SColorGridDisplay = styled.div`
   ${boldBorder}
 `;
 
-export const SGridControl = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
+export const SComparisonPanel = styled(SFlex)`
+  ${boldBorder}
+  position: relative;
+  background: white;
 
   hr {
     margin: 1px 0;
@@ -39,6 +38,12 @@ export const SGridControl = styled.div`
     border: none;
     box-shadow: 0 0 0px 0.5px ${black};
   }
+`;
+
+const PANEL_HEIGHT = 200;
+export const SSelectedColor = styled(SFlex)`
+  width: 100%;
+  height: ${PANEL_HEIGHT / 2}px;
 `;
 
 export const SColorInputOptions = styled(SFlex)`
@@ -89,14 +94,6 @@ export const SColorItem = styled.div`
   }
 `;
 
-export const SDisplayedColor = styled(SFlex)`
-  ${boldBorder}
-  position: relative;
-  background: white;
-  width: 100%;
-  height: 300px;
-`;
-
 export const SDisplayedColorDetails = styled.ul`
   display: flex;
   flex-direction: column;
@@ -115,11 +112,6 @@ export const SDisplayedColorDetails = styled.ul`
       transition: 0.1s linear background-color;
     }
   }
-`;
-
-export const SSelectedColor = styled(SFlex)`
-  width: 100%;
-  height: 50%;
 `;
 
 export const SColor = styled.div`

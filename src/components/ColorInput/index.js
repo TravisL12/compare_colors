@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { H1, SButton, SColumn, SFlex, SLogo } from "../App/App.style";
+import { H2, SOptions, SButton, SColumn, SFlex, SLogo } from "../App/App.style";
 import {
   getDifferenceColor,
   highlightRegex,
@@ -63,13 +63,15 @@ const ColorInput = ({
 
   return (
     <SColumn>
-      <SFlex column fullWidth>
+      <SFlex column fullWidth style={{ height: "210px" }}>
         <SLogo>ChromaExtract</SLogo>
-
         <p>
           Enter or Paste colors (hex or rgb) below and they will be parsed and
           displayed
         </p>
+      </SFlex>
+      <SOptions column fullWidth>
+        <H2>Color Text to Parse</H2>
         <SFlex
           alignItems="flex-end"
           justify="flex-end"
@@ -79,7 +81,7 @@ const ColorInput = ({
           <SButton onClick={testColors}>Test</SButton>
           <SButton onClick={resetColorDisplay}>Reset</SButton>
         </SFlex>
-      </SFlex>
+      </SOptions>
       <ColorTextArea
         colorHighlight={colorHighlight}
         onTextChange={onTextChange}
