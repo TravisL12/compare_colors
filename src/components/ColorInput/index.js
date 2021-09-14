@@ -64,19 +64,6 @@ const ColorInput = ({
 
   return (
     <SColumn>
-      <SLogo>ChromaExtract</SLogo>
-      <SOptions column fullWidth>
-        <SFlex
-          alignItems="flex-end"
-          justify="flex-end"
-          gap={10}
-          style={{ height: "100%", flex: 1 }}
-        >
-          <SButton onClick={instructionColors}>Instructions</SButton>
-          <SButton onClick={testColors}>Large Test</SButton>
-          <SButton onClick={resetColorDisplay}>Reset</SButton>
-        </SFlex>
-      </SOptions>
       <ColorTextArea
         colorHighlight={colorHighlight}
         onTextChange={onTextChange}

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const black = "#444444";
-export const gray = "rgb(212, 212, 212)";
-export const lightgray = "#ececec";
+export const gray = "#ececec";
+export const lightgray = "#f9f9f9";
 export const white = "#ffffff";
 export const logoGreen = "#003c08";
 export const rowHeight = "50px";
@@ -97,17 +97,14 @@ export const SColumn = styled(SFlex)`
   max-width: 1400px;
   width: 100%;
   height: 100%;
-  background: ${gray};
   border-radius: ${borderRadius};
-  padding: 10px;
 `;
 
-export const SApp = styled.div`
-  display: flex;
-  padding: 10px;
-  gap: 10px;
+export const SApp = styled(SFlex)`
+  padding: 0 20px 20px;
   height: 100vh;
   color: ${black};
+  background: ${gray};
 
   p {
     ${logoFont}

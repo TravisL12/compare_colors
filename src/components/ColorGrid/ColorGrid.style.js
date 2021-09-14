@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { getDifferenceColor } from "../../utilities/color-utils";
 import {
-  black,
   boldBorder,
+  black,
   borderRadius,
   lightgray,
   rowHeight,
@@ -10,6 +10,7 @@ import {
 } from "../App/App.style";
 
 export const SColorGridDisplay = styled.div`
+  ${boldBorder}
   display: grid;
   grid-template-columns: ${(props) =>
     props.showInfo
@@ -19,12 +20,11 @@ export const SColorGridDisplay = styled.div`
   grid-column-gap: 3px;
   grid-row-gap: 5px;
   box-sizing: border-box;
-  background: white;
+  background: ${lightgray};
   padding: 10px;
   width: 100%;
   flex: 1;
   overflow: auto;
-  ${boldBorder}
 `;
 
 export const SComparisonPanel = styled(SFlex)`
@@ -172,6 +172,7 @@ export const SLabelColor = styled.div`
 
   input[type="color"] + label {
     background: ${(props) => props.color};
+
     display: block;
     height: 100%;
     width: 100%;

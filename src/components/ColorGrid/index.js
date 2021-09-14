@@ -132,25 +132,23 @@ function ColorGrid({ colors, resetColorDisplay }) {
           </SButton>
         </SFlex>
       </SOptions>
-      <SFlex column fullWidth style={{ flex: 1, overflow: "auto" }}>
-        <SColorGridDisplay showInfo={showInfo}>
-          {sortedColors.map((color, idx) => {
-            const isSelected = displayedColor
-              ? color.id === displayedColor.id
-              : false;
+      <SColorGridDisplay showInfo={showInfo}>
+        {sortedColors.map((color, idx) => {
+          const isSelected = displayedColor
+            ? color.id === displayedColor.id
+            : false;
 
-            return (
-              <ColorItem
-                isSelected={isSelected}
-                setDisplayedColor={setDisplayedColor}
-                color={color}
-                showInfo={showInfo}
-                key={idx}
-              />
-            );
-          })}
-        </SColorGridDisplay>
-      </SFlex>
+          return (
+            <ColorItem
+              isSelected={isSelected}
+              setDisplayedColor={setDisplayedColor}
+              color={color}
+              showInfo={showInfo}
+              key={idx}
+            />
+          );
+        })}
+      </SColorGridDisplay>
     </SColumn>
   );
 }
