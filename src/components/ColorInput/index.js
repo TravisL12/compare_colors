@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { SOptions, SButton, SColumn, SFlex, SLogo } from "../App/App.style";
+import { SColumn } from "../App/App.style";
 import {
   getDifferenceColor,
   highlightRegex,
