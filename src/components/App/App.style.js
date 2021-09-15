@@ -30,10 +30,6 @@ const textLayer = `
   ${boldBorder}
 `;
 
-const logoFont = `
-  font-family: 'Tinos', serif;
-`;
-
 export const H1 = styled.h1`
   margin-bottom: 5px;
 `;
@@ -43,7 +39,6 @@ export const H2 = styled.h2`
 `;
 
 export const SLogo = styled(H1)`
-  ${logoFont}
   margin: 0;
   font-size: 72px;
   color: ${logoGreen};
