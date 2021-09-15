@@ -63,7 +63,11 @@ function ColorGrid({ colors, displayedColor, setDisplayedColor }) {
 
   const colorCollection = useMemo(() => {
     return displayedColor
-      ? colors.filter((c) => c.hexString === displayedColor.hexString)
+      ? colors.filter(
+          (c) =>
+            c.hexString === displayedColor.hexString &&
+            c.id !== displayedColor.id
+        )
       : null;
   }, [colors, displayedColor]);
 
@@ -88,6 +92,7 @@ function ColorGrid({ colors, displayedColor, setDisplayedColor }) {
         compareColor={compareColor}
         displayedColor={displayedColor}
         colorCollection={colorCollection}
+        setDisplayedColor={setDisplayedColor}
       />
       <SOptions column fullWidth>
         <H2>Extracted Color Values</H2>

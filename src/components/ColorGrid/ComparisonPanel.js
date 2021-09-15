@@ -1,4 +1,5 @@
-import React from "react";
+import { first } from "lodash";
+import React, { useMemo } from "react";
 import { copyText } from "../../utilities/color-utils";
 import { SFlex } from "../App/App.style";
 import {
@@ -25,8 +26,22 @@ function ComparisonPanel({
   updateCompareColor,
   displayedColor,
   colorCollection,
+  setDisplayedColor,
 }) {
   const ids = (colorCollection || []).map((color) => (color ? color.id : null));
+
+  const prevMatch = useMemo(
+    () =>
+      (colorCollection || [])
+        .filter((c) => c.id < displayedColor.id)
+        .sort((a, b) => b.id - a.id),
+    [colorCollection, displayedColor]
+  );
+
+  const nextMatch = useMemo(
+    () => (colorCollection || []).filter((c) => c.id > displayedColor.id),
+    [colorCollection, displayedColor]
+  );
 
   return (
     <SComparisonPanel column fullWidth>
@@ -79,7 +94,11 @@ function ComparisonPanel({
           <span>{displayedColor && displayedColor.name}</span>
         </SColor>
         <div style={{ flex: 1 }}>
-          <strong>{!displayedColor ? "Nothing Selected" : "Selection"}</strong>
+          <strong>
+            {!displayedColor
+              ? "Nothing Selected"
+              : `Selection (ID ${displayedColor.id})`}
+          </strong>
           <SFlex fullWidth justify="space-between">
             {displayedColor && (
               <>
@@ -104,11 +123,27 @@ function ComparisonPanel({
                       {displayedColor.initialColor}
                     </span>
                   </li>
-                  {ids.length > 1 && (
-                    <li>
-                      <span>Dupe:</span>
-                      <span>{ids.length}</span>
-                    </li>
+                  {ids.length > 0 && (
+                    <>
+                      <li>
+                        <span>Dupe:</span>
+                        <span>{ids.length}</span>
+                      </li>
+                      <li>
+                        <button
+                          onClick={() => setDisplayedColor(first(prevMatch))}
+                          disabled={prevMatch.length < 1}
+                        >
+                          Prev
+                        </button>
+                        <button
+                          onClick={() => setDisplayedColor(first(nextMatch))}
+                          disabled={nextMatch.length < 1}
+                        >
+                          Next
+                        </button>
+                      </li>
+                    </>
                   )}
                 </SDisplayedColorDetails>
               </>
