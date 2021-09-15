@@ -19,10 +19,9 @@ import {
 import { SColorGridDisplay } from "./ColorGrid.style";
 import { uniqBy } from "lodash";
 
-function ColorGrid({ colors }) {
+function ColorGrid({ colors, displayedColor, setDisplayedColor }) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));
   const [showInfo, setShowInfo] = useState(true);
-  const [displayedColor, setDisplayedColor] = useState(null);
   const [sortMethod, setSortMethod] = useState(SORT_OFF);
   const areColorsSorted = sortMethod !== SORT_OFF;
 

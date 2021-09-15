@@ -1,5 +1,9 @@
 import React, { useMemo, useRef } from "react";
-import { SColumn, STextAreaDisplay } from "../App/App.style";
+import {
+  SColumn,
+  STextAreaDisplay,
+  SHighlightedColorText,
+} from "../App/App.style";
 import {
   getDifferenceColor,
   highlightRegex,
@@ -9,7 +13,12 @@ import {
 import { browserColorsByName } from "../../browserColorsList";
 import Color from "../../models/color";
 
-const ColorInput = ({ setColors, colorInput, onTextChange }) => {
+const ColorInput = ({
+  setColors,
+  colorInput,
+  onTextChange,
+  displayedColor,
+}) => {
   const highlightRef = useRef();
   const textRef = useRef();
 
@@ -23,6 +32,7 @@ const ColorInput = ({ setColors, colorInput, onTextChange }) => {
 
     const colors = [];
     const colorDisplayedInput = colorSplit.map((text, idx) => {
+      const id = idx + 1;
       const lowCaseText = text.toLowerCase();
       const colorMatch =
         browserColorsByName[lowCaseText] || matchRegex.test(lowCaseText)
@@ -30,29 +40,33 @@ const ColorInput = ({ setColors, colorInput, onTextChange }) => {
           : false;
 
       if (colorMatch) {
-        const findColor = new Color(colorMatch, idx);
-        const textColor = getDifferenceColor(findColor);
-        colors.push(findColor);
+        const color = new Color(colorMatch, id);
+        const invertColor = getDifferenceColor(color);
+        colors.push(color);
+
+        const isSelected = displayedColor && displayedColor.id === id;
 
         return (
-          <span
-            key={idx}
-            id={idx}
+          <SHighlightedColorText
+            key={id}
+            id={`color-highlight-${id}`}
+            isSelected={isSelected}
+            colorMatch={colorMatch}
             style={{
-              color: textColor,
+              color: invertColor,
               backgroundColor: text,
             }}
           >
             {text}
-          </span>
+          </SHighlightedColorText>
         );
       }
       return text;
     });
 
     setColors(colors);
-    return <div>{colorDisplayedInput}</div>;
-  }, [setColors, colorInput]);
+    return colorDisplayedInput;
+  }, [setColors, colorInput, displayedColor]);
 
   const updateScroll = (event) => {
     highlightRef.current.scrollTop = event.target.scrollTop;

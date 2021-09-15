@@ -109,6 +109,13 @@ export const SApp = styled(SFlex)`
   }
 `;
 
+export const SHighlightedColorText = styled.span`
+  position: relative;
+  box-shadow: ${(props) =>
+    props.isSelected ? `0 0 10px 5px ${props.colorMatch}` : "none"};
+  z-index: ${(props) => (props.isSelected ? 10 : "inherit")};
+`;
+
 export const STextAreaDisplay = styled.div`
   position: relative;
   width: 100%;

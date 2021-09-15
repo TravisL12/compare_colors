@@ -3,7 +3,7 @@ import { format2hex, hex2dec } from "../utilities/hexadecimal-utils";
 import { hslDec2array, isColorHsl } from "../utilities/hsl-utils";
 export default class Color {
   constructor(color = "000000", id) {
-    this.id = id + 1;
+    this.id = id;
     this.initialColor = color;
 
     if (browserColorsByName[color]) {

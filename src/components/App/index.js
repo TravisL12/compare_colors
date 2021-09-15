@@ -6,6 +6,7 @@ import { demoText, test } from "../../testData";
 
 const App = () => {
   const [colorInput, setColorInput] = useState(demoText);
+  const [displayedColor, setDisplayedColor] = useState(null);
   const [colors, setColors] = useState([]);
 
   const updateTextArea = ({ target: { value } }) => {
@@ -48,8 +49,13 @@ const App = () => {
           setColors={setColors}
           colorInput={colorInput}
           onTextChange={updateTextArea}
+          displayedColor={displayedColor}
         />
-        <ColorGrid colors={colors} />
+        <ColorGrid
+          colors={colors}
+          displayedColor={displayedColor}
+          setDisplayedColor={setDisplayedColor}
+        />
       </SFlex>
     </SApp>
   );
