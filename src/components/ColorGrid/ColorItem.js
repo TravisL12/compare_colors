@@ -1,13 +1,18 @@
 import React from "react";
+import { copyText } from "../../utilities/color-utils";
 import { SColorItem } from "./ColorGrid.style";
 
 function ColorItem({ color, showInfo, setDisplayedColor, isSelected }) {
-  const { hexColor, initialColor } = color;
+  const { hexString, rgbString, hslString, name, initialColor } = color;
 
   const squareStyle = {
-    color: `#${hexColor}`,
-    background: `#${hexColor}`,
+    color: hexString,
+    background: hexString,
   };
+
+  const displayValues = [hexString, rgbString, hslString, name].filter(
+    (str) => str && str.toLowerCase() !== initialColor.toLowerCase()
+  );
 
   return (
     <SColorItem isSelected={isSelected}>
@@ -18,7 +23,12 @@ function ColorItem({ color, showInfo, setDisplayedColor, isSelected }) {
       />
       {showInfo && (
         <div className="names">
-          <p>{initialColor}</p>
+          <p onClick={copyText}>{initialColor}</p>
+          {displayValues.map((val) => (
+            <p key={val} onClick={copyText}>
+              {val}
+            </p>
+          ))}
         </div>
       )}
     </SColorItem>

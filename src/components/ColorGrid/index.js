@@ -80,7 +80,7 @@ function ColorGrid({ colors }) {
       : colors;
 
     return uniqBy(sorted, "rgbString");
-  }, [colors, areColorsSorted, sortMethod]);
+  }, [colors, areColorsSorted, sortMethod, compareColor, sortTypes]);
 
   return (
     <SColumn column fullWidth>

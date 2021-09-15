@@ -105,7 +105,7 @@ export const SDisplayedColorDetails = styled.ul`
     display: flex;
 
     span:first-child {
-      width: 40px;
+      width: 50px;
     }
     span:nth-child(2) {
       cursor: pointer;

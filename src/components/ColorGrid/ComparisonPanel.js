@@ -26,7 +26,6 @@ function ComparisonPanel({
   displayedColor,
   colorCollection,
 }) {
-  console.log(colorCollection);
   const ids = (colorCollection || []).map((color) => (color ? color.id : null));
 
   return (
@@ -79,26 +78,41 @@ function ComparisonPanel({
         >
           <span>{displayedColor && displayedColor.name}</span>
         </SColor>
-        <div>
+        <div style={{ flex: 1 }}>
           <strong>{!displayedColor ? "Nothing Selected" : "Selection"}</strong>
-          <SFlex>
+          <SFlex fullWidth justify="space-between">
             {displayedColor && (
-              <SDisplayedColorDetails>
-                <li>
-                  <span>Hex:</span>
-                  <span onClick={copyText}>{displayedColor.hexString}</span>
-                </li>
-                <li>
-                  <span>RGB:</span>
-                  <span onClick={copyText}>{displayedColor.rgbString}</span>
-                </li>
-                <li>
-                  <span>HSL:</span>
-                  <span onClick={copyText}>{displayedColor.hslString}</span>
-                </li>
-              </SDisplayedColorDetails>
+              <>
+                <SDisplayedColorDetails>
+                  <li>
+                    <span>Hex:</span>
+                    <span onClick={copyText}>{displayedColor.hexString}</span>
+                  </li>
+                  <li>
+                    <span>RGB:</span>
+                    <span onClick={copyText}>{displayedColor.rgbString}</span>
+                  </li>
+                  <li>
+                    <span>HSL:</span>
+                    <span onClick={copyText}>{displayedColor.hslString}</span>
+                  </li>
+                </SDisplayedColorDetails>
+                <SDisplayedColorDetails>
+                  <li>
+                    <span>Match:</span>
+                    <span onClick={copyText}>
+                      {displayedColor.initialColor}
+                    </span>
+                  </li>
+                  {ids.length > 1 && (
+                    <li>
+                      <span>Dupe:</span>
+                      <span>{ids.length}</span>
+                    </li>
+                  )}
+                </SDisplayedColorDetails>
+              </>
             )}
-            <div>{ids.length > 1 && <span>IDs: {ids.length}</span>}</div>
           </SFlex>
         </div>
       </SSelectedColor>
