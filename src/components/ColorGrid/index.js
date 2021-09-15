@@ -72,7 +72,7 @@ function ColorGrid({ colors, resetColorDisplay }) {
     : colors;
 
   return (
-    <SColumn>
+    <SColumn column fullWidth>
       <ComparisonPanel
         toggle={toggle}
         updateCompareColor={updateCompareColor}

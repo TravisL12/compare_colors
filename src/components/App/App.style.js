@@ -92,10 +92,8 @@ export const SRadioButton = styled.div`
 
 export const SColumn = styled(SFlex)`
   position: relative;
-  flex-direction: column;
   gap: 10px;
   max-width: 1400px;
-  width: 100%;
   height: 100%;
   border-radius: ${borderRadius};
 `;

@@ -1,31 +1,27 @@
-import React, { useMemo } from "react";
-import { SColumn } from "../App/App.style";
+import React, { useMemo, useRef } from "react";
+import { SColumn, STextAreaDisplay } from "../App/App.style";
 import {
   getDifferenceColor,
   highlightRegex,
+  matchColors,
   matchRegex,
 } from "../../utilities/color-utils";
 import { browserColorsByName } from "../../browserColorsList";
-import ColorTextArea from "./ColorTextArea";
+import Color from "../../models/color";
 
-const ColorInput = ({
-  colors,
-  colorInput,
-  testColors,
-  instructionColors,
-  resetColorDisplay,
-  onTextChange,
-}) => {
+const ColorInput = ({ setColors, colorInput, onTextChange }) => {
+  const highlightRef = useRef();
+  const textRef = useRef();
+
   const colorHighlight = useMemo(() => {
-    if (!colors.length) {
-      return colorInput;
-    }
+    const parsedColors = matchColors(colorInput.toLowerCase());
 
-    const colorNames = colors.map(({ name }) => name).filter((x) => x);
+    const colorNames = parsedColors.map(({ name }) => name).filter((x) => x);
     const colorSplit = colorInput
       .split(highlightRegex(colorNames))
       .filter((x) => x);
 
+    const colors = [];
     const colorDisplayedInput = colorSplit.map((text, idx) => {
       const lowCaseText = text.toLowerCase();
       const colorMatch =
@@ -34,19 +30,14 @@ const ColorInput = ({
           : false;
 
       if (colorMatch) {
-        const findColor = colors.find((color) => {
-          const { hexString, rgbString, hslString, name } = color;
-          return [hexString, rgbString, hslString, name]
-            .map((x) => (x ? x.toLowerCase() : x))
-            .includes(colorMatch.trim().toLowerCase());
-        });
-
+        const findColor = new Color(colorMatch, idx);
         const textColor = getDifferenceColor(findColor);
+        colors.push(findColor);
 
         return (
           <span
             key={idx}
-            id={findColor ? findColor.id : idx}
+            id={idx}
             style={{
               color: textColor,
               backgroundColor: text,
@@ -59,16 +50,29 @@ const ColorInput = ({
       return text;
     });
 
+    setColors(colors);
     return <div>{colorDisplayedInput}</div>;
-  }, [colors, colorInput]);
+  }, [setColors, colorInput]);
+
+  const updateScroll = (event) => {
+    highlightRef.current.scrollTop = event.target.scrollTop;
+  };
 
   return (
-    <SColumn>
-      <ColorTextArea
-        colorHighlight={colorHighlight}
-        onTextChange={onTextChange}
-        colorInput={colorInput}
-      />
+    <SColumn column fullWidth>
+      <STextAreaDisplay>
+        <div ref={highlightRef} className="color-highlight-layer">
+          {colorHighlight}
+        </div>
+        <textarea
+          ref={textRef}
+          onScroll={updateScroll}
+          className="color-textarea"
+          onChange={onTextChange}
+          value={colorInput}
+          spellCheck="false"
+        />
+      </STextAreaDisplay>
     </SColumn>
   );
 };

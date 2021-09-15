@@ -1,7 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import ColorGrid from "../ColorGrid";
-import Color from "../../models/color";
-import { matchColors } from "../../utilities/color-utils";
 import { uniqBy } from "lodash";
 import { SApp, SLogo, SOptions, SFlex, SButton } from "./App.style";
 import ColorInput from "../ColorInput";
@@ -28,28 +26,6 @@ const App = () => {
     setColors([]);
   };
 
-  const parseColors = useCallback(() => {
-    const parsedColors = matchColors(colorInput.toLowerCase());
-
-    if (parsedColors.length === 0) {
-      setColors([]);
-      return;
-    }
-
-    const matchedColors = parsedColors.map(
-      ({ color, name }, id) => new Color(name || color, id)
-    );
-
-    if (matchedColors.length === 0) {
-      setColors([]);
-      return;
-    }
-
-    setColors(matchedColors);
-  }, [colorInput]);
-
-  useEffect(parseColors, [colorInput]);
-
   return (
     <SApp column gap={10}>
       <SFlex column>
@@ -70,12 +46,9 @@ const App = () => {
 
       <SFlex fullWidth gap={20} style={{ overflow: "auto", flex: 1 }}>
         <ColorInput
-          colors={colors}
+          setColors={setColors}
           colorInput={colorInput}
           onTextChange={updateTextArea}
-          testColors={testColors}
-          instructionColors={instructionColors}
-          resetColorDisplay={resetColorDisplay}
         />
         <ColorGrid colors={uniqBy(colors, (x) => x.rgbString)} />
       </SFlex>
