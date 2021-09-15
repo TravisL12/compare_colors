@@ -1,8 +1,9 @@
-import React, { useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import {
   SColumn,
   STextAreaDisplay,
   SHighlightedColorText,
+  SColorHighlightLayer,
 } from "../App/App.style";
 import {
   getDifferenceColor,
@@ -21,6 +22,22 @@ const ColorInput = ({
 }) => {
   const highlightRef = useRef();
   const textRef = useRef();
+
+  const displayedColorElement = useMemo(() => {
+    if (displayedColor) {
+      return document.getElementById(`color-highlight-${displayedColor.id}`);
+    }
+    return null;
+  }, [displayedColor]);
+
+  useEffect(() => {
+    if (displayedColorElement) {
+      displayedColorElement.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [displayedColorElement]);
 
   const colorHighlight = useMemo(() => {
     const parsedColors = matchColors(colorInput.toLowerCase());
@@ -75,9 +92,14 @@ const ColorInput = ({
   return (
     <SColumn column fullWidth>
       <STextAreaDisplay>
-        <div ref={highlightRef} className="color-highlight-layer">
+        <SColorHighlightLayer
+          ref={highlightRef}
+          highlightOffset={
+            displayedColorElement ? displayedColorElement.offsetTop : false
+          }
+        >
           {colorHighlight}
-        </div>
+        </SColorHighlightLayer>
         <textarea
           ref={textRef}
           onScroll={updateScroll}

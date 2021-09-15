@@ -111,17 +111,29 @@ export const SHighlightedColorText = styled.span`
   z-index: ${(props) => (props.isSelected ? 10 : "inherit")};
 `;
 
+export const SColorHighlightLayer = styled.div`
+  ${textLayer}
+  z-index: 1;
+
+  ${(props) =>
+    props.highlightOffset
+      ? `&::before {
+          content: '';
+          position: absolute;
+          background-color: #ffa;
+          top: ${props.highlightOffset}px;
+          width: 100%;
+          height: 15px;
+        }`
+      : ""}
+`;
+
 export const STextAreaDisplay = styled.div`
   position: relative;
   width: 100%;
   box-sizing: border-box;
   flex: 1;
   overflow: scroll;
-
-  .color-highlight-layer {
-    ${textLayer}
-    z-index: 1;
-  }
 
   .color-textarea {
     ${textLayer}
