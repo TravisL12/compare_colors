@@ -1,17 +1,13 @@
 import React from "react";
-import { copyText } from "../../utilities/color-utils";
-import { browserColorsByHex } from "../../browserColorsList";
 import { SColorItem } from "./ColorGrid.style";
 
 function ColorItem({ color, showInfo, setDisplayedColor, isSelected }) {
-  const { hexColor, rgbColor, hue, saturation, lightness } = color;
+  const { hexColor, initialColor } = color;
 
   const squareStyle = {
     color: `#${hexColor}`,
     background: `#${hexColor}`,
   };
-
-  const browserColorName = color.name || browserColorsByHex[`#${hexColor}`];
 
   return (
     <SColorItem isSelected={isSelected}>
@@ -22,12 +18,7 @@ function ColorItem({ color, showInfo, setDisplayedColor, isSelected }) {
       />
       {showInfo && (
         <div className="names">
-          <p onClick={copyText}>#{hexColor}</p>
-          <p onClick={copyText}>rgb({rgbColor.join(",")})</p>
-          <p onClick={copyText}>
-            hsl({[hue, `${saturation}%`, `${lightness}%`].join(",")})
-          </p>
-          {browserColorName && <p onClick={copyText}>{browserColorName}</p>}
+          <p>{initialColor}</p>
         </div>
       )}
     </SColorItem>

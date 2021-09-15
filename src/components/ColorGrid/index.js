@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Color from "../../models/color";
 import ColorItem from "./ColorItem";
 import ComparisonPanel from "./ComparisonPanel";
@@ -17,8 +17,9 @@ import {
   SRadioButton,
 } from "../App/App.style";
 import { SColorGridDisplay } from "./ColorGrid.style";
+import { uniqBy } from "lodash";
 
-function ColorGrid({ colors, resetColorDisplay }) {
+function ColorGrid({ colors }) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));
   const [showInfo, setShowInfo] = useState(true);
   const [displayedColor, setDisplayedColor] = useState(null);
@@ -61,26 +62,33 @@ function ColorGrid({ colors, resetColorDisplay }) {
     },
   };
 
-  const sortedColors = areColorsSorted
-    ? colors
-        .slice()
-        .sort(
-          (a, b) =>
-            sortTypes[sortMethod](a, compareColor) -
-            sortTypes[sortMethod](b, compareColor)
-        )
-    : colors;
+  const colorCollection = useMemo(() => {
+    return displayedColor
+      ? colors.filter((c) => c.hexString === displayedColor.hexString)
+      : null;
+  }, [colors, displayedColor]);
+
+  const sortedColors = useMemo(() => {
+    const sorted = areColorsSorted
+      ? colors
+          .slice()
+          .sort(
+            (a, b) =>
+              sortTypes[sortMethod](a, compareColor) -
+              sortTypes[sortMethod](b, compareColor)
+          )
+      : colors;
+
+    return uniqBy(sorted, "rgbString");
+  }, [colors, areColorsSorted, sortMethod]);
 
   return (
     <SColumn column fullWidth>
       <ComparisonPanel
-        toggle={toggle}
         updateCompareColor={updateCompareColor}
         compareColor={compareColor}
-        showInfo={showInfo}
-        sortMethod={sortMethod}
-        resetColorDisplay={resetColorDisplay}
         displayedColor={displayedColor}
+        colorCollection={colorCollection}
       />
       <SOptions column fullWidth>
         <H2>Extracted Color Values</H2>

@@ -105,7 +105,6 @@ export const SApp = styled(SFlex)`
   background: ${gray};
 
   p {
-    ${logoFont}
     font-size: 18px;
   }
 `;

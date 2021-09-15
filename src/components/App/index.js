@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ColorGrid from "../ColorGrid";
-import { uniqBy } from "lodash";
 import { SApp, SLogo, SOptions, SFlex, SButton } from "./App.style";
 import ColorInput from "../ColorInput";
 import { demoText, test } from "../../testData";
@@ -50,7 +49,7 @@ const App = () => {
           colorInput={colorInput}
           onTextChange={updateTextArea}
         />
-        <ColorGrid colors={uniqBy(colors, (x) => x.rgbString)} />
+        <ColorGrid colors={colors} />
       </SFlex>
     </SApp>
   );
