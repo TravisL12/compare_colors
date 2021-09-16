@@ -5,7 +5,7 @@ import ColorInput from "../ColorInput";
 import { demoText, test } from "../../testData";
 
 const App = () => {
-  const [colorInput, setColorInput] = useState(demoText);
+  const [colorInput, setColorInput] = useState(test);
   const [displayedColor, setDisplayedColor] = useState(null);
   const [colors, setColors] = useState([]);
 
