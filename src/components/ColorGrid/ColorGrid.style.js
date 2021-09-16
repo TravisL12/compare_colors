@@ -96,6 +96,7 @@ export const SColorItem = styled.div`
 
 export const SDisplayedColorDetails = styled.ul`
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 4px;
   height: 100%;
@@ -103,9 +104,10 @@ export const SDisplayedColorDetails = styled.ul`
 
   li {
     display: flex;
+    gap: 5px;
 
     span:first-child {
-      width: 50px;
+      min-width: 40px;
     }
     span:nth-child(2) {
       cursor: pointer;

@@ -5,7 +5,7 @@ import ColorInput from "../ColorInput";
 import { demoText, test } from "../../testData";
 
 const App = () => {
-  const [colorInput, setColorInput] = useState(test);
+  const [colorInput, setColorInput] = useState(demoText);
   const [displayedColor, setDisplayedColor] = useState(null);
   const [colors, setColors] = useState([]);
 
@@ -38,7 +38,7 @@ const App = () => {
             style={{ height: "100%", flex: 1 }}
           >
             <SButton onClick={instructionColors}>Instructions</SButton>
-            <SButton onClick={testColors}>Large Test</SButton>
+            <SButton onClick={testColors}>Demo Text</SButton>
             <SButton onClick={resetColorDisplay}>Reset</SButton>
           </SFlex>
         </SOptions>

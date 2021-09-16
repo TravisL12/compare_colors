@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { getDifferenceColor } from "../../utilities/color-utils";
 import { hexAlpha } from "../../utilities/hexadecimal-utils";
 export const black = "#444444";
 export const gray = "#ececec";
@@ -111,7 +112,9 @@ export const SHighlightedColorText = styled.span`
   border-radius: ${(props) => (props.isSelected ? "5px" : 0)};
   box-shadow: ${(props) =>
     props.isSelected
-      ? `0 0 0px ${boxSize}px ${props.colorMatch}, 0 0 0 ${boxSize + 1}px black`
+      ? `0 0 0px ${boxSize}px ${props.colorMatch}, 0 0 0 ${
+          boxSize + 1
+        }px ${getDifferenceColor(props.colorMatch)}`
       : "none"};
 `;
 

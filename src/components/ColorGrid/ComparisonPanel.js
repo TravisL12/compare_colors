@@ -1,7 +1,7 @@
-import { first } from "lodash";
+import { first, last } from "lodash";
 import React, { useMemo } from "react";
 import { copyText } from "../../utilities/color-utils";
-import { SFlex } from "../App/App.style";
+import { SButton, SFlex } from "../App/App.style";
 import {
   SComparisonPanel,
   SColorInputOptions,
@@ -13,6 +13,8 @@ import {
 } from "./ColorGrid.style";
 
 const QUICK_COMPARE_COLORS = [
+  "black",
+  "gray",
   "red",
   "orange",
   "yellow",
@@ -28,18 +30,19 @@ function ComparisonPanel({
   colorCollection,
   setDisplayedColor,
 }) {
-  const ids = (colorCollection || []).map((color) => (color ? color.id : null));
+  const ids = colorCollection.map((color) => (color ? color.id : null));
+  const idIndex = ids.findIndex((id) => id === displayedColor.id);
 
-  const prevMatch = useMemo(
+  const prevMatches = useMemo(
     () =>
-      (colorCollection || [])
+      colorCollection
         .filter((c) => c.id < displayedColor.id)
         .sort((a, b) => b.id - a.id),
     [colorCollection, displayedColor]
   );
 
-  const nextMatch = useMemo(
-    () => (colorCollection || []).filter((c) => c.id > displayedColor.id),
+  const nextMatches = useMemo(
+    () => colorCollection.filter((c) => c.id > displayedColor.id),
     [colorCollection, displayedColor]
   );
 
@@ -94,11 +97,7 @@ function ComparisonPanel({
           <span>{displayedColor && displayedColor.name}</span>
         </SColor>
         <div style={{ flex: 1 }}>
-          <strong>
-            {!displayedColor
-              ? "Nothing Selected"
-              : `Selection (ID ${displayedColor.id})`}
-          </strong>
+          <strong>{!displayedColor ? "Nothing Selected" : "Selection"}</strong>
           <SFlex fullWidth justify="space-between">
             {displayedColor && (
               <>
@@ -118,30 +117,42 @@ function ComparisonPanel({
                 </SDisplayedColorDetails>
                 <SDisplayedColorDetails>
                   <li>
-                    <span>Match:</span>
+                    <span>Matched Text:</span>
                     <span onClick={copyText}>
                       {displayedColor.initialColor}
                     </span>
                   </li>
-                  {ids.length > 0 && (
+                  {ids.length > 1 && (
                     <>
                       <li>
-                        <span>Dupe:</span>
-                        <span>{ids.length}</span>
+                        <span>Match:</span>
+                        <span>
+                          {idIndex + 1} of {ids.length}
+                        </span>
                       </li>
                       <li>
-                        <button
-                          onClick={() => setDisplayedColor(first(prevMatch))}
-                          disabled={prevMatch.length < 1}
-                        >
-                          Prev
-                        </button>
-                        <button
-                          onClick={() => setDisplayedColor(first(nextMatch))}
-                          disabled={nextMatch.length < 1}
-                        >
-                          Next
-                        </button>
+                        <SFlex gap={10}>
+                          <SButton
+                            onClick={() => {
+                              const previous = first(prevMatches)
+                                ? first(prevMatches)
+                                : last(nextMatches);
+                              setDisplayedColor(previous);
+                            }}
+                          >
+                            Previous
+                          </SButton>
+                          <SButton
+                            onClick={() => {
+                              const next = first(nextMatches)
+                                ? first(nextMatches)
+                                : last(prevMatches);
+                              setDisplayedColor(next);
+                            }}
+                          >
+                            Next
+                          </SButton>
+                        </SFlex>
                       </li>
                     </>
                   )}
