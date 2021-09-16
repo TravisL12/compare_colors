@@ -94,6 +94,7 @@ const ColorInput = ({
       <STextAreaDisplay>
         <SColorHighlightLayer
           ref={highlightRef}
+          color={displayedColor ? displayedColor.hexString : null}
           highlightOffset={
             displayedColorElement ? displayedColorElement.offsetTop : false
           }

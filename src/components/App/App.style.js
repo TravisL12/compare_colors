@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { hexAlpha } from "../../utilities/hexadecimal-utils";
 export const black = "#444444";
 export const gray = "#ececec";
 export const lightgray = "#f9f9f9";
@@ -104,11 +104,15 @@ export const SApp = styled(SFlex)`
   }
 `;
 
+const boxSize = 3;
 export const SHighlightedColorText = styled.span`
   position: relative;
-  box-shadow: ${(props) =>
-    props.isSelected ? `0 0 10px 5px ${props.colorMatch}` : "none"};
   z-index: ${(props) => (props.isSelected ? 10 : "inherit")};
+  border-radius: ${(props) => (props.isSelected ? "5px" : 0)};
+  box-shadow: ${(props) =>
+    props.isSelected
+      ? `0 0 0px ${boxSize}px ${props.colorMatch}, 0 0 0 ${boxSize + 1}px black`
+      : "none"};
 `;
 
 export const SColorHighlightLayer = styled.div`
@@ -120,10 +124,11 @@ export const SColorHighlightLayer = styled.div`
       ? `&::before {
           content: '';
           position: absolute;
-          background-color: #ffa;
+          background-color: #${hexAlpha(props.color, 0.6)};
           top: ${props.highlightOffset}px;
           width: 100%;
           height: 15px;
+          z-index: 2;
         }`
       : ""}
 `;
