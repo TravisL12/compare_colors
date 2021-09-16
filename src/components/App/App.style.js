@@ -124,10 +124,11 @@ export const SColorHighlightLayer = styled.div`
       ? `&::before {
           content: '';
           position: absolute;
-          background-color: #${hexAlpha(props.color, 0.6)};
+          background-color: #${hexAlpha("gray", 0.2)};
           top: ${props.highlightOffset}px;
+          left: 0;
           width: 100%;
-          height: 15px;
+          height: 16px;
           z-index: 2;
         }`
       : ""}

@@ -21,7 +21,9 @@ export function hex2dec(hex) {
  */
 export function hexAlpha(color, percent = 0.5) {
   const colorObj = typeof color === "object" ? color : new Color(color);
-  const percentHex = `0${Number(100 * percent).toString(16)}`.slice(-2);
+  const percentHex = `0${Number(Math.round(255 * percent)).toString(16)}`.slice(
+    -2
+  );
   return `${colorObj.hexColor}${percentHex}`;
 }
 
