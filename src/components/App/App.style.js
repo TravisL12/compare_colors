@@ -51,6 +51,7 @@ export const SFlex = styled.div`
   gap: ${(props) => (props.gap ? `${props.gap}px` : 0)};
   justify-content: ${(props) => (props.justify ? props.justify : "flex-start")};
   width: ${(props) => (props.fullWidth ? "100%" : "auto")};
+  flex-wrap: ${(props) => (props.wrap ? "wrap" : "nowrap")};
   align-items: ${(props) =>
     props.alignItems ? props.alignItems : "flex-start"};
 `;

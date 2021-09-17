@@ -4,7 +4,6 @@ import { copyText } from "../../utilities/color-utils";
 import { SButton, SFlex } from "../App/App.style";
 import {
   SComparisonPanel,
-  SColorInputOptions,
   SDisplayedColorDetails,
   SColor,
   SLabelColor,
@@ -67,26 +66,17 @@ function ComparisonPanel({
             />
           </div>
         </SLabelColor>
-        <SFlex justify="space-between" style={{ flex: 1 }}>
-          <SColorInputOptions
-            justify="space-between"
-            color={compareColor.hexString}
-          >
-            <div>
-              <strong>Comparison</strong>
-              <SFlex gap={5}>
-                {QUICK_COMPARE_COLORS.map((color) => (
-                  <SCompareColor
-                    key={color}
-                    onClick={() =>
-                      updateCompareColor({ target: { value: color } })
-                    }
-                    color={color}
-                  />
-                ))}
-              </SFlex>
-            </div>
-          </SColorInputOptions>
+        <SFlex justify="space-between" column style={{ flex: 1 }}>
+          <strong>Comparison</strong>
+          <SFlex gap={5} wrap>
+            {QUICK_COMPARE_COLORS.map((color) => (
+              <SCompareColor
+                key={color}
+                onClick={() => updateCompareColor({ target: { value: color } })}
+                color={color}
+              />
+            ))}
+          </SFlex>
         </SFlex>
       </SSelectedColor>
       <hr />
@@ -98,7 +88,7 @@ function ComparisonPanel({
         </SColor>
         <div style={{ flex: 1 }}>
           <strong>{!displayedColor ? "Nothing Selected" : "Selection"}</strong>
-          <SFlex fullWidth justify="space-between">
+          <SFlex fullWidth justify="space-between" wrap>
             {displayedColor && (
               <>
                 <SDisplayedColorDetails>
@@ -116,12 +106,6 @@ function ComparisonPanel({
                   </li>
                 </SDisplayedColorDetails>
                 <SDisplayedColorDetails>
-                  <li>
-                    <span>Matched Text:</span>
-                    <span onClick={copyText}>
-                      {displayedColor.initialColor}
-                    </span>
-                  </li>
                   {ids.length > 1 && (
                     <>
                       <li>

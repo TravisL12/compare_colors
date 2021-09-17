@@ -46,13 +46,6 @@ export const SSelectedColor = styled(SFlex)`
   height: ${PANEL_HEIGHT / 2}px;
 `;
 
-export const SColorInputOptions = styled(SFlex)`
-  input[type="text"] {
-    width: 60px;
-    text-align: center;
-  }
-`;
-
 export const SColorItem = styled.div`
   display: flex;
   position: relative;
