@@ -29,7 +29,7 @@ function ComparisonPanel({
   colorCollection,
   setDisplayedColor,
 }) {
-  const ids = colorCollection.map((color) => (color ? color.id : null));
+  const ids = colorCollection.map((color) => color?.id ?? null);
   const idIndex = ids.findIndex((id) => id === displayedColor.id);
 
   const prevMatches = useMemo(
