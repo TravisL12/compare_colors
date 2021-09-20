@@ -2,7 +2,7 @@
   "name": "color-compare",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://travisl12.github.io/compare_colors",
+  "homepage": ".",
   "dependencies": {
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
