@@ -63,12 +63,8 @@ function ColorGrid({ colors, displayedColor, setDisplayedColor }) {
 
   const colorCollection = useMemo(() => {
     return displayedColor
-      ? colors.filter(
-          (c) =>
-            c.hexString === displayedColor.hexString &&
-            c.id !== displayedColor.id
-        )
-      : null;
+      ? colors.filter((c) => c.hexString === displayedColor.hexString)
+      : [];
   }, [colors, displayedColor]);
 
   const sortedColors = useMemo(() => {

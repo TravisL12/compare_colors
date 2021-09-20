@@ -14,6 +14,7 @@ import {
 import { browserColorsByName } from "../../browserColorsList";
 import Color from "../../models/color";
 
+let highlightScrollTimeout;
 const ColorInput = ({
   setColors,
   colorInput,
@@ -89,11 +90,19 @@ const ColorInput = ({
     highlightRef.current.scrollTop = event.target.scrollTop;
   };
 
+  const updatedHighlightScroll = () => {
+    clearTimeout(highlightScrollTimeout);
+    highlightScrollTimeout = setTimeout(() => {
+      textRef.current.scrollTop = highlightRef.current.scrollTop;
+    }, 50);
+  };
+
   return (
     <SColumn column fullWidth>
       <STextAreaDisplay>
         <SColorHighlightLayer
           ref={highlightRef}
+          onScroll={updatedHighlightScroll}
           highlightOffset={
             displayedColorElement ? displayedColorElement.offsetTop : false
           }

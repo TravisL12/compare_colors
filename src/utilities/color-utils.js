@@ -8,7 +8,10 @@ const rgbRe = `rgb\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*\\)`;
 const hexRe = `#\\"?[a-f0-9]{6}\\"?`; // hex regex https://stackoverflow.com/questions/41258980/split-string-on-hex-colour
 const hslRe = `hsl\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}%\\s*,\\s*\\d{1,3}%\\s*\\)`;
 export const highlightRegex = (nameVals) =>
-  new RegExp(`(${rgbRe}|${hexRe}|${hslRe}|${nameVals.join("|")})`, "gi");
+  new RegExp(
+    `(${rgbRe}|${hexRe}|${hslRe}|\\b${nameVals.join("\\b|\\b")})`,
+    "gi"
+  );
 
 export const matchRegex = new RegExp(`(${rgbRe}|${hexRe}|${hslRe})`, "gi");
 

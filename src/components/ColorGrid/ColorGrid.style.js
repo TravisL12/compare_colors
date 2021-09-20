@@ -46,13 +46,6 @@ export const SSelectedColor = styled(SFlex)`
   height: ${PANEL_HEIGHT / 2}px;
 `;
 
-export const SColorInputOptions = styled(SFlex)`
-  input[type="text"] {
-    width: 60px;
-    text-align: center;
-  }
-`;
-
 export const SColorItem = styled.div`
   display: flex;
   position: relative;
@@ -96,6 +89,7 @@ export const SColorItem = styled.div`
 
 export const SDisplayedColorDetails = styled.ul`
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 4px;
   height: 100%;
@@ -103,9 +97,10 @@ export const SDisplayedColorDetails = styled.ul`
 
   li {
     display: flex;
+    gap: 5px;
 
     span:first-child {
-      width: 50px;
+      min-width: 40px;
     }
     span:nth-child(2) {
       cursor: pointer;

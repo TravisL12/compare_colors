@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { getDifferenceColor } from "../../utilities/color-utils";
 import { hexAlpha } from "../../utilities/hexadecimal-utils";
 export const black = "#444444";
 export const gray = "#ececec";
@@ -50,6 +51,7 @@ export const SFlex = styled.div`
   gap: ${(props) => (props.gap ? `${props.gap}px` : 0)};
   justify-content: ${(props) => (props.justify ? props.justify : "flex-start")};
   width: ${(props) => (props.fullWidth ? "100%" : "auto")};
+  flex-wrap: ${(props) => (props.wrap ? "wrap" : "nowrap")};
   align-items: ${(props) =>
     props.alignItems ? props.alignItems : "flex-start"};
 `;
@@ -111,7 +113,9 @@ export const SHighlightedColorText = styled.span`
   border-radius: ${(props) => (props.isSelected ? "5px" : 0)};
   box-shadow: ${(props) =>
     props.isSelected
-      ? `0 0 0px ${boxSize}px ${props.colorMatch}, 0 0 0 ${boxSize + 1}px black`
+      ? `0 0 0px ${boxSize}px ${props.colorMatch}, 0 0 0 ${
+          boxSize + 1
+        }px ${getDifferenceColor(props.colorMatch)}`
       : "none"};
 `;
 

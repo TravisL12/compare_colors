@@ -38,7 +38,7 @@ const App = () => {
             style={{ height: "100%", flex: 1 }}
           >
             <SButton onClick={instructionColors}>Instructions</SButton>
-            <SButton onClick={testColors}>Large Test</SButton>
+            <SButton onClick={testColors}>Demo Text</SButton>
             <SButton onClick={resetColorDisplay}>Reset</SButton>
           </SFlex>
         </SOptions>
