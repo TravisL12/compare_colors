@@ -14,8 +14,20 @@ import {
 import { browserColorsByName } from "../../browserColorsList";
 import Color from "../../models/color";
 
+const findBoundary = (idx, text, direction = -1) => {
+  for (let i = 0; i < 10; i++) {
+    const val = i * direction;
+    if ([" ", "\n"].includes(text[idx + val])) {
+      console.log(text[idx + val], idx + val);
+      return idx + val;
+    }
+  }
+  return -1;
+};
+
 let highlightScrollTimeout;
 const ColorInput = ({
+  colors,
   setColors,
   colorInput,
   onTextChange,
@@ -48,7 +60,7 @@ const ColorInput = ({
       .split(highlightRegex(colorNames))
       .filter((x) => x);
 
-    const colors = [];
+    const matchedColors = [];
     const colorDisplayedInput = colorSplit.map((text, idx) => {
       const id = idx + 1;
       const lowCaseText = text.toLowerCase();
@@ -60,7 +72,7 @@ const ColorInput = ({
       if (colorMatch) {
         const color = new Color(colorMatch, id);
         const invertColor = getDifferenceColor(color);
-        colors.push(color);
+        matchedColors.push(color);
 
         const isSelected = displayedColor && displayedColor.id === id;
 
@@ -82,7 +94,7 @@ const ColorInput = ({
       return text;
     });
 
-    setColors(colors);
+    setColors(matchedColors);
     return colorDisplayedInput;
   }, [setColors, colorInput, displayedColor]);
 
@@ -95,6 +107,14 @@ const ColorInput = ({
     highlightScrollTimeout = setTimeout(() => {
       textRef.current.scrollTop = highlightRef.current.scrollTop;
     }, 50);
+  };
+
+  const checkSelection = (event) => {
+    const start = findBoundary(event.currentTarget.selectionStart, colorInput);
+    const end = findBoundary(event.currentTarget.selectionEnd, colorInput, 1);
+
+    // console.log(colors);
+    console.log(colorInput.substring(start, end));
   };
 
   return (
@@ -114,6 +134,7 @@ const ColorInput = ({
           onScroll={updateScroll}
           className="color-textarea"
           onChange={onTextChange}
+          onClick={checkSelection}
           value={colorInput}
           spellCheck="false"
         />
