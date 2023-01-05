@@ -14,12 +14,12 @@ import {
 import { browserColorsByName } from "../../browserColorsList";
 import Color from "../../models/color";
 
+const boundaryThreshold = [" ", "\t", "\n", ",", "'", '"'];
 const findBoundary = (idx, text, direction = -1) => {
   for (let i = 0; i < 10; i++) {
     const val = i * direction;
-    if ([" ", "\n"].includes(text[idx + val])) {
-      console.log(text[idx + val], idx + val);
-      return idx + val;
+    if (boundaryThreshold.includes(text[idx + val])) {
+      return direction === -1 ? idx + val + 1 : idx + val;
     }
   }
   return -1;
@@ -61,16 +61,16 @@ const ColorInput = ({
       .filter((x) => x);
 
     const matchedColors = [];
-    const colorDisplayedInput = colorSplit.map((text, idx) => {
+    const colorDisplayedInput = colorSplit.map((colorText, idx) => {
       const id = idx + 1;
-      const lowCaseText = text.toLowerCase();
+      const lowCaseText = colorText.toLowerCase();
       const colorMatch =
         browserColorsByName[lowCaseText] || matchRegex.test(lowCaseText)
           ? lowCaseText
           : false;
 
       if (colorMatch) {
-        const color = new Color(colorMatch, id);
+        const color = new Color(colorText, id);
         const invertColor = getDifferenceColor(color);
         matchedColors.push(color);
 
@@ -84,14 +84,14 @@ const ColorInput = ({
             colorMatch={colorMatch}
             style={{
               color: invertColor,
-              backgroundColor: text,
+              backgroundColor: colorText,
             }}
           >
-            {text}
+            {colorText}
           </SHighlightedColorText>
         );
       }
-      return text;
+      return colorText;
     });
 
     setColors(matchedColors);
@@ -113,8 +113,15 @@ const ColorInput = ({
     const start = findBoundary(event.currentTarget.selectionStart, colorInput);
     const end = findBoundary(event.currentTarget.selectionEnd, colorInput, 1);
 
-    // console.log(colors);
-    console.log(colorInput.substring(start, end));
+    if (start === -1 || end === -1) {
+      return;
+    }
+
+    const clickedColor = colorInput.substring(start, end).trim();
+    const findColorObject = colors.find(
+      (color) => color.initialColor === clickedColor
+    );
+    console.log(clickedColor, findColorObject);
   };
 
   return (
