@@ -35,8 +35,7 @@ function ColorGrid({ colors, displayedColor, setDisplayedColor }) {
   useEffect(() => {
     if (displayedColor) {
       itemRefs[displayedColor.id]?.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
+        block: "nearest",
       });
     }
   }, [displayedColor]);

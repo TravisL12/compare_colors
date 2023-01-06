@@ -11,12 +11,12 @@ const ColorItem = React.forwardRef(
       background: hexString,
     };
 
-    const displayValues = [hexString, rgbString, hslString, name].filter(
+    const displayValues = [hexString, rgbString, hslString].filter(
       (str) => str && str.toLowerCase() !== initialColor.toLowerCase()
     );
 
     return (
-      <SColorItem isSelected={isSelected} ref={ref}>
+      <SColorItem isSelected={isSelected} showInfo={showInfo} ref={ref}>
         <div
           className="square"
           style={squareStyle}

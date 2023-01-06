@@ -7,6 +7,7 @@ import {
   lightgray,
   rowHeight,
   SFlex,
+  selectedgray,
 } from "../App/App.style";
 
 export const SColorGridDisplay = styled.div`
@@ -14,11 +15,9 @@ export const SColorGridDisplay = styled.div`
   display: grid;
   grid-template-columns: ${(props) =>
     props.showInfo
-      ? "repeat(auto-fill, minmax(150px, 1fr));"
+      ? "repeat(auto-fill, minmax(180px, 1fr));"
       : `repeat(auto-fill, minmax(${rowHeight}, 1fr));`}
   grid-template-rows: repeat(auto-fill, ${rowHeight});
-  grid-column-gap: 3px;
-  grid-row-gap: 5px;
   box-sizing: border-box;
   background: ${lightgray};
   padding: 10px;
@@ -47,14 +46,22 @@ export const SSelectedColor = styled(SFlex)`
 `;
 
 export const SColorItem = styled.div`
-  display: flex;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: ${(props) => (props.showInfo ? "flex-start" : "center")};
+  gap: 3px;
   box-sizing: border-box;
+  padding: 5px;
   font-weight: ${(props) => (props.isSelected ? "bold" : "inherit")};
+  background: ${(props) => (props.isSelected ? selectedgray : "inherit")};
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${(props) => (props.isSelected ? "gray" : "transparent")};
 
   .square {
-    height: ${rowHeight};
-    width: ${rowHeight};
+    height: 50px;
+    width: 50px;
     border-radius: 2px;
     border: 1px solid ${black};
     cursor: pointer;
@@ -67,12 +74,10 @@ export const SColorItem = styled.div`
   }
 
   .names {
-    background: ${(props) => (props.isSelected ? lightgray : "inherit")};
     font-size: 12px;
     text-transform: uppercase;
     border-radius: 2px;
     z-index: 1;
-    margin-left: 3px;
     flex: 1;
     overflow: hidden;
 
