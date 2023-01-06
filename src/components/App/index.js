@@ -48,6 +48,7 @@ const App = () => {
         <ColorInput
           colors={colors}
           setColors={setColors}
+          setDisplayedColor={setDisplayedColor}
           colorInput={colorInput}
           onTextChange={updateTextArea}
           displayedColor={displayedColor}

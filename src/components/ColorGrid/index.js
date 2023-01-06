@@ -25,6 +25,22 @@ function ColorGrid({ colors, displayedColor, setDisplayedColor }) {
   const [sortMethod, setSortMethod] = useState(SORT_OFF);
   const areColorsSorted = sortMethod !== SORT_OFF;
 
+  const itemRefs = useMemo(() => {
+    return colors.reduce((acc, color) => {
+      acc[color.id] = React.createRef();
+      return acc;
+    }, {});
+  }, [colors]);
+
+  useEffect(() => {
+    if (displayedColor) {
+      itemRefs[displayedColor.id]?.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [displayedColor]);
+
   useEffect(() => {
     const hasNoMatches = !colors || colors.length === 0;
     const isDisplayedColorCurrent = colors && !displayedColor;
@@ -39,12 +55,15 @@ function ColorGrid({ colors, displayedColor, setDisplayedColor }) {
       );
       if (!isDisplayedInColors) setDisplayedColor(colors[0]);
     }
-  }, [colors, displayedColor]);
+  }, [colors, displayedColor, setDisplayedColor]);
 
-  const sortTypes = {
-    distanceDelta,
-    distanceChromatic,
-  };
+  const sortTypes = useMemo(
+    () => ({
+      distanceDelta,
+      distanceChromatic,
+    }),
+    []
+  );
 
   const updateCompareColor = ({ target: { value } }) => {
     const browserColor = browserColorsByName[value.toLowerCase()];
@@ -148,6 +167,7 @@ function ColorGrid({ colors, displayedColor, setDisplayedColor }) {
 
           return (
             <ColorItem
+              ref={itemRefs[color.id]}
               isSelected={isSelected}
               setDisplayedColor={setDisplayedColor}
               color={color}

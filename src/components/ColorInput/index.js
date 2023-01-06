@@ -14,7 +14,7 @@ import {
 import { browserColorsByName } from "../../browserColorsList";
 import Color from "../../models/color";
 
-const boundaryThreshold = [" ", "\t", "\n", ",", "'", '"'];
+const boundaryThreshold = [" ", "\t", "\n", ",", "'", '"', "(", ")"];
 const findBoundary = (idx, text, direction = -1) => {
   for (let i = 0; i < 10; i++) {
     const val = i * direction;
@@ -29,6 +29,7 @@ let highlightScrollTimeout;
 const ColorInput = ({
   colors,
   setColors,
+  setDisplayedColor,
   colorInput,
   onTextChange,
   displayedColor,
@@ -121,7 +122,9 @@ const ColorInput = ({
     const findColorObject = colors.find(
       (color) => color.initialColor === clickedColor
     );
-    console.log(clickedColor, findColorObject);
+    if (findColorObject) {
+      setDisplayedColor(findColorObject);
+    }
   };
 
   return (
