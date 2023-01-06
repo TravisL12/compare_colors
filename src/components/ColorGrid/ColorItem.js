@@ -11,7 +11,7 @@ const ColorItem = React.forwardRef(
       background: hexString,
     };
 
-    const displayValues = [hexString, rgbString, hslString].filter(
+    const displayValues = [hexString, rgbString, hslString, name].filter(
       (str) => str && str.toLowerCase() !== initialColor.toLowerCase()
     );
 
