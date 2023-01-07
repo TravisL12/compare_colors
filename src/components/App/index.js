@@ -46,7 +46,9 @@ const App = () => {
 
       <SFlex fullWidth gap={20} style={{ overflow: "auto", flex: 1 }}>
         <ColorInput
+          colors={colors}
           setColors={setColors}
+          setDisplayedColor={setDisplayedColor}
           colorInput={colorInput}
           onTextChange={updateTextArea}
           displayedColor={displayedColor}

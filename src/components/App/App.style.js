@@ -4,9 +4,10 @@ import { hexAlpha } from "../../utilities/hexadecimal-utils";
 export const black = "#444444";
 export const gray = "#ececec";
 export const lightgray = "#f9f9f9";
+export const selectedgray = "#d5d5d5";
 export const white = "#ffffff";
 export const logoGreen = "#003c08";
-export const rowHeight = "50px";
+export const rowHeight = "65px";
 export const borderRadius = "5px";
 
 export const boldBorder = `
