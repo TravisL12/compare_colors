@@ -14,7 +14,19 @@ import {
 import { browserColorsByName } from "../../browserColorsList";
 import Color from "../../models/color";
 
-const boundaryThreshold = [" ", "\t", "\n", ",", "'", '"', "(", ")"];
+const boundaryThreshold = [
+  " ",
+  "\t",
+  "\n",
+  ",",
+  "'",
+  '"',
+  "(",
+  ")",
+  ".",
+  "[",
+  "]",
+];
 const findBoundary = (idx, text, direction = -1) => {
   for (let i = 0; i < 10; i++) {
     const val = i * direction;
@@ -70,7 +82,7 @@ const ColorInput = ({
           : false;
 
       if (colorMatch) {
-        const color = new Color(colorText, id);
+        const color = new Color(colorMatch, id);
         const invertColor = getDifferenceColor(color);
         matchedColors.push(color);
 
@@ -119,7 +131,7 @@ const ColorInput = ({
 
     const clickedColor = colorInput.substring(start, end).trim();
     const findColorObject = colors.find(
-      (color) => color.initialColor === clickedColor
+      (color) => color.initialColor.toLowerCase() === clickedColor.toLowerCase()
     );
     if (findColorObject) {
       setDisplayedColor(findColorObject);
