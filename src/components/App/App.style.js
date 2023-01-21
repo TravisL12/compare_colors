@@ -85,6 +85,7 @@ export const SRadioButton = styled.div`
 
   input[type="radio"]:checked + label {
     text-decoration: underline;
+    font-weight: bold;
   }
 `;
 

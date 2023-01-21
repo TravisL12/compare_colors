@@ -21,6 +21,7 @@ import { uniqBy } from "lodash";
 
 function ColorGrid({ colors, displayedColor, setDisplayedColor }) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));
+  const [searchInput, setSearchInput] = useState("");
   const [showInfo, setShowInfo] = useState(true);
   const [sortMethod, setSortMethod] = useState(SORT_OFF);
   const areColorsSorted = sortMethod !== SORT_OFF;
@@ -85,19 +86,29 @@ function ColorGrid({ colors, displayedColor, setDisplayedColor }) {
       : [];
   }, [colors, displayedColor]);
 
-  const sortedColors = useMemo(() => {
+  const filteredColors = useMemo(() => {
+    const filterColors = colors.filter((color) =>
+      color.matchColor(searchInput)
+    );
     const sorted = areColorsSorted
-      ? colors
+      ? filterColors
           .slice()
           .sort(
             (a, b) =>
               sortTypes[sortMethod](a, compareColor) -
               sortTypes[sortMethod](b, compareColor)
           )
-      : colors;
+      : filterColors;
 
     return uniqBy(sorted, "rgbString");
-  }, [colors, areColorsSorted, sortMethod, compareColor, sortTypes]);
+  }, [
+    colors,
+    areColorsSorted,
+    sortMethod,
+    compareColor,
+    sortTypes,
+    searchInput,
+  ]);
 
   return (
     <SColumn column fullWidth>
@@ -152,14 +163,23 @@ function ColorGrid({ colors, displayedColor, setDisplayedColor }) {
               </SRadioButton>
             </SOptions>
           </SFlex>
-
+          <SFlex gap={6} alignItems="center">
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchInput}
+              onChange={(event) => {
+                setSearchInput(event.target.value);
+              }}
+            />
+          </SFlex>
           <SButton className={showInfo ? "on" : "off"} onClick={toggle.info}>
             {showInfo ? "Details On" : "Details Off"}
           </SButton>
         </SFlex>
       </SOptions>
       <SColorGridDisplay showInfo={showInfo}>
-        {sortedColors.map((color, idx) => {
+        {filteredColors.map((color, idx) => {
           const isSelected = displayedColor
             ? color.id === displayedColor.id
             : false;

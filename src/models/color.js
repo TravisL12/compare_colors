@@ -1,6 +1,7 @@
 import { browserColorsByName, browserColorsByHex } from "../browserColorsList";
 import { format2hex, hex2dec } from "../utilities/hexadecimal-utils";
 import { hslDec2array, isColorHsl } from "../utilities/hsl-utils";
+
 export default class Color {
   constructor(color = "000000", id) {
     this.id = id;
@@ -32,6 +33,19 @@ export default class Color {
     if (browserColorsByHex[this.hexString]) {
       this.name = browserColorsByHex[this.hexString];
     }
+  }
+
+  matchColor(searchInput) {
+    let isMatch = false;
+    const checkMatch = (text) =>
+      isMatch || text?.toLowerCase().includes(searchInput.toLowerCase());
+
+    isMatch = checkMatch(this.initialColor, searchInput);
+    isMatch = checkMatch(this.name, searchInput);
+    isMatch = checkMatch(this.hexString, searchInput);
+    isMatch = checkMatch(this.rgbString, searchInput);
+    isMatch = checkMatch(this.hslString, searchInput);
+    return isMatch;
   }
 
   // https://codepen.io/pankajparashar/pen/oFzIg
