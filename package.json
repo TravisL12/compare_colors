@@ -2,7 +2,7 @@
   "name": "color-compare",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://redundantrobot.com/chroma_extract",
   "dependencies": {
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
@@ -17,7 +17,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts --openssl-legacy-provider build",
+    "build": "INLINE_RUNTIME_CHUNK=false GENERATE_SOURCEMAP=false REACT_APP_DEPLOY_DIRECTORY=chroma_extract yarn build-react-scripts",
+    "build-react-scripts": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "yarn run build",
