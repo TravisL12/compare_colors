@@ -1,4 +1,4 @@
-export const browserColorsByName = {
+export const browserColorsByName: Record<string, string> = {
   black: "#000000",
   navy: "#000080",
   darkblue: "#00008B",
@@ -150,7 +150,7 @@ export const browserColorsByName = {
 };
 
 export const browserColorsByHex = Object.keys(browserColorsByName).reduce(
-  (acc, colorName) => {
+  (acc: Record<string, string>, colorName) => {
     acc[browserColorsByName[colorName]] = colorName;
     return acc;
   },

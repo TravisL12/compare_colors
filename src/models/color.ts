@@ -1,9 +1,25 @@
 import { browserColorsByName, browserColorsByHex } from "../browserColorsList";
 import { format2hex, hex2dec } from "../utilities/hexadecimal-utils";
 import { hslDec2array, isColorHsl } from "../utilities/hsl-utils";
+
 export default class Color {
-  constructor(color = "000000", id) {
-    this.id = id;
+  id: string;
+  initialColor: string;
+  red: number;
+  green: number;
+  blue: number;
+  hexColor: string;
+  hexString: string;
+  hslString: string;
+  hue: number;
+  lightness: number;
+  name: string;
+  rgbColor: number[];
+  rgbString: string;
+  saturation: number;
+
+  constructor(color = "000000", id?: string) {
+    this.id = id || "";
     this.initialColor = color;
 
     if (browserColorsByName[color]) {
@@ -35,13 +51,13 @@ export default class Color {
   }
 
   // https://codepen.io/pankajparashar/pen/oFzIg
-  generateHsl() {
+  generateHsl = () => {
     const [r, g, b] = this.rgbColor.map((i) => i / 255);
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
     let h = 0;
     let s = 0;
-    let l = (max + min) / 2;
+    const l = (max + min) / 2;
 
     if (max !== min) {
       const d = max - min;
@@ -65,11 +81,11 @@ export default class Color {
     }
 
     this.calculateHsl(h, s, l);
-  }
+  };
 
-  calculateHsl(h, s, l) {
+  calculateHsl = (h: number, s: number, l: number) => {
     this.hue = (h * 360 + 0.5) | 0;
     this.saturation = (s * 100 + 0.5) | 0;
     this.lightness = (l * 100 + 0.5) | 0;
-  }
+  };
 }

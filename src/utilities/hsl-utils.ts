@@ -2,8 +2,10 @@
  * @param {string} hsl color string => hsl(150, 80%, 90%)
  * @return {array} [200, 0.5, 0.3]
  */
-export function hslDec2array(hslColorStr) {
-  let [h, s, l] = hslColorStr.replace(/[%hsl()\s]/gi, "").split(",");
+export function hslDec2array(hslColorStr: string) {
+  let [h, s, l]: (string | number | undefined)[] = hslColorStr
+    .replace(/[%hsl()\s]/gi, "")
+    .split(",");
   h = parseInt(h, 10) / 360;
   s = parseInt(s, 10) / 100;
   l = parseInt(l, 10) / 100;
@@ -21,7 +23,7 @@ export function isColorHsl(color) {
 }
 
 // https://stackoverflow.com/a/9493060
-export function hsl2rgb(hsl) {
+export function hsl2rgb(hsl: (string | number | undefined)[]) {
   const [h, s, l] = hsl;
   let r, g, b;
 
@@ -37,8 +39,8 @@ export function hsl2rgb(hsl) {
       return p;
     };
 
-    let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    let p = 2 * l - q;
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
     r = hue2rgb(p, q, h + 1 / 3);
     g = hue2rgb(p, q, h);
     b = hue2rgb(p, q, h - 1 / 3);
