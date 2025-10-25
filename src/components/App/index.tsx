@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ColorGrid from "../ColorGrid";
 import { SApp, SLogo, SOptions, SFlex, SButton } from "./App.style";
 import ColorInput from "../ColorInput";
 import { demoText, test } from "../../testData";
+import type Color from "../../models/color";
 
 const App = () => {
   const [colorInput, setColorInput] = useState(demoText);
-  const [displayedColor, setDisplayedColor] = useState(null);
-  const [colors, setColors] = useState([]);
+  const [displayedColor, setDisplayedColor] = useState<Color | null>(null);
+  const [colors, setColors] = useState<Color[]>([]);
 
   const updateTextArea = ({ target: { value } }) => {
     setColorInput(value);

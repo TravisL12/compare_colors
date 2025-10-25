@@ -33,7 +33,9 @@ export function copyText(event: MouseEvent) {
 
   // Briefly have the element that was clicked glow with its color
   // to confirm the string has been copied
-  style.backgroundColor = `#${hexAlpha(color, 0.9)}`;
+  style.backgroundColor = color.alpha
+    ? color.hexString
+    : `#${hexAlpha(color, 0.9)}`;
   setTimeout(() => {
     style.backgroundColor = "";
   }, COPY_FADE_DELAY);
@@ -41,7 +43,7 @@ export function copyText(event: MouseEvent) {
   // Can only copy text from an HTMLInputElement
   // Create an input, add the text to copy and remove input element
   const inputEl = document.createElement("input");
-  inputEl.value = "";
+  inputEl.value = textContent || "";
   document.body.appendChild(inputEl);
   inputEl.select();
   document.execCommand("copy");

@@ -53,6 +53,7 @@ export const SFlex = styled.div<{
   fullWidth: boolean;
   wrap: boolean;
   alignItems: string;
+  style?: Record<string, string | number>;
 }>`
   display: flex;
   flex-direction: ${(props) => (props.column ? "column" : "row")};
@@ -115,7 +116,10 @@ export const SApp = styled(SFlex)`
 `;
 
 const boxSize = 3;
-export const SHighlightedColorText = styled.span`
+export const SHighlightedColorText = styled.span<{
+  isSelected: boolean | null;
+  colorMatch: string;
+}>`
   position: relative;
   z-index: ${(props) => (props.isSelected ? 10 : "inherit")};
   border-radius: ${(props) => (props.isSelected ? "5px" : 0)};
@@ -127,7 +131,7 @@ export const SHighlightedColorText = styled.span`
       : "none"};
 `;
 
-export const SColorHighlightLayer = styled.div`
+export const SColorHighlightLayer = styled.div<{ highlightOffset: string }>`
   ${textLayer}
   z-index: 1;
 

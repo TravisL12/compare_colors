@@ -1,4 +1,11 @@
-import React, { useEffect, useState, useMemo, type Ref } from "react";
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  type Ref,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import Color from "../../models/color";
 import ColorItem from "./ColorItem";
 import ComparisonPanel from "./ComparisonPanel";
@@ -21,8 +28,8 @@ import { uniqBy } from "lodash";
 
 type ColorGridProps = {
   colors: Color[];
-  displayedColor: Color;
-  setDisplayedColor: (color: Color | null) => void;
+  displayedColor: Color | null;
+  setDisplayedColor: Dispatch<SetStateAction<Color | null>>;
 };
 
 function ColorGrid({

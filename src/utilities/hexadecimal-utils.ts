@@ -15,8 +15,8 @@ export function hex2dec(hex: string): number[] {
   });
 }
 
-export function hexAlphaToFloat(hex: string) {
-  return parseInt(hex, 16) / 255;
+export function hexAlphaToFloat(hex: string): number {
+  return Number((parseInt(hex, 16) / 255).toFixed(1));
 }
 
 export function floatToHexAlpha(percent: number) {

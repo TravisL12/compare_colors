@@ -11,6 +11,7 @@ export default class Color {
   red: number;
   green: number;
   blue: number;
+  alpha: number;
   hexColor: string;
   hexString: string;
   hslString: string;
@@ -45,11 +46,12 @@ export default class Color {
       this.generateHsl();
     }
 
-    [this.red, this.blue, this.green] = this.rgbColor;
+    [this.red, this.blue, this.green, this.alpha] = this.rgbColor;
 
     this.hexString = `#${this.hexColor}`.toUpperCase();
-    this.rgbString =
-      `rgb(${this.red},${this.blue},${this.green})`.toUpperCase();
+    this.rgbString = this.alpha
+      ? `rgba(${this.red},${this.blue},${this.green},${this.alpha})`.toUpperCase()
+      : `rgb(${this.red},${this.blue},${this.green})`.toUpperCase();
     this.hslString =
       `hsl(${this.hue},${this.saturation}%,${this.lightness}%)`.toUpperCase();
 
