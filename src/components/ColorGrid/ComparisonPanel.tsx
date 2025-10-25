@@ -3,6 +3,7 @@ import {
   SLabelColor,
   SSelectedColor,
   SCompareColor,
+  SColorInput,
 } from "./ColorGrid.style";
 import { QUICK_COMPARE_COLORS } from "../../constants";
 import type { ComparisonPanelProps } from "../../types";
@@ -22,7 +23,16 @@ function ComparisonPanel({
           value={compareColor.hexString}
         />
         <label htmlFor="compare-color-type" />
-        <div className="color-text-input">
+      </SLabelColor>
+      <SFlex
+        justify="space-between"
+        column
+        style={{ height: "100%", padding: "5px", flex: 1 }}
+      >
+        <SColorInput>
+          <label htmlFor="compare-color-text">
+            <strong>Compare color</strong>
+          </label>
           <input
             type="text"
             id="compare-color-text"
@@ -30,10 +40,8 @@ function ComparisonPanel({
             value={compareColor.name || compareColor.hexColor}
             placeholder="#000000 (Default)"
           />
-        </div>
-      </SLabelColor>
-      <SFlex justify="space-between" column style={{ flex: 1 }}>
-        <strong>Comparison</strong>
+        </SColorInput>
+        <strong>Quick colors</strong>
         <SFlex gap={5} wrap>
           {QUICK_COMPARE_COLORS.map((color) => (
             <SCompareColor

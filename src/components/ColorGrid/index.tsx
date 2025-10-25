@@ -112,12 +112,6 @@ function ColorGrid({
           compareColor={compareColor}
           updateCompareColor={updateCompareColor}
         />
-        <hr />
-        <SelectedColor
-          displayedColor={displayedColor}
-          colorCollection={colorCollection}
-          setDisplayedColor={setDisplayedColor}
-        />
       </SComparisonPanel>
       <SOptions column fullWidth>
         <H2>Extracted Color Values</H2>
@@ -169,6 +163,11 @@ function ColorGrid({
           </SButton>
         </SFlex>
       </SOptions>
+      <SelectedColor
+        displayedColor={displayedColor}
+        colorCollection={colorCollection}
+        setDisplayedColor={setDisplayedColor}
+      />
       <SColorGridDisplay showInfo={showInfo}>
         {sortedColors.map((color, idx) => {
           const isSelected = displayedColor
