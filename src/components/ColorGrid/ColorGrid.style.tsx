@@ -10,7 +10,7 @@ import {
   selectedgray,
 } from "../App/App.style";
 
-export const SColorGridDisplay = styled.div`
+export const SColorGridDisplay = styled.div<{ showInfo?: boolean }>`
   ${boldBorder}
   display: grid;
   grid-template-columns: ${(props) =>
@@ -45,7 +45,10 @@ export const SSelectedColor = styled(SFlex)`
   height: ${PANEL_HEIGHT / 2}px;
 `;
 
-export const SColorItem = styled.div`
+export const SColorItem = styled.div<{
+  showInfo: boolean;
+  isSelected: boolean;
+}>`
   position: relative;
   display: flex;
   justify-content: center;
@@ -114,7 +117,7 @@ export const SDisplayedColorDetails = styled.ul`
   }
 `;
 
-export const SColor = styled.div`
+export const SColor = styled.div<{ color: string }>`
   position: relative;
   background: ${(props) => props.color};
   height: 100%;
@@ -138,7 +141,7 @@ export const SBtnContainer = styled.div`
   right: 5px;
 `;
 
-export const SLabelColor = styled.div`
+export const SLabelColor = styled.div<{ color: string }>`
   position: relative;
   height: 100%;
   width: 25%;
@@ -181,7 +184,7 @@ export const SLabelColor = styled.div`
   }
 `;
 
-export const SCompareColor = styled.div`
+export const SCompareColor = styled.div<{ color: string }>`
   cursor: pointer;
   background: ${(props) => props.color};
   height: 30px;

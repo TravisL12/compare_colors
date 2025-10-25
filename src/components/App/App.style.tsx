@@ -46,7 +46,15 @@ export const SLogo = styled(H1)`
   color: ${logoGreen};
 `;
 
-export const SFlex = styled.div`
+export const SFlex = styled.div<{
+  column: boolean;
+  gap: number;
+  justify: string;
+  fullWidth: boolean;
+  wrap: boolean;
+  alignItems: string;
+  style?: Record<string, string | number>;
+}>`
   display: flex;
   flex-direction: ${(props) => (props.column ? "column" : "row")};
   gap: ${(props) => (props.gap ? `${props.gap}px` : 0)};
@@ -108,7 +116,10 @@ export const SApp = styled(SFlex)`
 `;
 
 const boxSize = 3;
-export const SHighlightedColorText = styled.span`
+export const SHighlightedColorText = styled.span<{
+  isSelected: boolean | null;
+  colorMatch: string;
+}>`
   position: relative;
   z-index: ${(props) => (props.isSelected ? 10 : "inherit")};
   border-radius: ${(props) => (props.isSelected ? "5px" : 0)};
@@ -120,7 +131,7 @@ export const SHighlightedColorText = styled.span`
       : "none"};
 `;
 
-export const SColorHighlightLayer = styled.div`
+export const SColorHighlightLayer = styled.div<{ highlightOffset: string }>`
   ${textLayer}
   z-index: 1;
 

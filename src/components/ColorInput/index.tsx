@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import {
   SColumn,
   STextAreaDisplay,
@@ -11,8 +17,17 @@ import {
   matchColors,
   matchRegex,
 } from "../../utilities/color-utils";
-import { browserColorsByName } from "../../browserColorsList";
+import { browserColorsByName } from "../../browserColorsList.ts";
 import Color from "../../models/color";
+
+type ColorInputProps = {
+  colors: Color[];
+  setColors: Dispatch<SetStateAction<Color[]>>;
+  setDisplayedColor: Dispatch<SetStateAction<Color | null>>;
+  colorInput: string;
+  onTextChange: (target) => void;
+  displayedColor: Color | null;
+};
 
 const boundaryThreshold = [
   " ",
@@ -45,7 +60,7 @@ const ColorInput = ({
   colorInput,
   onTextChange,
   displayedColor,
-}) => {
+}: ColorInputProps) => {
   const highlightRef = useRef();
   const textRef = useRef();
 
@@ -71,10 +86,9 @@ const ColorInput = ({
     const colorSplit = colorInput
       .split(highlightRegex(colorNames))
       .filter((x) => x);
-
-    const matchedColors = [];
+    const matchedColors: Color[] = [];
     const colorDisplayedInput = colorSplit.map((colorText, idx) => {
-      const id = idx + 1;
+      const id = `${idx + 1}`;
       const lowCaseText = colorText.toLowerCase();
       const colorMatch =
         browserColorsByName[lowCaseText] || matchRegex.test(lowCaseText)
