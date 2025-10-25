@@ -6,7 +6,7 @@ import { black, white } from "../components/App/App.style";
 import type { MouseEvent } from "react";
 const COPY_FADE_DELAY = 500;
 const rgbRe = `rgba?\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}(?:\\s*,\\s*(?:0(?:\\.\\d+)?|1(?:\\.0+)?))?\\s*\\)`;
-const hexRe = `#\\"?[a-f0-9]{6}\\"?`; // hex regex https://stackoverflow.com/questions/41258980/split-string-on-hex-colour
+const hexRe = `#\\"?[a-f0-9]{6,8}\\"?`; // hex regex https://stackoverflow.com/questions/41258980/split-string-on-hex-colour
 const hslRe = `hsl\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}%\\s*,\\s*\\d{1,3}%\\s*\\)`;
 
 const combinedRe = `${rgbRe}|${hexRe}|${hslRe}`;
@@ -15,16 +15,9 @@ export const highlightRegex = (nameVals: string[]) =>
 
 export const matchRegex = new RegExp(`(${combinedRe})`, "gi");
 
-/**
- * matchColors - Parse rgb(X, X, X) or #123456 (hex) patterns
- * @param {string} colorInput
- * @return {array} array of matched values
- */
-export function matchColors(colorInput: string) {
+export function matchColors(colorInput: string): { color: string }[] {
   const browserColors = Object.keys(browserColorsByName)
-    .filter((color) => {
-      return colorInput.match(color);
-    })
+    .filter((color) => colorInput.match(color))
     .map((name) => ({ name, color: browserColorsByName[name] }));
 
   const regexMatches = (colorInput.match(matchRegex) || []).map((color) => ({

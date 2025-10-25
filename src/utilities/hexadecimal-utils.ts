@@ -3,11 +3,20 @@ import { hsl2rgb, hslDec2array, isColorHsl } from "./hsl-utils";
 import { dec2hex, isColorRgb } from "./rgb-utils";
 
 export function hex2dec(hex: string): number[] {
-  const split = [hex.slice(0, 2), hex.slice(2, 4), hex.slice(4, 6)];
+  const split = [
+    hex.slice(0, 2),
+    hex.slice(2, 4),
+    hex.slice(4, 6),
+    hex.slice(6),
+  ];
 
-  return split.map((c) => {
-    return parseInt(c, 16);
+  return split.map((c, idx) => {
+    return idx === 3 && c ? hexAlphaToFloat(c) : parseInt(c, 16);
   });
+}
+
+export function hexAlphaToFloat(hex: string) {
+  return parseInt(hex, 16) / 255;
 }
 
 export function floatToHexAlpha(percent: number) {
