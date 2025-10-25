@@ -1,7 +1,7 @@
 import Color from "../models/color";
 
 // Found at: https://github.com/antimatter15/rgb-lab/blob/master/color.js
-export function rgb2lab(rgb) {
+export function rgb2lab(rgb: number[]) {
   let r = rgb[0] / 255;
   let g = rgb[1] / 255;
   let b = rgb[2] / 255;
@@ -25,27 +25,27 @@ export function rgb2lab(rgb) {
 // calculate the perceptual distance between colors in CIELAB (Delta-E 94)
 // https://github.com/THEjoezack/ColorMine/blob/master/ColorMine/ColorSpaces/Comparisons/Cie94Comparison.cs
 
-export function deltaE(labA, labB) {
-  let deltaL = labA[0] - labB[0];
-  let deltaA = labA[1] - labB[1];
-  let deltaB = labA[2] - labB[2];
+export function deltaE(labA: number[], labB: number[]) {
+  const deltaL = labA[0] - labB[0];
+  const deltaA = labA[1] - labB[1];
+  const deltaB = labA[2] - labB[2];
 
-  let c1 = Math.sqrt(labA[1] * labA[1] + labA[2] * labA[2]);
-  let c2 = Math.sqrt(labB[1] * labB[1] + labB[2] * labB[2]);
+  const c1 = Math.sqrt(labA[1] * labA[1] + labA[2] * labA[2]);
+  const c2 = Math.sqrt(labB[1] * labB[1] + labB[2] * labB[2]);
 
-  let deltaC = c1 - c2;
+  const deltaC = c1 - c2;
   let deltaH = deltaA * deltaA + deltaB * deltaB - deltaC * deltaC;
 
   deltaH = deltaH < 0 ? 0 : Math.sqrt(deltaH);
 
-  let sc = 1.0 + 0.045 * c1;
-  let sh = 1.0 + 0.015 * c1;
+  const sc = 1.0 + 0.045 * c1;
+  const sh = 1.0 + 0.015 * c1;
 
-  let deltaLKlsl = deltaL / 1.0;
-  let deltaCkcsc = deltaC / sc;
-  let deltaHkhsh = deltaH / sh;
+  const deltaLKlsl = deltaL / 1.0;
+  const deltaCkcsc = deltaC / sc;
+  const deltaHkhsh = deltaH / sh;
 
-  let i =
+  const i =
     deltaLKlsl * deltaLKlsl + deltaCkcsc * deltaCkcsc + deltaHkhsh * deltaHkhsh;
 
   return i < 0 ? 0 : Math.sqrt(i);
@@ -58,7 +58,7 @@ export function deltaE(labA, labB) {
  * @param {Color} target
  * @return {float} returns distance between compare and target hex values
  */
-export function distanceDelta(compare, target = new Color()) {
+export function distanceDelta(compare: Color, target = new Color()) {
   const labA = rgb2lab(target.rgbColor);
   const labB = rgb2lab(compare.rgbColor);
   return deltaE(labA, labB);
@@ -70,7 +70,7 @@ export function distanceDelta(compare, target = new Color()) {
  * @param {Color} target
  * @return {float} returns distance between compare and target hex values
  */
-export function distanceChromatic(compare, target = new Color()) {
+export function distanceChromatic(compare: Color, target = new Color()) {
   const cDec = compare.rgbColor;
   const tDec = target.rgbColor;
 
