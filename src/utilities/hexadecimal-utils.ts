@@ -19,7 +19,7 @@ export function hex2dec(hex: string): number[] {
  * @param {string} color
  * @param {float} percent opacity percentage
  */
-export function hexAlpha(color: string, percent = 0.5) {
+export function hexAlpha(color: Color | string, percent = 0.5) {
   const colorObj = typeof color === "object" ? color : new Color(color);
   const percentHex = `0${Number(Math.round(255 * percent)).toString(16)}`.slice(
     -2

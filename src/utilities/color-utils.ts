@@ -1,13 +1,14 @@
 import Color from "../models/color";
-import { browserColorsByName } from "../browserColorsList";
+import { browserColorsByName } from "../browserColorsList.ts";
 import { hexAlpha } from "./hexadecimal-utils";
 import { distanceChromatic } from "./distance-utils";
 import { black, white } from "../components/App/App.style";
+import type { MouseEvent } from "react";
 const COPY_FADE_DELAY = 500;
 const rgbRe = `rgb\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*\\)`;
 const hexRe = `#\\"?[a-f0-9]{6}\\"?`; // hex regex https://stackoverflow.com/questions/41258980/split-string-on-hex-colour
 const hslRe = `hsl\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}%\\s*,\\s*\\d{1,3}%\\s*\\)`;
-export const highlightRegex = (nameVals) =>
+export const highlightRegex = (nameVals: string[]) =>
   new RegExp(
     `(${rgbRe}|${hexRe}|${hslRe}|\\b${nameVals.join("\\b|\\b")})`,
     "gi"
@@ -20,7 +21,7 @@ export const matchRegex = new RegExp(`(${rgbRe}|${hexRe}|${hslRe})`, "gi");
  * @param {string} colorInput
  * @return {array} array of matched values
  */
-export function matchColors(colorInput) {
+export function matchColors(colorInput: string) {
   const browserColors = Object.keys(browserColorsByName)
     .filter((color) => {
       return colorInput.match(color);
@@ -33,10 +34,10 @@ export function matchColors(colorInput) {
   return regexMatches.concat(browserColors);
 }
 
-export function copyText(event) {
+export function copyText(event: MouseEvent) {
   const { target } = event;
-  const { textContent } = target;
-  const color = new Color(textContent);
+  const { textContent } = target as HTMLElement;
+  const color = new Color(textContent as string);
 
   // Briefly have the element that was clicked glow with its color
   // to confirm the string has been copied
@@ -55,7 +56,7 @@ export function copyText(event) {
   document.body.removeChild(inputEl);
 }
 
-export function getDifferenceColor(color) {
+export function getDifferenceColor(color: Color | string) {
   const colorObj = typeof color === "object" ? color : new Color(color);
   const dist = colorObj ? distanceChromatic(colorObj) : 0;
   return dist > 300 ? black : white;

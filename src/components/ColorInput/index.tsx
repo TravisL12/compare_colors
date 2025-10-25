@@ -11,7 +11,7 @@ import {
   matchColors,
   matchRegex,
 } from "../../utilities/color-utils";
-import { browserColorsByName } from "../../browserColorsList";
+import { browserColorsByName } from "../../browserColorsList.ts";
 import Color from "../../models/color";
 
 const boundaryThreshold = [

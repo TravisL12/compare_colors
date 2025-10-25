@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, type Ref } from "react";
 import Color from "../../models/color";
 import ColorItem from "./ColorItem";
 import ComparisonPanel from "./ComparisonPanel";
@@ -6,8 +6,8 @@ import {
   distanceDelta,
   distanceChromatic,
 } from "../../utilities/distance-utils";
-import { browserColorsByName } from "../../browserColorsList";
-import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "../../constants";
+import { browserColorsByName } from "../../browserColorsList.ts";
+import { SORT_OFF, SORT_CHROMATIC, SORT_DELTA } from "../../constants.ts";
 import {
   SColumn,
   H2,
@@ -19,7 +19,17 @@ import {
 import { SColorGridDisplay } from "./ColorGrid.style";
 import { uniqBy } from "lodash";
 
-function ColorGrid({ colors, displayedColor, setDisplayedColor }) {
+type ColorGridProps = {
+  colors: Color[];
+  displayedColor: Color;
+  setDisplayedColor: (color: Color | null) => void;
+};
+
+function ColorGrid({
+  colors,
+  displayedColor,
+  setDisplayedColor,
+}: ColorGridProps) {
   const [compareColor, setCompareColor] = useState(new Color("000000"));
   const [showInfo, setShowInfo] = useState(true);
   const [sortMethod, setSortMethod] = useState(SORT_OFF);
@@ -29,7 +39,7 @@ function ColorGrid({ colors, displayedColor, setDisplayedColor }) {
     return colors.reduce((acc, color) => {
       acc[color.id] = React.createRef();
       return acc;
-    }, {});
+    }, {} as Record<string, Ref<Color | null>>);
   }, [colors]);
 
   useEffect(() => {

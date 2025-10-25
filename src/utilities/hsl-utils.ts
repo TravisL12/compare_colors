@@ -18,7 +18,7 @@ export function hslDec2array(hslColorStr: string) {
  * @param {string} color
  * @returns {boolean}
  */
-export function isColorHsl(color) {
+export function isColorHsl(color: string) {
   return /^hsl/i.test(color);
 }
 

@@ -1,4 +1,7 @@
-import { browserColorsByName, browserColorsByHex } from "../browserColorsList";
+import {
+  browserColorsByName,
+  browserColorsByHex,
+} from "../browserColorsList.ts";
 import { format2hex, hex2dec } from "../utilities/hexadecimal-utils";
 import { hslDec2array, isColorHsl } from "../utilities/hsl-utils";
 
@@ -12,15 +15,20 @@ export default class Color {
   hexString: string;
   hslString: string;
   hue: number;
+  saturation: number;
   lightness: number;
   name: string;
   rgbColor: number[];
   rgbString: string;
-  saturation: number;
 
   constructor(color = "000000", id?: string) {
     this.id = id || "";
     this.initialColor = color;
+    this.hue = 0;
+    this.saturation = 0;
+    this.lightness = 0;
+    this.name = "";
+    this.hexString = "";
 
     if (browserColorsByName[color]) {
       this.name = color;
