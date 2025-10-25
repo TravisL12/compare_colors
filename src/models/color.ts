@@ -4,7 +4,7 @@ import {
 } from "../browserColorsList.ts";
 import { format2hex, hex2dec } from "../utilities/hexadecimal-utils";
 import { hslDec2array, isColorHsl } from "../utilities/hsl-utils";
-import { isColorRgb } from "../utilities/rgb-utils.ts";
+import { dec2array, isColorRgb } from "../utilities/rgb-utils.ts";
 
 export default class Color {
   id: string;
@@ -64,7 +64,7 @@ export default class Color {
 
   initialColorFormat = () => {
     if (isColorRgb(this.initialColor)) {
-      this.rgbColor = hex2dec(this.hexColor);
+      this.rgbColor = dec2array(this.initialColor);
       this.hexColor = format2hex(this.hexString || this.initialColor);
       [this.red, this.blue, this.green, this.alpha] = this.rgbColor;
 
