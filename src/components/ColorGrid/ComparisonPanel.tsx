@@ -25,7 +25,7 @@ const QUICK_COMPARE_COLORS = [
 
 type ComparisonPanelProps = {
   compareColor: Color;
-  updateCompareColor: Color;
+  updateCompareColor: () => void;
   displayedColor: Color | null;
   colorCollection: Color[];
   setDisplayedColor: Dispatch<SetStateAction<Color | null>>;
