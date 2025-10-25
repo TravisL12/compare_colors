@@ -19,13 +19,13 @@ export function hexAlphaToFloat(hex: string): number {
   return Number((parseInt(hex, 16) / 255).toFixed(1));
 }
 
-export function floatToHexAlpha(percent: number) {
-  return `0${Number(Math.round(255 * percent)).toString(16)}`.slice(-2);
+export function floatToHexAlpha(decimal: number) {
+  return `0${Number(Math.round(255 * decimal)).toString(16)}`.slice(-2);
 }
 
-export function hexAlpha(color: Color | string, percent = 0.5): string {
+export function hexAlpha(color: Color | string, decimal = 0.5): string {
   const colorObj = typeof color === "object" ? color : new Color(color);
-  const percentHex = floatToHexAlpha(percent);
+  const percentHex = floatToHexAlpha(decimal);
   return `${colorObj.hexColor}${percentHex}`;
 }
 

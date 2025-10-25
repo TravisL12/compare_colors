@@ -15,7 +15,7 @@ export function isColorHsl(color: string): boolean {
 
 // https://stackoverflow.com/a/9493060
 export function hsl2rgb(hsl: (string | number | undefined)[]) {
-  const [h, s, l] = hsl;
+  const [h, s, l, alpha] = hsl;
   let r, g, b;
 
   if (s === 0) {
@@ -37,5 +37,10 @@ export function hsl2rgb(hsl: (string | number | undefined)[]) {
     b = hue2rgb(p, q, h - 1 / 3);
   }
 
-  return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+  return [
+    Math.round(r * 255),
+    Math.round(g * 255),
+    Math.round(b * 255),
+    alpha as number,
+  ];
 }

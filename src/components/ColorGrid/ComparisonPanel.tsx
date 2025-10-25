@@ -1,5 +1,5 @@
 import { first, last } from "lodash";
-import React, { useMemo } from "react";
+import { useMemo, type Dispatch, type SetStateAction } from "react";
 import { copyText } from "../../utilities/color-utils";
 import { SButton, SFlex } from "../App/App.style";
 import {
@@ -10,6 +10,7 @@ import {
   SSelectedColor,
   SCompareColor,
 } from "./ColorGrid.style";
+import type Color from "../../models/color";
 
 const QUICK_COMPARE_COLORS = [
   "black",
@@ -22,13 +23,21 @@ const QUICK_COMPARE_COLORS = [
   "violet",
 ];
 
+type ComparisonPanelProps = {
+  compareColor: Color;
+  updateCompareColor: Color;
+  displayedColor: Color | null;
+  colorCollection: Color[];
+  setDisplayedColor: Dispatch<SetStateAction<Color | null>>;
+};
+
 function ComparisonPanel({
   compareColor,
   updateCompareColor,
   displayedColor,
   colorCollection,
   setDisplayedColor,
-}) {
+}: ComparisonPanelProps) {
   const ids = colorCollection.map((color) => color?.id ?? null);
   const idIndex = ids.findIndex((id) => id === displayedColor.id);
 

@@ -4,6 +4,7 @@ import {
 } from "../browserColorsList.ts";
 import { format2hex, hex2dec } from "../utilities/hexadecimal-utils";
 import { hslDec2array, isColorHsl } from "../utilities/hsl-utils";
+import { isColorRgb } from "../utilities/rgb-utils.ts";
 
 export default class Color {
   id: string;
@@ -28,27 +29,21 @@ export default class Color {
     this.hue = 0;
     this.saturation = 0;
     this.lightness = 0;
+    this.red = 0;
+    this.green = 0;
+    this.blue = 0;
+    this.alpha = 0;
     this.name = "";
     this.hexString = "";
+    this.hexColor = "";
+    this.rgbColor = [];
 
     if (browserColorsByName[color]) {
       this.name = color;
       this.hexString = browserColorsByName[color];
     }
 
-    this.hexColor = format2hex(this.hexString || this.initialColor);
-    this.rgbColor = hex2dec(this.hexColor);
-    [this.red, this.blue, this.green, this.alpha] = this.rgbColor;
-
-    if (isColorHsl(this.initialColor)) {
-      const [h, s, l, alpha] = hslDec2array(this.initialColor);
-      this.calculateHsl(h, s, l);
-      if (alpha) {
-        this.alpha = alpha;
-      }
-    } else {
-      this.generateHsl();
-    }
+    this.initialColorFormat();
 
     this.hexString = `#${this.hexColor}`.toUpperCase();
     this.rgbString = this.alpha
@@ -64,6 +59,41 @@ export default class Color {
       this.name = browserColorsByHex[this.hexString];
     }
   }
+
+  initialColorFormat = () => {
+    if (isColorRgb(this.initialColor)) {
+      this.rgbColor = hex2dec(this.hexColor);
+      this.hexColor = format2hex(this.hexString || this.initialColor);
+      [this.red, this.blue, this.green, this.alpha] = this.rgbColor;
+
+      const [h, s, l] = hslDec2array(this.initialColor);
+      this.calculateHsl(h, s, l);
+    } else if (isColorHsl(this.initialColor)) {
+      const [h, s, l, alpha] = hslDec2array(this.initialColor);
+      this.calculateHsl(h, s, l);
+      if (alpha) {
+        this.alpha = alpha;
+      }
+
+      this.hexColor = format2hex(this.hexString || this.initialColor);
+      this.rgbColor = hex2dec(this.hexColor);
+      [this.red, this.blue, this.green] = this.rgbColor;
+    } else {
+      this.hexColor = format2hex(this.hexString || this.initialColor);
+      this.rgbColor = hex2dec(this.hexColor);
+      [this.red, this.blue, this.green, this.alpha] = this.rgbColor;
+
+      if (isColorHsl(this.initialColor)) {
+        const [h, s, l, alpha] = hslDec2array(this.initialColor);
+        this.calculateHsl(h, s, l);
+        if (alpha) {
+          this.alpha = alpha;
+        }
+      } else {
+        this.generateHsl();
+      }
+    }
+  };
 
   // https://codepen.io/pankajparashar/pen/oFzIg
   generateHsl = () => {
