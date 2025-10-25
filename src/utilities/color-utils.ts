@@ -7,7 +7,7 @@ import type { MouseEvent } from "react";
 const COPY_FADE_DELAY = 500;
 const rgbRe = `rgba?\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}(?:\\s*,\\s*(?:0(?:\\.\\d+)?|1(?:\\.0+)?))?\\s*\\)`;
 const hexRe = `#\\"?[a-f0-9]{6,8}\\"?`; // hex regex https://stackoverflow.com/questions/41258980/split-string-on-hex-colour
-const hslRe = `hsl\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}%\\s*,\\s*\\d{1,3}%\\s*\\)`;
+const hslRe = `hsl\\s*\\(\\s*\\d{1,3}\\s*(?:,|\\s)\\s*\\d{1,3}%\\s*(?:,|\\s)\\s*\\d{1,3}%\\s*(?:\\/\\s*\\d{1,3}%?)?\\s*\\)`;
 
 const combinedRe = `${rgbRe}|${hexRe}|${hslRe}`;
 export const highlightRegex = (nameVals: string[]) =>

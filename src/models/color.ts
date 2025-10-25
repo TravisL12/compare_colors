@@ -38,22 +38,27 @@ export default class Color {
 
     this.hexColor = format2hex(this.hexString || this.initialColor);
     this.rgbColor = hex2dec(this.hexColor);
+    [this.red, this.blue, this.green, this.alpha] = this.rgbColor;
 
     if (isColorHsl(this.initialColor)) {
-      const [h, s, l] = hslDec2array(this.initialColor);
+      const [h, s, l, alpha] = hslDec2array(this.initialColor);
       this.calculateHsl(h, s, l);
+      if (alpha) {
+        this.alpha = alpha;
+      }
     } else {
       this.generateHsl();
     }
-
-    [this.red, this.blue, this.green, this.alpha] = this.rgbColor;
 
     this.hexString = `#${this.hexColor}`.toUpperCase();
     this.rgbString = this.alpha
       ? `rgba(${this.red},${this.blue},${this.green},${this.alpha})`.toUpperCase()
       : `rgb(${this.red},${this.blue},${this.green})`.toUpperCase();
-    this.hslString =
-      `hsl(${this.hue},${this.saturation}%,${this.lightness}%)`.toUpperCase();
+    this.hslString = this.alpha
+      ? `hsl(${this.hue} ${this.saturation}% ${this.lightness}% / ${
+          this.alpha * 100
+        }%)`.toUpperCase()
+      : `hsl(${this.hue} ${this.saturation}% ${this.lightness}%)`.toUpperCase();
 
     if (browserColorsByHex[this.hexString]) {
       this.name = browserColorsByHex[this.hexString];

@@ -1,16 +1,12 @@
-/**
- * @param {string} hsl color string => hsl(150, 80%, 90%)
- * @return {array} [200, 0.5, 0.3]
- */
-export function hslDec2array(hslColorStr: string) {
-  let [h, s, l]: (string | number | undefined)[] = hslColorStr
-    .replace(/[%hsl()\s]/gi, "")
-    .split(",");
+export function hslDec2array(hslColorStr: string): number[] {
+  let [h, s, l, alpha]: (string | number | undefined)[] = hslColorStr
+    .replace(/[%hsl()]/gi, "")
+    .split(/[,\s/]+/gi);
   h = parseInt(h, 10) / 360;
   s = parseInt(s, 10) / 100;
   l = parseInt(l, 10) / 100;
-
-  return [h, s, l];
+  alpha = alpha ? parseInt(alpha.replace("%", "")) / 100 : 0;
+  return [h, s, l, alpha];
 }
 
 export function isColorHsl(color: string): boolean {
