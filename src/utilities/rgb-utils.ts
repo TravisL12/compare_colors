@@ -1,41 +1,28 @@
-import { format2hex } from "./hexadecimal-utils";
+import { floatToHexAlpha, format2hex } from "./hexadecimal-utils";
 
-/**
- *
- * @param {string} color
- * @returns {boolean}
- */
-export function isColorRgb(color: string) {
-  return /^rgb/i.test(color);
+export function isColorRgb(color: string): boolean {
+  return /^rgba?/i.test(color);
 }
 
-/**
- * @param {string} rgb color string => rgb(200, 150, 0)
- * @return {array} [200, 150, 0]
- */
 export function dec2array(rgbColorStr: string): number[] {
   return rgbColorStr
-    .replace(/[rgb()\s]/gi, "")
+    .replace(/[rgba()\s]/gi, "")
     .split(",")
-    .map((num) => parseInt(num, 10));
+    .map((num) => parseFloat(num));
 }
 
-/**
- *
- * @param {array | string}
- * array of ints ex: [210, 190, 5];
- * string ex: 'rgb(210, 190, 5)'
- */
-export function dec2hex(rgbColor: string | number[]) {
+export function dec2hex(rgbColor: string | number[]): string {
   let color = rgbColor;
   if (typeof rgbColor === "string") {
     color = dec2array(color as string);
   }
 
   const hex = (color as number[])
-    .map((c) => {
+    .map((c, idx) => {
       const num = Number(c);
-      return `0${num.toString(16)}`.slice(-2);
+      return idx === 3
+        ? floatToHexAlpha(num)
+        : `0${num.toString(16)}`.slice(-2);
     })
     .join("");
 

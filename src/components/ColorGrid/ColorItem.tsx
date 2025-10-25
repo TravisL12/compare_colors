@@ -1,9 +1,17 @@
 import React from "react";
 import { copyText } from "../../utilities/color-utils";
 import { SColorItem } from "./ColorGrid.style";
+import type Color from "../../models/color";
+
+type ColorItemProps = {
+  color: Color;
+  showInfo: boolean;
+  setDisplayedColor: (color: Color | null) => void;
+  isSelected: boolean;
+};
 
 const ColorItem = React.forwardRef(
-  ({ color, showInfo, setDisplayedColor, isSelected }, ref) => {
+  ({ color, showInfo, setDisplayedColor, isSelected }: ColorItemProps, ref) => {
     const { hexString, rgbString, hslString, name, initialColor } = color;
 
     const squareStyle = {

@@ -5,16 +5,15 @@ import { distanceChromatic } from "./distance-utils";
 import { black, white } from "../components/App/App.style";
 import type { MouseEvent } from "react";
 const COPY_FADE_DELAY = 500;
-const rgbRe = `rgb\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*\\)`;
+const rgbRe = `rgba?\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}(?:\\s*,\\s*(?:0(?:\\.\\d+)?|1(?:\\.0+)?))?\\s*\\)`;
 const hexRe = `#\\"?[a-f0-9]{6}\\"?`; // hex regex https://stackoverflow.com/questions/41258980/split-string-on-hex-colour
 const hslRe = `hsl\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}%\\s*,\\s*\\d{1,3}%\\s*\\)`;
-export const highlightRegex = (nameVals: string[]) =>
-  new RegExp(
-    `(${rgbRe}|${hexRe}|${hslRe}|\\b${nameVals.join("\\b|\\b")})`,
-    "gi"
-  );
 
-export const matchRegex = new RegExp(`(${rgbRe}|${hexRe}|${hslRe})`, "gi");
+const combinedRe = `${rgbRe}|${hexRe}|${hslRe}`;
+export const highlightRegex = (nameVals: string[]) =>
+  new RegExp(`(${combinedRe}|\\b${nameVals.join("\\b|\\b")})`, "gi");
+
+export const matchRegex = new RegExp(`(${combinedRe})`, "gi");
 
 /**
  * matchColors - Parse rgb(X, X, X) or #123456 (hex) patterns
@@ -36,20 +35,20 @@ export function matchColors(colorInput: string) {
 
 export function copyText(event: MouseEvent) {
   const { target } = event;
-  const { textContent } = target as HTMLElement;
+  const { textContent, style } = target as HTMLElement;
   const color = new Color(textContent as string);
 
   // Briefly have the element that was clicked glow with its color
   // to confirm the string has been copied
-  target.style.backgroundColor = `#${hexAlpha(color, 0.9)}`;
+  style.backgroundColor = `#${hexAlpha(color, 0.9)}`;
   setTimeout(() => {
-    target.style.backgroundColor = null;
+    style.backgroundColor = "";
   }, COPY_FADE_DELAY);
 
   // Can only copy text from an HTMLInputElement
   // Create an input, add the text to copy and remove input element
   const inputEl = document.createElement("input");
-  inputEl.value = textContent;
+  inputEl.value = "";
   document.body.appendChild(inputEl);
   inputEl.select();
   document.execCommand("copy");

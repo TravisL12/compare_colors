@@ -46,7 +46,14 @@ export const SLogo = styled(H1)`
   color: ${logoGreen};
 `;
 
-export const SFlex = styled.div`
+export const SFlex = styled.div<{
+  column: boolean;
+  gap: number;
+  justify: string;
+  fullWidth: boolean;
+  wrap: boolean;
+  alignItems: string;
+}>`
   display: flex;
   flex-direction: ${(props) => (props.column ? "column" : "row")};
   gap: ${(props) => (props.gap ? `${props.gap}px` : 0)};

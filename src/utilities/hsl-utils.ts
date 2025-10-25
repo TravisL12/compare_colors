@@ -13,12 +13,7 @@ export function hslDec2array(hslColorStr: string) {
   return [h, s, l];
 }
 
-/**
- *
- * @param {string} color
- * @returns {boolean}
- */
-export function isColorHsl(color: string) {
+export function isColorHsl(color: string): boolean {
   return /^hsl/i.test(color);
 }
 

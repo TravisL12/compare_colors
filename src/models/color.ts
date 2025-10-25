@@ -37,6 +37,7 @@ export default class Color {
 
     this.hexColor = format2hex(this.hexString || this.initialColor);
     this.rgbColor = hex2dec(this.hexColor);
+    // this.alpha =
 
     if (isColorHsl(this.initialColor)) {
       const [h, s, l] = hslDec2array(this.initialColor);
