@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useMemo,
-  type Ref,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
+import React, { useEffect, useState, useMemo, type Ref } from "react";
 import Color from "../../models/color";
 import ColorItem from "./ColorItem";
 import ComparisonPanel from "./ComparisonPanel";
@@ -23,14 +16,10 @@ import {
   SOptions,
   SRadioButton,
 } from "../App/App.style";
-import { SColorGridDisplay } from "./ColorGrid.style";
+import { SColorGridDisplay, SComparisonPanel } from "./ColorGrid.style";
 import { uniqBy } from "lodash";
-
-type ColorGridProps = {
-  colors: Color[];
-  displayedColor: Color | null;
-  setDisplayedColor: Dispatch<SetStateAction<Color | null>>;
-};
+import type { ColorGridProps } from "../../types.ts";
+import SelectedColor from "./SelectedColor.tsx";
 
 function ColorGrid({
   colors,
@@ -118,13 +107,18 @@ function ColorGrid({
 
   return (
     <SColumn column fullWidth>
-      <ComparisonPanel
-        updateCompareColor={updateCompareColor}
-        compareColor={compareColor}
-        displayedColor={displayedColor}
-        colorCollection={colorCollection}
-        setDisplayedColor={setDisplayedColor}
-      />
+      <SComparisonPanel column fullWidth>
+        <ComparisonPanel
+          compareColor={compareColor}
+          updateCompareColor={updateCompareColor}
+        />
+        <hr />
+        <SelectedColor
+          displayedColor={displayedColor}
+          colorCollection={colorCollection}
+          setDisplayedColor={setDisplayedColor}
+        />
+      </SComparisonPanel>
       <SOptions column fullWidth>
         <H2>Extracted Color Values</H2>
         <SFlex fullWidth justify="space-between" alignItems="center">

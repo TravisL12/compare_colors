@@ -4,7 +4,6 @@ import {
 } from "../browserColorsList.ts";
 import { format2hex, hex2dec } from "../utilities/hexadecimal-utils";
 import { hslDec2array, isColorHsl } from "../utilities/hsl-utils";
-import { dec2array, isColorRgb } from "../utilities/rgb-utils.ts";
 
 export default class Color {
   id: string;
@@ -62,21 +61,17 @@ export default class Color {
     }
   }
 
+  parseHsl = (checkAlpha?: boolean) => {
+    const [h, s, l, alpha] = hslDec2array(this.initialColor);
+    this.calculateHsl(h, s, l);
+    if (alpha && checkAlpha) {
+      this.alpha = alpha;
+    }
+  };
+
   initialColorFormat = () => {
-    if (isColorRgb(this.initialColor)) {
-      this.rgbColor = dec2array(this.initialColor);
-      this.hexColor = format2hex(this.hexString || this.initialColor);
-      [this.red, this.blue, this.green, this.alpha] = this.rgbColor;
-
-      const [h, s, l] = hslDec2array(this.initialColor);
-      this.calculateHsl(h, s, l);
-    } else if (isColorHsl(this.initialColor)) {
-      const [h, s, l, alpha] = hslDec2array(this.initialColor);
-      this.calculateHsl(h, s, l);
-      if (alpha) {
-        this.alpha = alpha;
-      }
-
+    if (isColorHsl(this.initialColor)) {
+      this.parseHsl(true);
       this.hexColor = format2hex(this.hexString || this.initialColor);
       this.rgbColor = hex2dec(this.hexColor);
       [this.red, this.blue, this.green] = this.rgbColor;
@@ -84,16 +79,7 @@ export default class Color {
       this.hexColor = format2hex(this.hexString || this.initialColor);
       this.rgbColor = hex2dec(this.hexColor);
       [this.red, this.blue, this.green, this.alpha] = this.rgbColor;
-
-      if (isColorHsl(this.initialColor)) {
-        const [h, s, l, alpha] = hslDec2array(this.initialColor);
-        this.calculateHsl(h, s, l);
-        if (alpha) {
-          this.alpha = alpha;
-        }
-      } else {
-        this.generateHsl();
-      }
+      this.parseHsl();
     }
   };
 
