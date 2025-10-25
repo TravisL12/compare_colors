@@ -13,7 +13,6 @@ type ColorItemProps = {
 const ColorItem = React.forwardRef(
   ({ color, showInfo, setDisplayedColor, isSelected }: ColorItemProps, ref) => {
     const { hexString, rgbString, hslString, name, initialColor } = color;
-
     const squareStyle = {
       color: hexString,
       background: hexString,

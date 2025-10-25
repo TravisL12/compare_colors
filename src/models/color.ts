@@ -45,11 +45,13 @@ export default class Color {
 
     this.initialColorFormat();
 
+    const hasAlpha = this.alpha && this.alpha > 0;
+
     this.hexString = `#${this.hexColor}`.toUpperCase();
-    this.rgbString = this.alpha
+    this.rgbString = hasAlpha
       ? `rgba(${this.red},${this.blue},${this.green},${this.alpha})`.toUpperCase()
       : `rgb(${this.red},${this.blue},${this.green})`.toUpperCase();
-    this.hslString = this.alpha
+    this.hslString = hasAlpha
       ? `hsl(${this.hue} ${this.saturation}% ${this.lightness}% / ${
           this.alpha * 100
         }%)`.toUpperCase()
