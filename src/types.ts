@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, ChangeEvent, SetStateAction } from "react";
 import type Color from "./models/color";
 
 export type ColorGridProps = {
@@ -9,11 +9,11 @@ export type ColorGridProps = {
 
 export type ComparisonPanelProps = {
   compareColor: Color;
-  updateCompareColor: () => void;
+  updateCompareColor: (e: ChangeEvent) => void;
 };
 
 export type SelectedColorProps = {
-  displayedColor: Color | null;
+  displayedColor?: Color;
   colorCollection: Color[];
   setDisplayedColor: Dispatch<SetStateAction<Color | null>>;
 };

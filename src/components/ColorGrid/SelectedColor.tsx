@@ -15,25 +15,30 @@ const SelectedColor = ({
   setDisplayedColor,
 }: SelectedColorProps) => {
   const ids = colorCollection.map((color) => color?.id ?? null);
-  const idIndex = ids.findIndex((id) => id === displayedColor.id);
+  const idIndex = ids.findIndex((id) => id === displayedColor?.id);
 
   const prevMatches = useMemo(
     () =>
       colorCollection
-        .filter((c) => c.id < displayedColor.id)
+        .filter((c) => displayedColor?.id && c.id < displayedColor.id)
         .sort((a, b) => b.id - a.id),
     [colorCollection, displayedColor]
   );
 
   const nextMatches = useMemo(
-    () => colorCollection.filter((c) => c.id > displayedColor.id),
+    () =>
+      colorCollection.filter(
+        (c) => displayedColor?.id && c.id > displayedColor.id
+      ),
     [colorCollection, displayedColor]
   );
 
   return (
     <SSelectedColor gap={4}>
-      <SColor color={displayedColor ? displayedColor.hexString : "transparent"}>
-        <span>{displayedColor && displayedColor.name}</span>
+      <SColor
+        color={displayedColor ? displayedColor?.hexString : "transparent"}
+      >
+        <span>{displayedColor && displayedColor?.name}</span>
       </SColor>
       <div style={{ flex: 1 }}>
         <strong>{!displayedColor ? "Nothing Selected" : "Selection"}</strong>
@@ -43,15 +48,15 @@ const SelectedColor = ({
               <SDisplayedColorDetails>
                 <li>
                   <span>Hex:</span>
-                  <span onClick={copyText}>{displayedColor.hexString}</span>
+                  <span onClick={copyText}>{displayedColor?.hexString}</span>
                 </li>
                 <li>
                   <span>RGB:</span>
-                  <span onClick={copyText}>{displayedColor.rgbString}</span>
+                  <span onClick={copyText}>{displayedColor?.rgbString}</span>
                 </li>
                 <li>
                   <span>HSL:</span>
-                  <span onClick={copyText}>{displayedColor.hslString}</span>
+                  <span onClick={copyText}>{displayedColor?.hslString}</span>
                 </li>
               </SDisplayedColorDetails>
               <SDisplayedColorDetails>

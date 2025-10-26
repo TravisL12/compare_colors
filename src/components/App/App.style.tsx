@@ -47,12 +47,12 @@ export const SLogo = styled(H1)`
 `;
 
 export const SFlex = styled.div<{
-  column: boolean;
-  gap: number;
-  justify: string;
-  fullWidth: boolean;
-  wrap: boolean;
-  alignItems: string;
+  column?: boolean;
+  gap?: number;
+  justify?: string;
+  fullWidth?: boolean;
+  wrap?: boolean;
+  alignItems?: string;
   style?: Record<string, string | number>;
 }>`
   display: flex;
@@ -131,7 +131,7 @@ export const SHighlightedColorText = styled.span<{
       : "none"};
 `;
 
-export const SColorHighlightLayer = styled.div<{ highlightOffset: string }>`
+export const SColorHighlightLayer = styled.div<{ highlightOffset?: string }>`
   ${textLayer}
   z-index: 1;
 

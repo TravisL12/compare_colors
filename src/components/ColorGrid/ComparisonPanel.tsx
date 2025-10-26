@@ -1,5 +1,4 @@
 import {
-  SComparisonPanel,
   SLabelColor,
   SSelectedColor,
   SCompareColor,
