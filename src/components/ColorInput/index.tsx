@@ -29,30 +29,22 @@ type ColorInputProps = {
   displayedColor: Color | null;
 };
 
-const boundaryThreshold = [
-  " ",
-  "\t",
-  "\n",
-  ",",
-  "'",
-  '"',
-  "(",
-  ")",
-  ".",
-  "[",
-  "]",
-];
-const findBoundary = (idx, text, direction = -1) => {
-  for (let i = 0; i < 10; i++) {
-    const val = i * direction;
-    if (boundaryThreshold.includes(text[idx + val])) {
-      return direction === -1 ? idx + val + 1 : idx + val;
+const wordRegex =
+  /#(?:[0-9a-fA-F]{3,8})\b|\b(?:rgb|hsl)a?\([^\)]*\)|\b[a-zA-Z]+\b/g;
+
+const findBoundary = (idx: number, text: string) => {
+  let match;
+
+  while ((match = wordRegex.exec(text)) !== null) {
+    if (match.index <= idx && idx < match.index + match[0].length) {
+      console.log(match[0], "match[0]");
+      return match[0];
     }
   }
   return -1;
 };
 
-let highlightScrollTimeout;
+let highlightScrollTimeout: number;
 const ColorInput = ({
   colors,
   setColors,
@@ -61,8 +53,8 @@ const ColorInput = ({
   onTextChange,
   displayedColor,
 }: ColorInputProps) => {
-  const highlightRef = useRef();
-  const textRef = useRef();
+  const highlightRef = useRef<HTMLElement | undefined>(undefined);
+  const textRef = useRef<HTMLTextAreaElement | undefined>(undefined);
 
   const displayedColorElement = useMemo(() => {
     if (displayedColor) {
@@ -126,25 +118,30 @@ const ColorInput = ({
   }, [setColors, colorInput, displayedColor]);
 
   const updateScroll = (event) => {
-    highlightRef.current.scrollTop = event.target.scrollTop;
+    if (textRef.current && highlightRef.current) {
+      highlightRef.current.scrollTop = event.target.scrollTop;
+    }
   };
 
   const updatedHighlightScroll = () => {
     clearTimeout(highlightScrollTimeout);
     highlightScrollTimeout = setTimeout(() => {
-      textRef.current.scrollTop = highlightRef.current.scrollTop;
+      if (textRef.current && highlightRef.current) {
+        textRef.current.scrollTop = highlightRef.current.scrollTop;
+      }
     }, 50);
   };
 
   const checkSelection = (event) => {
-    const start = findBoundary(event.currentTarget.selectionStart, colorInput);
-    const end = findBoundary(event.currentTarget.selectionEnd, colorInput, 1);
+    const clickedColor = findBoundary(
+      event.currentTarget.selectionStart,
+      colorInput
+    );
 
-    if (start === -1 || end === -1) {
+    if (clickedColor === -1) {
       return;
     }
 
-    const clickedColor = colorInput.substring(start, end).trim();
     const findColorObject = colors.find(
       (color) => color.initialColor.toLowerCase() === clickedColor.toLowerCase()
     );
