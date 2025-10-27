@@ -41,10 +41,11 @@ function ColorGrid({
   useEffect(() => {
     if (displayedColor) {
       itemRefs[displayedColor.id]?.current?.scrollIntoView({
-        block: "nearest",
+        block: "center",
+        behavior: "smooth",
       });
     }
-  }, [displayedColor]);
+  }, [itemRefs, displayedColor]);
 
   useEffect(() => {
     const hasNoMatches = !colors || colors.length === 0;

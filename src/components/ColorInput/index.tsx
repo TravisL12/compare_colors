@@ -74,7 +74,8 @@ const ColorInput = ({
   useEffect(() => {
     if (displayedColorElement) {
       displayedColorElement.scrollIntoView({
-        block: "nearest",
+        block: "center",
+        behavior: "smooth",
       });
     }
   }, [displayedColorElement]);
