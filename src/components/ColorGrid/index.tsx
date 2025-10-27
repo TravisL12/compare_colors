@@ -115,7 +115,19 @@ function ColorGrid({
       </SComparisonPanel>
       <SOptions column fullWidth>
         <H2>Extracted Color Values</H2>
-        <SFlex fullWidth justify="space-between" alignItems="center">
+      </SOptions>
+      <SelectedColor
+        displayedColor={displayedColor}
+        colorCollection={colorCollection}
+        setDisplayedColor={setDisplayedColor}
+      />
+      <SColorGridDisplay showInfo={showInfo}>
+        <SFlex
+          fullWidth
+          justify="space-between"
+          alignItems="center"
+          style={{ gridColumn: "1 / -1" }}
+        >
           <SFlex>
             <SOptions gap={10}>
               <SRadioButton>
@@ -162,13 +174,6 @@ function ColorGrid({
             {showInfo ? "Details On" : "Details Off"}
           </SButton>
         </SFlex>
-      </SOptions>
-      <SelectedColor
-        displayedColor={displayedColor}
-        colorCollection={colorCollection}
-        setDisplayedColor={setDisplayedColor}
-      />
-      <SColorGridDisplay showInfo={showInfo}>
         {sortedColors.map((color, idx) => {
           const isSelected = displayedColor
             ? color.id === displayedColor.id

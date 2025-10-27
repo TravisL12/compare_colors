@@ -37,7 +37,7 @@ export const H1 = styled.h1`
 `;
 
 export const H2 = styled.h2`
-  margin-bottom: 5px;
+  margin-bottom: 0;
 `;
 
 export const SLogo = styled(H1)`
@@ -80,6 +80,8 @@ export const SButton = styled.button`
 `;
 
 export const SRadioButton = styled.div`
+  margin-top: -10px;
+
   input[type="radio"] {
     display: none;
   }
@@ -89,10 +91,17 @@ export const SRadioButton = styled.div`
     cursor: pointer;
     color: ${black};
     font-size: 14px;
+    padding: 4px;
+    border-radius: 4px;
+    color: ${logoGreen};
+    background: white;
+    border: 1px solid ${logoGreen};
   }
 
   input[type="radio"]:checked + label {
-    text-decoration: underline;
+    font-weight: 600;
+    color: white;
+    background: ${logoGreen};
   }
 `;
 

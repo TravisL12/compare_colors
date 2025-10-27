@@ -17,7 +17,7 @@ export const SColorGridDisplay = styled.div<{ showInfo?: boolean }>`
     props.showInfo
       ? "repeat(auto-fill, minmax(180px, 1fr));"
       : `repeat(auto-fill, minmax(${rowHeight}, 1fr));`}
-  grid-template-rows: repeat(auto-fill, ${rowHeight});
+  grid-template-rows: 35px repeat(auto-fill, ${rowHeight});
   box-sizing: border-box;
   background: ${lightgray};
   padding: 10px;
