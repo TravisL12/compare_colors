@@ -141,31 +141,24 @@ export const SBtnContainer = styled.div`
   right: 5px;
 `;
 
+export const SColorInput = styled.div`
+  width: 75%;
+
+  input[type="text"] {
+    width: 100%;
+  }
+
+  input[type="text"]:focus {
+    background: rgba(255, 255, 255, 0.75);
+    color: black;
+  }
+`;
+
 export const SLabelColor = styled.div<{ color: string }>`
   position: relative;
   height: 100%;
   width: 25%;
   max-width: 150px;
-
-  .color-text-input {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 75%;
-
-    input[type="text"] {
-      background: transparent;
-      width: 100%;
-      color: ${(props) => getDifferenceColor(props.color)};
-      border: none;
-      text-align: right;
-    }
-
-    input[type="text"]:focus {
-      background: rgba(255, 255, 255, 0.75);
-      color: black;
-    }
-  }
 
   input[type="color"] {
     position: absolute;

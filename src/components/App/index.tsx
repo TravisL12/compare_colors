@@ -10,7 +10,10 @@ const App = () => {
   const [displayedColor, setDisplayedColor] = useState<Color | null>(null);
   const [colors, setColors] = useState<Color[]>([]);
 
-  const updateTextArea = ({ target: { value } }) => {
+  const updateTextArea = (event: MouseEvent) => {
+    const {
+      target: { value },
+    } = event;
     setColorInput(value);
   };
 
