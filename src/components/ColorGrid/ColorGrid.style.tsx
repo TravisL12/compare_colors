@@ -185,6 +185,10 @@ export const SColorInput = styled.div`
     background: rgba(255, 255, 255, 0.75);
     color: black;
   }
+
+  input[type="text"][aria-invalid="true"] {
+    border-color: #b33718;
+  }
 `;
 
 export const SLabelColor = styled.div<{ color: string }>`

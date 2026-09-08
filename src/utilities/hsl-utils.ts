@@ -2,35 +2,37 @@
  * Parses an HSL/HSLA string into normalised [hue, saturation, lightness, alpha]
  * values, where every component is in the 0..1 range. Alpha is `undefined` when
  * the source string did not specify one.
+ *
+ * The `%` signs are deliberately kept on the tokens: alpha is allowed to be
+ * either a 0-1 number or a percentage, and stripping `%` first makes the two
+ * indistinguishable.
  */
 export function hslDec2array(
   hslColorStr: string
 ): [number, number, number, number | undefined] {
   const [h, s, l, alpha] = hslColorStr
-    .replace(/[%hsla()]/gi, " ")
+    .replace(/^\s*hsla?\s*\(/i, "")
+    .replace(/\)\s*$/, "")
     .trim()
-    .split(/[,\s/]+/g);
+    .split(/[,\s/]+/)
+    .filter(Boolean);
 
   return [
     parseInt(h, 10) / 360,
     parseInt(s, 10) / 100,
     parseInt(l, 10) / 100,
-    parseAlpha(alpha, hslColorStr),
+    parseAlpha(alpha),
   ];
 }
 
-/**
- * CSS allows alpha as either a 0-1 number (`/ 0.5`) or a percentage (`/ 50%`).
- * The stripped token loses its `%`, so check the raw string to tell them apart.
- */
-function parseAlpha(token: string | undefined, source: string) {
+/** CSS allows alpha as a 0-1 number (`0.5`) or a percentage (`50%`). */
+function parseAlpha(token: string | undefined) {
   if (!token) return undefined;
 
   const value = parseFloat(token);
   if (Number.isNaN(value)) return undefined;
 
-  const isPercentage = /\/\s*[\d.]+\s*%/.test(source);
-  return isPercentage ? value / 100 : value;
+  return token.includes("%") ? value / 100 : value;
 }
 
 export function isColorHsl(color: string): boolean {

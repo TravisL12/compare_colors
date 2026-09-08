@@ -65,18 +65,24 @@ function ColorGrid({
     [sortedColors]
   );
 
-  // Skip the very first selection, which happens automatically on load.
-  const hasSelectedOnce = useRef(false);
+  // Scroll only when the selection actually moves to a different swatch.
+  // `displayedColor` and `itemRefs` are both rebuilt on every keystroke, so
+  // depending on them directly would scroll the grid while the user types.
+  const lastScrolledTo = useRef<string | null>(null);
   useEffect(() => {
-    if (!displayedColor) return;
+    const target = displayedColor?.hexString ?? null;
+    const isFirstSelection = lastScrolledTo.current === null;
+    const hasMoved = target !== lastScrolledTo.current;
+    lastScrolledTo.current = target;
 
-    if (hasSelectedOnce.current) {
-      itemRefs[displayedColor.hexString]?.current?.scrollIntoView({
-        block: "center",
-        behavior: "smooth",
-      });
-    }
-    hasSelectedOnce.current = true;
+    // The first selection happens automatically on load; scrolling to it would
+    // yank the reader away before they have read anything.
+    if (!target || isFirstSelection || !hasMoved) return;
+
+    itemRefs[target]?.current?.scrollIntoView({
+      block: "center",
+      behavior: "smooth",
+    });
   }, [itemRefs, displayedColor]);
 
   // Keep the selection pointing at something that still exists in the text.
@@ -86,11 +92,26 @@ function ColorGrid({
       return;
     }
 
-    const stillPresent =
-      displayedColor &&
-      colors.some((color) => color.id === displayedColor.id);
+    if (!displayedColor) {
+      setDisplayedColor(colors[0]);
+      return;
+    }
 
-    if (!stillPresent) setDisplayedColor(colors[0]);
+    // Ids are positional and get reassigned on every parse, so an id alone can
+    // silently point at a different colour after an edit. Prefer the same
+    // occurrence, fall back to the same colour elsewhere in the text, and only
+    // then give up and select the first one.
+    const sameOccurrence = colors.find(
+      (color) =>
+        color.id === displayedColor.id &&
+        color.hexString === displayedColor.hexString
+    );
+    const sameColor = colors.find(
+      (color) => color.hexString === displayedColor.hexString
+    );
+    const replacement = sameOccurrence ?? sameColor ?? colors[0];
+
+    if (replacement !== displayedColor) setDisplayedColor(replacement);
   }, [colors, displayedColor, setDisplayedColor]);
 
   const updateCompareColor = ({

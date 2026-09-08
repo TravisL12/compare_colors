@@ -44,7 +44,7 @@ const ColorInput = ({
   const [highlightOffset, setHighlightOffset] = useState<number | null>(null);
   // The first colour is auto-selected on load; scrolling to it would yank the
   // reader past the intro text before they have read it.
-  const hasSelectedOnce = useRef(false);
+  const lastScrolledTo = useRef<string | null>(null);
 
   useEffect(
     () => () => clearTimeout(scrollSyncTimeout.current),
@@ -53,9 +53,13 @@ const ColorInput = ({
 
   // Runs after the highlight layer has rendered, so the element for the newly
   // selected colour is guaranteed to exist before we measure or scroll to it.
+  // `segments` is rebuilt on every keystroke, so the band is re-measured each
+  // time, but scrolling is gated on the selection genuinely moving - otherwise
+  // typing would keep dragging the textarea back to the selected colour.
   useEffect(() => {
     if (!displayedColor) {
       setHighlightOffset(null);
+      lastScrolledTo.current = null;
       return;
     }
 
@@ -69,10 +73,14 @@ const ColorInput = ({
 
     setHighlightOffset(element.offsetTop);
 
-    if (hasSelectedOnce.current) {
+    const target = `${displayedColor.id}:${displayedColor.hexString}`;
+    const isFirstSelection = lastScrolledTo.current === null;
+    const hasMoved = target !== lastScrolledTo.current;
+    lastScrolledTo.current = target;
+
+    if (!isFirstSelection && hasMoved) {
       element.scrollIntoView({ block: "center", behavior: "smooth" });
     }
-    hasSelectedOnce.current = true;
   }, [displayedColor, segments]);
 
   const colorHighlight = useMemo(

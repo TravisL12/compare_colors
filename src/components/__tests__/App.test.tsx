@@ -2,10 +2,17 @@ import { describe, expect, it } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "../App";
+import StyleProvider from "../../StyleProvider";
 
 const renderApp = () => {
   const user = userEvent.setup();
-  render(<App />);
+  // Rendered through the same provider as production so the tests exercise the
+  // real prop filtering rather than a bare tree that warns on every render.
+  render(
+    <StyleProvider>
+      <App />
+    </StyleProvider>
+  );
   return user;
 };
 
@@ -126,5 +133,70 @@ describe("App", () => {
     const user = renderApp();
     await user.click(screen.getByRole("button", { name: /sample palette/i }));
     expect((textarea() as HTMLTextAreaElement).value).toContain("--blue-100");
+  });
+
+  it("keeps the selected colour when unrelated text is edited", async () => {
+    // Regression: ids are positional and reassigned on every parse, so
+    // comparing by id alone let an edit silently move the selection to a
+    // different colour that happened to inherit the id.
+    const user = renderApp();
+    await pasteText(user, "#ff0000 #00ff00 #0000ff");
+    await user.click(screen.getByRole("button", { name: /select blue/i }));
+    expect(within(selectionPanel()).getByText("#0000FF")).toBeInTheDocument();
+
+    await pasteText(user, "#ff0000 #00ff00 #0000ff #ffff00");
+    await user.click(screen.getByRole("button", { name: /select blue/i }));
+    expect(within(selectionPanel()).getByText("#0000FF")).toBeInTheDocument();
+  });
+
+  it("falls back to the first colour when the selected one is deleted", async () => {
+    const user = renderApp();
+    await pasteText(user, "#ff0000 #0000ff");
+    await user.click(screen.getByRole("button", { name: /select blue/i }));
+    expect(within(selectionPanel()).getByText("#0000FF")).toBeInTheDocument();
+
+    await pasteText(user, "#00ff00");
+    expect(within(selectionPanel()).getByText("#00FF00")).toBeInTheDocument();
+  });
+
+  it("lets a colour name be typed into the compare field", async () => {
+    // Regression: every keystroke was round-tripped through `new Color()`,
+    // so typing "r" rewrote the field to "#R" and a name was unreachable.
+    const user = renderApp();
+    const field = screen.getByLabelText(/compare color/i);
+
+    await user.clear(field);
+    await user.type(field, "dodgerblue");
+
+    expect(field).toHaveValue("dodgerblue");
+  });
+
+  it("keeps unparseable compare input on screen and flags it", async () => {
+    const user = renderApp();
+    const field = screen.getByLabelText(/compare color/i);
+
+    await user.clear(field);
+    await user.type(field, "notacolour");
+
+    expect(field).toHaveValue("notacolour");
+    expect(field).toHaveAttribute("aria-invalid", "true");
+  });
+
+  it("commits compare input once it parses", async () => {
+    const user = renderApp();
+    const field = screen.getByLabelText(/compare color/i);
+
+    await user.clear(field);
+    await user.type(field, "#0000ff");
+
+    // Typing is never interrupted, even though "#000" parses on its own.
+    expect(field).toHaveValue("#0000ff");
+    expect(field).toHaveAttribute("aria-invalid", "false");
+    // Setting a comparison colour turns on chromatic sorting.
+    expect(screen.getByLabelText("Chromatic Sort")).toBeChecked();
+
+    // Blurring normalises to the canonical name for that value.
+    await user.tab();
+    expect(field).toHaveValue("blue");
   });
 });
