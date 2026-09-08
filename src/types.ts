@@ -1,6 +1,8 @@
 import type { Dispatch, ChangeEvent, SetStateAction } from "react";
 import type Color from "./models/color";
 
+export type SortMethod = "off" | "distanceChromatic" | "distanceDelta";
+
 export type ColorGridProps = {
   colors: Color[];
   displayedColor: Color | null;
@@ -9,11 +11,13 @@ export type ColorGridProps = {
 
 export type ComparisonPanelProps = {
   compareColor: Color;
-  updateCompareColor: (e: ChangeEvent) => void;
+  updateCompareColor: (
+    e: ChangeEvent<HTMLInputElement> | { target: { value: string } }
+  ) => void;
 };
 
 export type SelectedColorProps = {
-  displayedColor?: Color;
+  displayedColor: Color | null;
   colorCollection: Color[];
   setDisplayedColor: Dispatch<SetStateAction<Color | null>>;
 };

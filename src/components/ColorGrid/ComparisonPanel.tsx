@@ -36,17 +36,20 @@ function ComparisonPanel({
             type="text"
             id="compare-color-text"
             onChange={updateCompareColor}
-            value={compareColor.name || compareColor.hexColor}
+            value={compareColor.name || compareColor.hexString}
             placeholder="#000000 (Default)"
           />
         </SColorInput>
         <strong>Quick colors</strong>
-        <SFlex gap={5} wrap>
+        <SFlex gap={5} $wrap>
           {QUICK_COMPARE_COLORS.map((color) => (
             <SCompareColor
               key={color}
+              type="button"
               onClick={() => updateCompareColor({ target: { value: color } })}
               color={color}
+              aria-label={`Compare against ${color}`}
+              title={color}
             />
           ))}
         </SFlex>

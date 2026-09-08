@@ -1,4 +1,4 @@
-import React from "react";
+import { forwardRef } from "react";
 import { copyText } from "../../utilities/color-utils";
 import { SColorItem } from "./ColorGrid.style";
 import type Color from "../../models/color";
@@ -6,17 +6,13 @@ import type Color from "../../models/color";
 type ColorItemProps = {
   color: Color;
   showInfo: boolean;
-  setDisplayedColor: (color: Color | null) => void;
+  setDisplayedColor: (color: Color) => void;
   isSelected: boolean;
 };
 
-const ColorItem = React.forwardRef(
-  ({ color, showInfo, setDisplayedColor, isSelected }: ColorItemProps, ref) => {
+const ColorItem = forwardRef<HTMLDivElement, ColorItemProps>(
+  ({ color, showInfo, setDisplayedColor, isSelected }, ref) => {
     const { hexString, rgbString, hslString, name, initialColor } = color;
-    const squareStyle = {
-      color: hexString,
-      background: hexString,
-    };
 
     const displayValues = [hexString, rgbString, hslString, name].filter(
       (str) => str && str.toLowerCase() !== initialColor.toLowerCase()
@@ -24,24 +20,45 @@ const ColorItem = React.forwardRef(
 
     return (
       <SColorItem isSelected={isSelected} showInfo={showInfo} ref={ref}>
-        <div
+        <button
+          type="button"
           className="square"
-          style={squareStyle}
+          style={{ background: hexString }}
           onClick={() => setDisplayedColor(color)}
+          aria-pressed={isSelected}
+          aria-label={`Select ${name || hexString}`}
+          title={name || hexString}
         />
         {showInfo && (
           <div className="names">
-            <p onClick={copyText}>{initialColor}</p>
+            <CopyableValue value={initialColor} />
             {displayValues.map((val) => (
-              <p key={val} onClick={copyText}>
-                {val}
-              </p>
+              <CopyableValue key={val} value={val} />
             ))}
           </div>
         )}
       </SColorItem>
     );
   }
+);
+
+ColorItem.displayName = "ColorItem";
+
+const CopyableValue = ({ value }: { value: string }) => (
+  <p
+    role="button"
+    tabIndex={0}
+    title={`Copy ${value}`}
+    onClick={copyText}
+    onKeyDown={(event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        copyText(event);
+      }
+    }}
+  >
+    {value}
+  </p>
 );
 
 export default ColorItem;

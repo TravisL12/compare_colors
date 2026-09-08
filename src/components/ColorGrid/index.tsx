@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, type Ref } from "react";
+import { createRef, useEffect, useMemo, useRef, useState } from "react";
 import Color from "../../models/color";
 import ColorItem from "./ColorItem";
 import ComparisonPanel from "./ComparisonPanel";
@@ -18,60 +18,86 @@ import {
 } from "../App/App.style";
 import { SColorGridDisplay, SComparisonPanel } from "./ColorGrid.style";
 import { uniqBy } from "lodash";
-import type { ColorGridProps } from "../../types.ts";
+import type { ColorGridProps, SortMethod } from "../../types.ts";
 import SelectedColor from "./SelectedColor.tsx";
+
+const SORT_OPTIONS: { value: SortMethod; label: string }[] = [
+  { value: SORT_CHROMATIC, label: "Chromatic Sort" },
+  { value: SORT_DELTA, label: "DeltaE Sort" },
+  { value: SORT_OFF, label: "No Sorting" },
+];
+
+const sortTypes: Record<
+  Exclude<SortMethod, "off">,
+  (compare: Color, target?: Color) => number
+> = { distanceDelta, distanceChromatic };
 
 function ColorGrid({
   colors,
   displayedColor,
   setDisplayedColor,
 }: ColorGridProps) {
-  const [compareColor, setCompareColor] = useState(new Color("000000"));
+  const [compareColor, setCompareColor] = useState(() => new Color("000000"));
   const [showInfo, setShowInfo] = useState(true);
-  const [sortMethod, setSortMethod] = useState(SORT_OFF);
+  const [sortMethod, setSortMethod] = useState<SortMethod>(SORT_OFF);
   const areColorsSorted = sortMethod !== SORT_OFF;
 
-  const itemRefs = useMemo(() => {
-    return colors.reduce((acc, color) => {
-      acc[color.id] = React.createRef();
-      return acc;
-    }, {} as Record<string, Ref<Color | null>>);
-  }, [colors]);
+  const sortedColors = useMemo(() => {
+    if (sortMethod === SORT_OFF) return uniqBy(colors, "hexString");
 
+    const distance = sortTypes[sortMethod];
+    const sorted = colors
+      .slice()
+      .sort((a, b) => distance(a, compareColor) - distance(b, compareColor));
+
+    return uniqBy(sorted, "hexString");
+  }, [colors, sortMethod, compareColor]);
+
+  // The grid shows one swatch per distinct colour, so refs are keyed by value
+  // rather than by occurrence - selecting the 7th `#FF0000` in the text still
+  // has to scroll to the single `#FF0000` swatch.
+  const itemRefs = useMemo(
+    () =>
+      sortedColors.reduce((acc, color) => {
+        acc[color.hexString] = createRef<HTMLDivElement>();
+        return acc;
+      }, {} as Record<string, React.RefObject<HTMLDivElement | null>>),
+    [sortedColors]
+  );
+
+  // Skip the very first selection, which happens automatically on load.
+  const hasSelectedOnce = useRef(false);
   useEffect(() => {
-    if (displayedColor) {
-      itemRefs[displayedColor.id]?.current?.scrollIntoView({
+    if (!displayedColor) return;
+
+    if (hasSelectedOnce.current) {
+      itemRefs[displayedColor.hexString]?.current?.scrollIntoView({
         block: "center",
         behavior: "smooth",
       });
     }
+    hasSelectedOnce.current = true;
   }, [itemRefs, displayedColor]);
 
+  // Keep the selection pointing at something that still exists in the text.
   useEffect(() => {
-    const hasNoMatches = !colors || colors.length === 0;
-    const isDisplayedColorCurrent = colors && !displayedColor;
-
-    if (hasNoMatches) {
+    if (colors.length === 0) {
       setDisplayedColor(null);
-    } else if (isDisplayedColorCurrent) {
-      setDisplayedColor(colors[0]);
-    } else if (colors && displayedColor) {
-      const isDisplayedInColors = colors.find(
-        (color) => color.hexString === displayedColor.hexString
-      );
-      if (!isDisplayedInColors) setDisplayedColor(colors[0]);
+      return;
     }
+
+    const stillPresent =
+      displayedColor &&
+      colors.some((color) => color.id === displayedColor.id);
+
+    if (!stillPresent) setDisplayedColor(colors[0]);
   }, [colors, displayedColor, setDisplayedColor]);
 
-  const sortTypes = useMemo(
-    () => ({
-      distanceDelta,
-      distanceChromatic,
-    }),
-    []
-  );
-
-  const updateCompareColor = ({ target: { value } }) => {
+  const updateCompareColor = ({
+    target: { value },
+  }: {
+    target: { value: string };
+  }) => {
     const browserColor = browserColorsByName[value.toLowerCase()];
     setCompareColor(new Color(browserColor || value));
     if (!areColorsSorted) {
@@ -79,32 +105,13 @@ function ColorGrid({
     }
   };
 
-  const toggle = {
-    info: () => setShowInfo(!showInfo),
-    sort: ({ currentTarget: { value } }) => {
-      setSortMethod(value);
-    },
-  };
-
-  const colorCollection = useMemo(() => {
-    return displayedColor
-      ? colors.filter((c) => c.hexString === displayedColor.hexString)
-      : [];
-  }, [colors, displayedColor]);
-
-  const sortedColors = useMemo(() => {
-    const sorted = areColorsSorted
-      ? colors
-          .slice()
-          .sort(
-            (a, b) =>
-              sortTypes[sortMethod](a, compareColor) -
-              sortTypes[sortMethod](b, compareColor)
-          )
-      : colors;
-
-    return uniqBy(sorted, "rgbString");
-  }, [colors, areColorsSorted, sortMethod, compareColor, sortTypes]);
+  const colorCollection = useMemo(
+    () =>
+      displayedColor
+        ? colors.filter((c) => c.hexString === displayedColor.hexString)
+        : [],
+    [colors, displayedColor]
+  );
 
   return (
     <SColumn column fullWidth>
@@ -127,70 +134,50 @@ function ColorGrid({
           fullWidth
           justify="space-between"
           alignItems="center"
-          style={{ gridColumn: "1 / -1" }}
+          $wrap
+          gap={10}
+          className="grid-toolbar"
         >
-          <SFlex>
-            <SOptions gap={10}>
-              <SRadioButton>
+          <SOptions gap={10} $wrap role="group" aria-label="Sort colours">
+            {SORT_OPTIONS.map(({ value, label }) => (
+              <SRadioButton key={value}>
                 <input
                   type="radio"
-                  id="compare-distanceChromatic"
+                  id={`compare-${value}`}
                   name="sortOption"
-                  checked={sortMethod === "distanceChromatic"}
-                  onChange={toggle.sort}
-                  value={SORT_CHROMATIC}
+                  checked={sortMethod === value}
+                  onChange={() => setSortMethod(value)}
+                  value={value}
                 />
-                <label htmlFor="compare-distanceChromatic">
-                  Chromatic Sort
-                </label>
+                <label htmlFor={`compare-${value}`}>{label}</label>
               </SRadioButton>
+            ))}
+          </SOptions>
 
-              <SRadioButton>
-                <input
-                  type="radio"
-                  id="compare-distanceDelta"
-                  name="sortOption"
-                  checked={sortMethod === "distanceDelta"}
-                  onChange={toggle.sort}
-                  value={SORT_DELTA}
-                />
-                <label htmlFor="compare-distanceDelta">DeltaE Sort</label>
-              </SRadioButton>
-
-              <SRadioButton>
-                <input
-                  type="radio"
-                  id="compare-off"
-                  name="sortOption"
-                  checked={sortMethod === "off"}
-                  onChange={toggle.sort}
-                  value={SORT_OFF}
-                />
-                <label htmlFor="compare-off">No Sorting</label>
-              </SRadioButton>
-            </SOptions>
-          </SFlex>
-
-          <SButton className={showInfo ? "on" : "off"} onClick={toggle.info}>
+          <SButton
+            aria-pressed={showInfo}
+            onClick={() => setShowInfo((shown) => !shown)}
+          >
             {showInfo ? "Details On" : "Details Off"}
           </SButton>
         </SFlex>
-        {sortedColors.map((color, idx) => {
-          const isSelected = displayedColor
-            ? color.id === displayedColor.id
-            : false;
 
-          return (
+        {sortedColors.length === 0 ? (
+          <p className="empty-state">
+            No colours found yet. Paste some text on the left to get started.
+          </p>
+        ) : (
+          sortedColors.map((color) => (
             <ColorItem
-              ref={itemRefs[color.id]}
-              isSelected={isSelected}
+              key={color.hexString}
+              ref={itemRefs[color.hexString]}
+              isSelected={color.hexString === displayedColor?.hexString}
               setDisplayedColor={setDisplayedColor}
               color={color}
               showInfo={showInfo}
-              key={idx}
             />
-          );
-        })}
+          ))
+        )}
       </SColorGridDisplay>
     </SColumn>
   );

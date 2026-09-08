@@ -1,57 +1,54 @@
-import { useState } from "react";
+import { useMemo, useState, type ChangeEvent } from "react";
 import ColorGrid from "../ColorGrid";
-import { SApp, SLogo, SOptions, SFlex, SButton } from "./App.style";
+import { SApp, SLogo, SFlex, SButton, STagline, SHeader } from "./App.style";
 import ColorInput from "../ColorInput";
-import { demoText, test } from "../../testData";
+import { demoText, paletteSample } from "../../testData";
+import {
+  colorsFromSegments,
+  parseColorText,
+} from "../../utilities/parse-color-text";
 import type Color from "../../models/color";
 
 const App = () => {
   const [colorInput, setColorInput] = useState(demoText);
   const [displayedColor, setDisplayedColor] = useState<Color | null>(null);
-  const [colors, setColors] = useState<Color[]>([]);
 
-  const updateTextArea = (event: MouseEvent) => {
-    const {
-      target: { value },
-    } = event;
-    setColorInput(value);
+  // Parsing lives here so both panes read the same result, and so no child
+  // has to write state back up during render to share it.
+  const segments = useMemo(() => parseColorText(colorInput), [colorInput]);
+  const colors = useMemo(() => colorsFromSegments(segments), [segments]);
+
+  const updateTextArea = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setColorInput(event.target.value);
   };
 
-  const testColors = () => {
-    setColorInput(test);
-  };
-
-  const instructionColors = () => {
-    setColorInput(demoText);
-  };
-
+  const showSample = () => setColorInput(paletteSample);
+  const showInstructions = () => setColorInput(demoText);
   const resetColorDisplay = () => {
     setColorInput("");
-    setColors([]);
+    setDisplayedColor(null);
   };
 
   return (
     <SApp column gap={10}>
-      <SFlex column>
-        <SLogo>ChromaExtract</SLogo>
-        <SOptions column fullWidth>
-          <SFlex
-            alignItems="flex-end"
-            justify="flex-end"
-            gap={10}
-            style={{ height: "100%", flex: 1 }}
-          >
-            <SButton onClick={instructionColors}>Instructions</SButton>
-            <SButton onClick={testColors}>Demo Text</SButton>
-            <SButton onClick={resetColorDisplay}>Reset</SButton>
-          </SFlex>
-        </SOptions>
-      </SFlex>
+      <SHeader>
+        <SFlex column>
+          <SLogo>ColorSnippet</SLogo>
+          <STagline>
+            Paste anything. Every colour in it becomes a swatch you can compare,
+            sort and copy.
+          </STagline>
+        </SFlex>
+        <SFlex alignItems="center" gap={16} $wrap>
+          <SButton onClick={showInstructions}>How it works</SButton>
+          <SButton onClick={showSample}>Sample palette</SButton>
+          <SButton onClick={resetColorDisplay}>Clear</SButton>
+        </SFlex>
+      </SHeader>
 
-      <SFlex fullWidth gap={20} style={{ overflow: "auto", flex: 1 }}>
+      <SFlex fullWidth gap={20} className="workspace">
         <ColorInput
-          colors={colors}
-          setColors={setColors}
+          segments={segments}
           setDisplayedColor={setDisplayedColor}
           colorInput={colorInput}
           onTextChange={updateTextArea}

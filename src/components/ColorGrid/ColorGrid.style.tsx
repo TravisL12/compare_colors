@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { getDifferenceColor } from "../../utilities/color-utils";
 import {
+  MOBILE,
   boldBorder,
   black,
   borderRadius,
@@ -23,7 +24,20 @@ export const SColorGridDisplay = styled.div<{ showInfo?: boolean }>`
   padding: 10px;
   width: 100%;
   flex: 1;
+  min-height: 240px;
   overflow: auto;
+  align-content: start;
+
+  .grid-toolbar {
+    grid-column: 1 / -1;
+  }
+
+  .empty-state {
+    grid-column: 1 / -1;
+    font-size: 15px;
+    padding: 20px 4px;
+    color: #6d6d6d;
+  }
 `;
 
 export const SComparisonPanel = styled(SFlex)`
@@ -42,7 +56,11 @@ export const SComparisonPanel = styled(SFlex)`
 const PANEL_HEIGHT = 200;
 export const SSelectedColor = styled(SFlex)`
   width: 100%;
-  height: ${PANEL_HEIGHT / 2}px;
+  min-height: ${PANEL_HEIGHT / 2}px;
+
+  @media (max-width: ${MOBILE}) {
+    height: auto;
+  }
 `;
 
 export const SColorItem = styled.div<{
@@ -65,14 +83,15 @@ export const SColorItem = styled.div<{
   .square {
     height: 50px;
     width: 50px;
+    padding: 0;
+    flex: 0 0 auto;
     border-radius: 2px;
     border: 1px solid ${black};
     cursor: pointer;
 
-    &:hover {
-      &:after {
-        background: none;
-      }
+    &:focus-visible {
+      outline: 2px solid ${black};
+      outline-offset: 2px;
     }
   }
 
@@ -89,6 +108,9 @@ export const SColorItem = styled.div<{
       border-radius: 2px;
       padding: 0 2px;
       font-size: 11px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       // Transition delay is also affected by color-utils::copyText setTimeout fn
       transition: 0.1s linear background-color;
     }
@@ -102,6 +124,8 @@ export const SDisplayedColorDetails = styled.ul`
   gap: 4px;
   height: 100%;
   justify-content: center;
+  /* Wide enough that the two detail columns stack rather than squeeze. */
+  min-width: 210px;
 
   li {
     display: flex;
@@ -112,7 +136,14 @@ export const SDisplayedColorDetails = styled.ul`
     }
     span:nth-child(2) {
       cursor: pointer;
+      border-radius: 2px;
+      padding: 0 2px;
       transition: 0.1s linear background-color;
+    }
+
+    span[role="button"]:focus-visible {
+      outline: 2px solid ${black};
+      outline-offset: 1px;
     }
   }
 `;
@@ -121,7 +152,9 @@ export const SColor = styled.div<{ color: string }>`
   position: relative;
   background: ${(props) => props.color};
   height: 100%;
+  min-height: ${PANEL_HEIGHT / 2}px;
   width: 25%;
+  flex: 0 0 auto;
   max-width: 150px;
 
   span {
@@ -157,7 +190,9 @@ export const SColorInput = styled.div`
 export const SLabelColor = styled.div<{ color: string }>`
   position: relative;
   height: 100%;
+  min-height: ${PANEL_HEIGHT / 2}px;
   width: 25%;
+  flex: 0 0 auto;
   max-width: 150px;
 
   input[type="color"] {
@@ -166,24 +201,32 @@ export const SLabelColor = styled.div<{ color: string }>`
     bottom: 0;
   }
 
+  /* Filling the relatively-positioned wrapper keeps the swatch visible even
+     when the panel is auto-height, as it is on narrow screens. */
   input[type="color"] + label {
+    position: absolute;
+    inset: 0;
     background: ${(props) => props.color};
-
-    display: block;
-    height: 100%;
-    width: 100%;
     z-index: 1;
     cursor: crosshair;
   }
+
+  input[type="color"]:focus-visible + label {
+    outline: 2px solid ${black};
+    outline-offset: -3px;
+  }
 `;
 
-export const SCompareColor = styled.div<{ color: string }>`
+export const SCompareColor = styled.button<{ color: string }>`
   cursor: pointer;
+  border: 1px solid transparent;
+  padding: 0;
   background: ${(props) => props.color};
   height: 30px;
   width: 50px;
   border-radius: ${borderRadius};
-  &:hover {
+  &:hover,
+  &:focus-visible {
     border: 1px solid ${(props) => getDifferenceColor(props.color)};
   }
 `;

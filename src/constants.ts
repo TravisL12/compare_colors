@@ -1,3 +1,4 @@
+// Left un-annotated so TypeScript infers literal types and can narrow on them.
 export const SORT_OFF = "off";
 export const SORT_CHROMATIC = "distanceChromatic";
 export const SORT_DELTA = "distanceDelta";

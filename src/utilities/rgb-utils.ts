@@ -12,17 +12,15 @@ export function dec2array(rgbColorStr: string): number[] {
 }
 
 export function dec2hex(rgbColor: string | number[]): string {
-  let color = rgbColor;
-  if (typeof rgbColor === "string") {
-    color = dec2array(color as string);
-  }
+  const channels =
+    typeof rgbColor === "string" ? dec2array(rgbColor) : rgbColor;
 
-  const hex = (color as number[])
-    .map((c, idx) => {
-      const num = Number(c);
+  const hex = channels
+    .map((channel, idx) => {
+      const num = Number(channel);
       return idx === 3
         ? floatToHexAlpha(num)
-        : `0${num.toString(16)}`.slice(-2);
+        : `0${Math.round(num).toString(16)}`.slice(-2);
     })
     .join("");
 
