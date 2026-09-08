@@ -76,11 +76,28 @@ The build is a static bundle — no server, no runtime config. `yarn build`
 produces `dist/`, which is served from the **domain root** (`base: "/"` in
 `vite.config.ts`).
 
-Caddy on the VPS handles TLS and routing:
+The repo is cloned on the VPS and built there. A shared Caddy container serves
+several sites, mounting each one's `dist/` under `/srv`:
+
+```yaml
+# docker-compose.yaml, alongside the Caddyfile
+services:
+  caddy:
+    image: caddy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./data:/data
+      - ./config:/config
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - /home/travis/development/compare_colors/dist:/srv/colorsnippet:ro
+```
 
 ```caddyfile
 colorsnippet.com, www.colorsnippet.com {
-    root * /var/www/colorsnippet
+    root * /srv/colorsnippet
     encode gzip zstd
 
     # Hashed asset filenames are safe to cache forever.
@@ -93,7 +110,6 @@ colorsnippet.com, www.colorsnippet.com {
     header {
         X-Content-Type-Options nosniff
         Referrer-Policy strict-origin-when-cross-origin
-        Strict-Transport-Security "max-age=31536000; includeSubDomains"
     }
 
     try_files {path} /index.html
@@ -101,12 +117,27 @@ colorsnippet.com, www.colorsnippet.com {
 }
 ```
 
-Deploy is a copy:
+Deploy is a rebuild in place:
 
 ```bash
-yarn verify && yarn build
-rsync -av --delete dist/ user@vps:/var/www/colorsnippet/
+git pull
+yarn install
+yarn verify && yarn build     # writes dist/, which Caddy is already serving
 ```
+
+Notes:
+
+- **Point DNS at the VPS before adding the site block.** Caddy provisions the
+  certificate on the first request for the hostname; if the name does not
+  resolve to the box yet, the ACME challenge fails and Caddy backs off before
+  retrying.
+- **Changing the volume list needs `docker compose up -d`**, not a restart.
+- **`dist/` is gitignored**, so a fresh clone has no `dist` directory and Docker
+  will create an empty one at that path. Caddy serves 404s until the first
+  build.
+- **HSTS is deliberately not set.** `Strict-Transport-Security` is cached by
+  browsers for its full max-age and cannot be revoked, so only add it once the
+  domain is permanently HTTPS.
 
 ## Licence
 
