@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { getDifferenceColor } from "../../utilities/color-utils";
 import { hexAlpha } from "../../utilities/hexadecimal-utils";
+import type { HighlightBand } from "../../utilities/scroll-selection";
 
 export const black = "#444444";
 export const gray = "#ececec";
@@ -219,20 +220,25 @@ export const SHighlightedColorText = styled.span<{
       : "none"};
 `;
 
-export const SColorHighlightLayer = styled.div<{ highlightOffset: number | null }>`
+export const SColorHighlightLayer = styled.div<{
+  highlightBand: HighlightBand | null;
+}>`
   ${textLayer}
   z-index: 1;
+  /* Purely decorative, and it sits under the textarea that owns every click.
+     Belt and braces so a stacking-context change can never steal a click. */
+  pointer-events: none;
 
   ${(props) =>
-    props.highlightOffset !== null
+    props.highlightBand
       ? `&::before {
           content: '';
           position: absolute;
           background-color: #${hexAlpha("gray", 0.2)};
-          top: ${props.highlightOffset}px;
+          top: ${props.highlightBand.top}px;
           left: 0;
           width: 100%;
-          height: 16px;
+          height: ${props.highlightBand.height}px;
           z-index: 2;
         }`
       : ""}

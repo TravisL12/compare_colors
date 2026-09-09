@@ -8,6 +8,7 @@ import {
   type KeyboardEvent,
   type MouseEvent,
   type SetStateAction,
+  type UIEvent,
 } from "react";
 import {
   SColumn,
@@ -18,6 +19,10 @@ import {
 import { getDifferenceColor } from "../../utilities/color-utils";
 import { colorAtOffset, type ColorSegment } from "../../utilities/parse-color-text";
 import type Color from "../../models/color";
+import {
+  scrollSelectionIntoView,
+  type HighlightBand,
+} from "../../utilities/scroll-selection";
 
 type ColorInputProps = {
   segments: ColorSegment[];
@@ -26,8 +31,6 @@ type ColorInputProps = {
   onTextChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   displayedColor: Color | null;
 };
-
-const SCROLL_SYNC_DELAY = 50;
 
 const ColorInput = ({
   segments,
@@ -38,18 +41,10 @@ const ColorInput = ({
 }: ColorInputProps) => {
   const highlightRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
-  const scrollSyncTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(
-    undefined
-  );
-  const [highlightOffset, setHighlightOffset] = useState<number | null>(null);
+  const [highlightBand, setHighlightBand] = useState<HighlightBand | null>(null);
   // The first colour is auto-selected on load; scrolling to it would yank the
   // reader past the intro text before they have read it.
   const lastScrolledTo = useRef<string | null>(null);
-
-  useEffect(
-    () => () => clearTimeout(scrollSyncTimeout.current),
-    []
-  );
 
   // Runs after the highlight layer has rendered, so the element for the newly
   // selected colour is guaranteed to exist before we measure or scroll to it.
@@ -58,7 +53,7 @@ const ColorInput = ({
   // typing would keep dragging the textarea back to the selected colour.
   useEffect(() => {
     if (!displayedColor) {
-      setHighlightOffset(null);
+      setHighlightBand(null);
       lastScrolledTo.current = null;
       return;
     }
@@ -67,11 +62,11 @@ const ColorInput = ({
       `color-highlight-${displayedColor.id}`
     );
     if (!element) {
-      setHighlightOffset(null);
+      setHighlightBand(null);
       return;
     }
 
-    setHighlightOffset(element.offsetTop);
+    setHighlightBand({ top: element.offsetTop, height: element.offsetHeight });
 
     const target = `${displayedColor.id}:${displayedColor.hexString}`;
     const isFirstSelection = lastScrolledTo.current === null;
@@ -79,7 +74,7 @@ const ColorInput = ({
     lastScrolledTo.current = target;
 
     if (!isFirstSelection && hasMoved) {
-      element.scrollIntoView({ block: "center", behavior: "smooth" });
+      scrollSelectionIntoView(textRef.current, element);
     }
   }, [displayedColor, segments]);
 
@@ -106,19 +101,10 @@ const ColorInput = ({
     [segments, displayedColor]
   );
 
-  const updateScroll = (event: MouseEvent<HTMLTextAreaElement>) => {
+  const updateScroll = (event: UIEvent<HTMLTextAreaElement>) => {
     if (highlightRef.current) {
       highlightRef.current.scrollTop = event.currentTarget.scrollTop;
     }
-  };
-
-  const updatedHighlightScroll = () => {
-    clearTimeout(scrollSyncTimeout.current);
-    scrollSyncTimeout.current = setTimeout(() => {
-      if (textRef.current && highlightRef.current) {
-        textRef.current.scrollTop = highlightRef.current.scrollTop;
-      }
-    }, SCROLL_SYNC_DELAY);
   };
 
   const checkSelection = (
@@ -138,8 +124,7 @@ const ColorInput = ({
       <STextAreaDisplay>
         <SColorHighlightLayer
           ref={highlightRef}
-          onScroll={updatedHighlightScroll}
-          highlightOffset={highlightOffset}
+          highlightBand={highlightBand}
           aria-hidden="true"
         >
           {colorHighlight}
